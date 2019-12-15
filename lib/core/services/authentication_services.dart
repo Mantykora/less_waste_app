@@ -16,10 +16,4 @@ class AuthenticationService {
     return hasUser;
   }
 
-  void setupLocator() {
-    locator.registerLazySingleton(() => AuthenticationService());
-    locator.registerLazySingleton(() => Api());
-
-    locator.registerLazySingleton(() => LoginModel());
-  }
 }

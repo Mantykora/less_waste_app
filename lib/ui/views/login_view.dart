@@ -14,8 +14,10 @@ class _LoginViewState extends State<LoginView> {
   final TextEditingController controller = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<LoginModel>(
-      builder: (context) => locator<LoginModel>(),
+    return ChangeNotifierProvider<LoginModel>.value(
+
+      value: locator<LoginModel>(),
+
       child: Consumer<LoginModel>(
         builder: (context, model, child) => Scaffold(
           backgroundColor: Colors.black38,
@@ -25,6 +27,7 @@ class _LoginViewState extends State<LoginView> {
             children: [
               LoginHeader(
                 controller: controller,
+                validationMessage: model.errorMessage,
               ),
               FlatButton(
                   color: Colors.white,
@@ -35,7 +38,7 @@ class _LoginViewState extends State<LoginView> {
                   onPressed: () async {
                     var loginSuccess = await model.login(controller.text);
                     if (loginSuccess) {
-                      // Navigate to the home view
+                      Navigator.pushNamed(context, '/');
                     }
                   })
             ],
