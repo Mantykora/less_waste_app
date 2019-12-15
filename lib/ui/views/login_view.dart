@@ -4,6 +4,7 @@ import 'package:less_waste_app/core/viewmodels/login_model.dart';
 import 'package:less_waste_app/ui/widgets/login_header.dart';
 import 'package:provider/provider.dart';
 import '../../service_locator.dart';
+import 'base_view.dart';
 
 class LoginView extends StatefulWidget {
   @override
@@ -14,12 +15,10 @@ class _LoginViewState extends State<LoginView> {
   final TextEditingController controller = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<LoginModel>.value(
+    return BaseView<LoginModel>(
 
-      value: locator<LoginModel>(),
-
-      child: Consumer<LoginModel>(
-        builder: (context, model, child) => Scaffold(
+      //value: locator<LoginModel>(),
+         builder: (context, model, child) => Scaffold(
           backgroundColor: Colors.black38,
           body: Column(
             mainAxisSize: MainAxisSize.max,
@@ -39,12 +38,13 @@ class _LoginViewState extends State<LoginView> {
                     var loginSuccess = await model.login(controller.text);
                     if (loginSuccess) {
                       Navigator.pushNamed(context, '/');
+                      print("succes");
                     }
                   })
             ],
           ),
         ),
-      ),
+
     );
   }
 }

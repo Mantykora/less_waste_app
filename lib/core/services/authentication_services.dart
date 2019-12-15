@@ -13,6 +13,7 @@ class AuthenticationService {
     var fetcheduser = await _api.getUserProfile(userId);
 // Check if success
     var hasUser = fetcheduser != null;
+    print(fetcheduser.name);
     return hasUser;
   }
 
