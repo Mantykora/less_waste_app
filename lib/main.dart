@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
         title: 'Flutter Demo',
         theme: ThemeData(),
         home: LoginView(),
-        initialRoute: 'login',
+        initialRoute: '/login',
         onGenerateRoute: Router.generateRoute,
       ),
     );
