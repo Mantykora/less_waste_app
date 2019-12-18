@@ -30,7 +30,7 @@ class _BaseViewState<T extends ChangeNotifier> extends State<BaseView<T>> {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<T>.value(
-      value: locator<T>(),
+      value: model,
       child: Consumer<T>(builder: widget.builder),
     );
   }

@@ -12,26 +12,27 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BaseView<HomeModel>(
-        onModelReady: (model) {
-          model.getPosts(Provider.of<User>(context).id);
-        },
-        builder: (context, model, child) => Scaffold(
-            backgroundColor: Colors.pink,
-            body: model.state == ViewState.Idle
-                ? Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 20.0),
-                    child: Text('Welcome ${Provider.of<User>(context).name}',),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 20.0),
-                    child: Text('Here are all your posts'),
-                  ),
-                  Expanded(child: getPostsUi(model.posts)),
-                ])
-                : Center(child: CircularProgressIndicator())));
+      onModelReady: (model) => model.getPosts(Provider.of<User>(context).id),
+      builder: (context, model, child) => Scaffold(
+          backgroundColor: Colors.red,
+          body: model.state == ViewState.Busy
+              ? Center(child: CircularProgressIndicator())
+              : Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(left: 20.0),
+                child: Text('Welcome ${Provider.of<User>(context).name}',
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 20.0),
+                child: Text('Here are all your posts',),
+              ),
+              Expanded(child: getPostsUi(model.posts)),
+            ],)
+      ),
+    );
   }
 
   Widget getPostsUi(List<Post> posts) => ListView.builder(
@@ -39,7 +40,8 @@ class HomeView extends StatelessWidget {
       itemBuilder: (context, index) => PostListItem(
         post: posts[index],
         onTap: () {
-          Navigator.pushNamed(context, 'post', arguments: posts[index]);
+          Navigator.pushNamed(context, '/post', arguments: posts[index]);
         },
-      ));
+      )
+  );
 }
