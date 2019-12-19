@@ -9,27 +9,34 @@ import 'package:provider/provider.dart';
 import 'base_view.dart';
 
 class HomeView extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
+
+    final user = Provider.of<User>(context);
+    print(user.id);
+
     return BaseView<HomeModel>(
-      onModelReady: (model) => model.getPosts(Provider.of<User>(context).id),
+      //onModelReady: (model) => model.getPosts(Provider.of<User>(context).id),
       builder: (context, model, child) => Scaffold(
           backgroundColor: Colors.red,
           body: model.state == ViewState.Busy
               ? Center(child: CircularProgressIndicator())
-              : Column(
+              :
+
+          Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Padding(
                 padding: const EdgeInsets.only(left: 20.0),
-                child: Text('Welcome ${Provider.of<User>(context).name}',
+                child: Text('Welcome ',
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 20.0),
-                child: Text('Here are all your posts',),
+                child: Text(Provider.of<User>(context).id),
               ),
-              Expanded(child: getPostsUi(model.posts)),
+             // Expanded(child: getPostsUi(model.posts)),
             ],)
       ),
     );

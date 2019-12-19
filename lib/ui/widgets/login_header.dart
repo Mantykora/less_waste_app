@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
 class LoginHeader extends StatelessWidget {
-  final TextEditingController controller;
+  final TextEditingController loginController;
+  final TextEditingController passController;
   final String validationMessage;
 
-  LoginHeader({@required this.controller, this.validationMessage});
+  LoginHeader({@required this.loginController, @required this.passController,  this.validationMessage});
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +13,8 @@ class LoginHeader extends StatelessWidget {
       Text('Login', style: TextStyle(color: Colors.blue)),
 
       Text('Enter a number between 1 - 10', style: TextStyle(color: Colors.amber)),
-      LoginTextField(controller),
+      LoginTextField(loginController),
+      LoginTextField(passController),
       this.validationMessage != null
           ? Text(validationMessage, style: TextStyle(color: Colors.red))
           : Container()

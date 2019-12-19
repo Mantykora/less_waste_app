@@ -13,7 +13,8 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends State<LoginView> {
-  final TextEditingController _controller = TextEditingController();
+  final TextEditingController _loginController = TextEditingController();
+  final TextEditingController _passController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +26,9 @@ class _LoginViewState extends State<LoginView> {
           children: <Widget>[
             LoginHeader(
                 validationMessage: model.errorMessage,
-                controller: _controller),
+                loginController: _loginController,
+                passController: _passController,
+            ),
             model.state == ViewState.Busy
                 ? CircularProgressIndicator()
                 : FlatButton(
@@ -35,10 +38,12 @@ class _LoginViewState extends State<LoginView> {
                 style: TextStyle(color: Colors.black),
               ),
               onPressed: () async {
-                var loginSuccess = await model.login(_controller.text);
-                if(loginSuccess){
+                var loginSuccess = await model.login(_loginController.text, _passController.text );
+
+
+//                if(loginSuccess){
                   Navigator.pushNamed(context, '/home');
-                }
+//                }
               },
             )
           ],),

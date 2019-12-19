@@ -5,6 +5,7 @@ import 'package:less_waste_app/ui/views/login_view.dart';
 import 'package:provider/provider.dart';
 
 import 'core/models/user.dart';
+import 'core/services/auth.dart';
 import 'core/services/authentication_services.dart';
 
 void main() {
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return  StreamProvider<User>.value(
       initialData: User.initial(),
-      value: locator<AuthenticationService>().userController.stream,
+      value: locator<AuthService>().user,
       child: MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(),

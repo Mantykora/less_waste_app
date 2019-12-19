@@ -1,5 +1,5 @@
 class User {
-  int id;
+  String id;
   String name;
   String username;
   DateTime joinDate;
@@ -8,7 +8,7 @@ class User {
   User({this.id, this.name, this.username, this.joinDate, this.postsNumber});
 
   User.initial()
-      : id = 0,
+      : id = "0",
         name = '',
         username = '';
 
