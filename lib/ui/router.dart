@@ -4,6 +4,7 @@ import 'package:less_waste_app/core/models/post.dart';
 import 'package:less_waste_app/ui/views/home_view.dart';
 import 'package:less_waste_app/ui/views/login_view.dart';
 import 'package:less_waste_app/ui/views/post_view.dart';
+import 'package:less_waste_app/ui/views/wrapper.dart';
 
 const String initialRoute = "login";
 
@@ -17,6 +18,8 @@ class Router {
       case '/post':
         var post = settings.arguments as Post;
         return MaterialPageRoute(builder: (_) => PostView(post: post));
+      case '/wrapper':
+        return MaterialPageRoute(builder: (_) => Wrapper());
       default:
         return MaterialPageRoute(
             builder: (_) => Scaffold(
