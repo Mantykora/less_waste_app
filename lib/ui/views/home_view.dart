@@ -36,6 +36,10 @@ class HomeView extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 20.0),
                 child: Text(Provider.of<User>(context).id),
               ),
+
+             FlatButton(onPressed: () async {
+               await model.logout();
+             }, child: Text('logout')),
              // Expanded(child: getPostsUi(model.posts)),
             ],)
       ),

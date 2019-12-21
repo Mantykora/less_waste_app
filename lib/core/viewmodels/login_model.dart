@@ -20,10 +20,19 @@ class LoginModel extends BaseModel {
 //      setState(ViewState.Idle);
 //      return false;
 //    }
-    await _authenticationService.signIn(email, password);
+    var response =  await _authenticationService.signIn(email, password);
+
+    if (response == null) {
+      setState(ViewState.Idle);
+      return null;
+    }
+
+    //return response;
 
     setState(ViewState.Idle);
     //return success;
   }
+
+
 
 }

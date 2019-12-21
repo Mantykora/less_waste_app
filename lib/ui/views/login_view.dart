@@ -25,28 +25,28 @@ class _LoginViewState extends State<LoginView> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             LoginHeader(
-                validationMessage: model.errorMessage,
-                loginController: _loginController,
-                passController: _passController,
+              validationMessage: model.errorMessage,
+              loginController: _loginController,
+              passController: _passController,
             ),
             model.state == ViewState.Busy
                 ? CircularProgressIndicator()
                 : FlatButton(
-              color: Colors.white,
-              child: Text(
-                'Login',
-                style: TextStyle(color: Colors.black),
-              ),
-              onPressed: () async {
-                var loginSuccess = await model.login(_loginController.text, _passController.text );
+                    color: Colors.white,
+                    child: Text(
+                      'Login',
+                      style: TextStyle(color: Colors.black),
+                    ),
+                    onPressed: () async {
+                      var loginSuccess = await model.login(_loginController.text, _passController.text);
 
-
-//                if(loginSuccess){
-                  Navigator.pushNamed(context, '/home');
-//                }
-              },
-            )
-          ],),
+                      if (loginSuccess != null) {
+                        Navigator.pushNamed(context, '/home');
+                      }
+                    },
+                  )
+          ],
+        ),
       ),
     );
   }
