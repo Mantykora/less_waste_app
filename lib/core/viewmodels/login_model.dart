@@ -4,9 +4,10 @@ import 'package:less_waste_app/core/services/auth.dart';
 import 'package:less_waste_app/core/services/authentication_services.dart';
 
 import '../../service_locator.dart';
+import 'authenticate_model.dart';
 import 'base_model.dart';
 /// Represents the state of the view
-class LoginModel extends BaseModel {
+class LoginModel extends AuthenticateModel {
   final AuthService _authenticationService =
       locator<AuthService>();
 

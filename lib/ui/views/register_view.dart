@@ -8,12 +8,12 @@ import 'package:provider/provider.dart';
 import '../../service_locator.dart';
 import 'base_view.dart';
 
-class LoginView extends StatefulWidget {
+class RegisterView extends StatefulWidget {
   @override
-  _LoginViewState createState() => _LoginViewState();
+  _RegisterViewState createState() => _RegisterViewState();
 }
 
-class _LoginViewState extends State<LoginView> {
+class _RegisterViewState extends State<RegisterView> {
   final TextEditingController _loginController = TextEditingController();
   final TextEditingController _passController = TextEditingController();
 
@@ -33,27 +33,27 @@ class _LoginViewState extends State<LoginView> {
             model.state == ViewState.Busy
                 ? CircularProgressIndicator()
                 : FlatButton(
-                    color: Colors.white,
-                    child: Text(
-                      'Login',
-                      style: TextStyle(color: Colors.black),
-                    ),
-                    onPressed: () async {
-                    //  var loginSuccess = await model.login(_loginController.text, _passController.text);
-
-//                      if (loginSuccess != null) {
-//                        Navigator.pushNamed(context, '/home');
-//                      }
-                    },
-                  ),
-            FlatButton(
               color: Colors.white,
               child: Text(
-                'goToRegister',
+                'Register',
                 style: TextStyle(color: Colors.black),
               ),
               onPressed: () async {
-               model.toggleView();
+//                var loginSuccess = await model.login(_loginController.text, _passController.text);
+//
+//                if (loginSuccess != null) {
+//                  Navigator.pushNamed(context, '/home');
+//                }
+              },
+            ),
+            FlatButton(
+              color: Colors.white,
+              child: Text(
+                'goToLogin',
+                style: TextStyle(color: Colors.black),
+              ),
+              onPressed: () async {
+                model.toggleView();
               },
             )
           ],
