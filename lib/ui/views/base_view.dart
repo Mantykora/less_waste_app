@@ -1,8 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:less_waste_app/core/services/authentication_services.dart';
-import 'package:less_waste_app/core/viewmodels/base_model.dart';
-import 'package:less_waste_app/core/viewmodels/login_model.dart';
-import 'package:less_waste_app/ui/widgets/login_header.dart';
 import 'package:provider/provider.dart';
 import '../../service_locator.dart';
 

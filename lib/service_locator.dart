@@ -6,14 +6,12 @@ import 'core/services/authentication_services.dart';
 import 'core/viewmodels/authenticate_model.dart';
 import 'core/viewmodels/comments_model.dart';
 import 'core/viewmodels/home_model.dart';
-import 'core/viewmodels/login_model.dart';
 
 GetIt locator = GetIt();
 
 void setupLocator() {
   locator.registerLazySingleton(() => AuthenticationService());
   locator.registerLazySingleton(() => Api());
-  locator.registerLazySingleton(() => LoginModel());
   locator.registerLazySingleton(() => AuthService());
   locator.registerLazySingleton(() => AuthenticateModel());
   locator.registerFactory(() => HomeModel());

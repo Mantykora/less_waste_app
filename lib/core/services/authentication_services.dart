@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:less_waste_app/core/models/user.dart';
-import 'package:less_waste_app/core/viewmodels/login_model.dart';
 
 import '../../service_locator.dart';
 import 'api.dart';

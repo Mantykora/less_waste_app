@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:less_waste_app/core/enums/viewstate.dart';
-import 'package:less_waste_app/core/services/authentication_services.dart';
 import 'package:less_waste_app/core/viewmodels/authenticate_model.dart';
-import 'package:less_waste_app/core/viewmodels/login_model.dart';
 import 'package:less_waste_app/ui/widgets/login_header.dart';
 import 'package:provider/provider.dart';
 import '../../service_locator.dart';
@@ -26,7 +24,7 @@ class _LoginViewState extends State<LoginView> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             LoginHeader(
-             // validationMessage: model.errorMessage,
+             validationMessage: model.errorMessage,
               loginController: _loginController,
               passController: _passController,
             ),
@@ -39,11 +37,11 @@ class _LoginViewState extends State<LoginView> {
                       style: TextStyle(color: Colors.black),
                     ),
                     onPressed: () async {
-                    //  var loginSuccess = await model.login(_loginController.text, _passController.text);
+                      var loginSuccess = await model.login(_loginController.text, _passController.text);
 
-//                      if (loginSuccess != null) {
-//                        Navigator.pushNamed(context, '/home');
-//                      }
+                      if (loginSuccess != null) {
+                        Navigator.pushNamed(context, '/home');
+                      }
                     },
                   ),
             FlatButton(
