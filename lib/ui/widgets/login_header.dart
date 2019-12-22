@@ -10,7 +10,10 @@ class LoginHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(children: <Widget>[
-      Text('Login', style: TextStyle(color: Colors.white)),
+      Padding(
+        padding: const EdgeInsets.only(bottom: 24.0),
+        child: Icon(Icons.person_outline, color: Colors.white, size: 70,),
+      ),
       LoginTextField(loginController, Icons.person_outline, 'login'),
       LoginTextField(passController, Icons.lock_outline, 'password'),
       this.validationMessage != null
@@ -38,6 +41,8 @@ class LoginTextField extends StatelessWidget {
 //      decoration: BoxDecoration(
 //          color: Colors.white, borderRadius: BorderRadius.circular(10.0)),
       child: TextField(
+
+        style: TextStyle(color: Colors.white),
 
           cursorColor: Colors.white,
           decoration: InputDecoration(

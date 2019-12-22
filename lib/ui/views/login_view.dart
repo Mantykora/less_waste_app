@@ -51,7 +51,7 @@ class _LoginViewState extends State<LoginView> {
 
                                 ),
 
-                                color: Colors.white,
+                                color:  Colors.white,
                   child: Text(
                               'Login',
                               style: TextStyle(color: Colors.black),
@@ -71,16 +71,38 @@ class _LoginViewState extends State<LoginView> {
                       ],
                     ),
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: FlatButton(
-                    //color: Colors.white,
-                    child: Text(
-                      'Register',
-                      style: TextStyle(color: Colors.black),
-                    ),
-                    onPressed: () async {
-                      model.toggleView();
-                    },
+                  padding: const EdgeInsets.only(top: 24.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      FlatButton(
+                        //color: Colors.white,
+                        child: Text(
+                          'Register',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        onPressed: () async {
+                          model.toggleView();
+                        },
+                      ),
+
+                      Text(
+                        '|',
+                        style: TextStyle(color: Colors.white),
+                      ),
+
+                      FlatButton(
+                        //color: Colors.white,
+                        child: Text(
+                          'Forgot password',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        onPressed: () async {
+                          model.toggleView();
+                        },
+                      ),
+
+                    ],
                   ),
                 )
               ],
