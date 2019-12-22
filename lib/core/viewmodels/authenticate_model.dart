@@ -27,7 +27,7 @@ class AuthenticateModel extends BaseModel {
     setState(ViewState.Busy);
     //var userId = int.tryParse(userIdText);
 //    if (userId == null) {
-//      errorMessage = 'Value entered is not a number';
+      //errorMessage = 'Value entered is not a number';
 //      setState(ViewState.Idle);
 //      return false;
 //    }

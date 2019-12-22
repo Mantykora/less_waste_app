@@ -20,41 +20,73 @@ class _LoginViewState extends State<LoginView> {
     return BaseView<AuthenticateModel>(
       builder: (context, model, child) => Scaffold(
         backgroundColor: Colors.blueAccent,
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+        resizeToAvoidBottomInset : false,
+        body: Stack(
           children: <Widget>[
-            LoginHeader(
-             validationMessage: model.errorMessage,
-              loginController: _loginController,
-              passController: _passController,
+            Opacity(
+              child: Image.asset('assets/background.jpg', fit: BoxFit.cover,
+              height: double.infinity, width: double.infinity,
+              ), opacity: 0.3,
             ),
-            model.state == ViewState.Busy
-                ? CircularProgressIndicator()
-                : FlatButton(
-                    color: Colors.white,
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                LoginHeader(
+                  validationMessage: model.errorMessage,
+                  loginController: _loginController,
+                  passController: _passController,
+                ),
+                model.state == ViewState.Busy
+                    ? CircularProgressIndicator()
+                    : Row(
+                      children: <Widget>[
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 24.0, right: 24.0, top: 50.0),
+                            child: Container(
+                              height: 40,
+                              child: FlatButton(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: new BorderRadius.circular(18.0),
+
+                                ),
+
+                                color: Colors.white,
+                  child: Text(
+                              'Login',
+                              style: TextStyle(color: Colors.black),
+                  ),
+                  onPressed: () async {
+                              var loginSuccess = await model.login(_loginController.text, _passController.text);
+
+                              if (loginSuccess != null) {
+                                Navigator.pushNamed(context, '/home');
+                              }
+                  },
+
+                ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: FlatButton(
+                    //color: Colors.white,
                     child: Text(
-                      'Login',
+                      'Register',
                       style: TextStyle(color: Colors.black),
                     ),
                     onPressed: () async {
-                      var loginSuccess = await model.login(_loginController.text, _passController.text);
-
-                      if (loginSuccess != null) {
-                        Navigator.pushNamed(context, '/home');
-                      }
+                      model.toggleView();
                     },
                   ),
-            FlatButton(
-              color: Colors.white,
-              child: Text(
-                'goToRegister',
-                style: TextStyle(color: Colors.black),
-              ),
-              onPressed: () async {
-               model.toggleView();
-              },
-            )
+                )
+              ],
+            ),
           ],
+
         ),
       ),
     );
