@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 
 class LoginHeader extends StatelessWidget {
   final TextEditingController loginController;
+  final TextEditingController emailController;
   final TextEditingController passController;
   final String validationMessage;
+  final bool isSignUp;
 
-  LoginHeader({@required this.loginController, @required this.passController, this.validationMessage});
+  LoginHeader({this.loginController,  @required this.emailController, @required this.passController, this.validationMessage, this.isSignUp});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +20,8 @@ class LoginHeader extends StatelessWidget {
           size: 70,
         ),
       ),
-      LoginTextField(loginController, Icons.person_outline, 'e-mail', false),
+      this.isSignUp != null ? LoginTextField(loginController, Icons.person_outline, 'login', false) : Container(),
+      LoginTextField(emailController, Icons.email, 'e-mail', false),
       LoginTextField(passController, Icons.lock_outline, 'password', true),
       this.validationMessage != null ? Text(validationMessage, style: TextStyle(color: Colors.red)) : Container()
     ]);

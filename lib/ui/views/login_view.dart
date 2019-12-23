@@ -12,7 +12,7 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends State<LoginView> {
-  final TextEditingController _loginController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passController = TextEditingController();
 
   @override
@@ -37,7 +37,7 @@ class _LoginViewState extends State<LoginView> {
               children: <Widget>[
                 LoginHeader(
                   validationMessage: model.errorMessage,
-                  loginController: _loginController,
+                  emailController: _emailController,
                   passController: _passController,
                 ),
                 model.state == ViewState.Busy
@@ -62,7 +62,7 @@ class _LoginViewState extends State<LoginView> {
                                     style: TextStyle(color: Colors.black),
                                   ),
                                   onPressed: () async {
-                                    var loginSuccess = await model.login(_loginController.text, _passController.text);
+                                    var loginSuccess = await model.login(_emailController.text, _passController.text);
 
                                     if (loginSuccess != null) {
                                       Navigator.pushNamed(context, '/home');
