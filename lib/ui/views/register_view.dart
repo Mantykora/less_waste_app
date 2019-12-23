@@ -66,7 +66,7 @@ class _RegisterViewState extends State<RegisterView> {
                                     style: TextStyle(color: Colors.black),
                                   ),
                                   onPressed: () async {
-                                    var loginSuccess = await model.login(_emailController.text, _passController.text);
+                                    var loginSuccess = await model.register(_loginController.text, _emailController.text, _passController.text, );
 
                                     if (loginSuccess != null) {
                                       Navigator.pushNamed(context, '/home');

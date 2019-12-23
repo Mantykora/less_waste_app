@@ -29,21 +29,8 @@ class AuthenticateModel extends BaseModel {
 //      return false;
 //    }
 
-    bool emailValid = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(email);
-
-    if (password.isEmpty || email.isEmpty) {
-      errorMessage = 'Enter e-mail and password';
-      setState(ViewState.Idle);
-      return null;
-    } else if (password.length < 5) {
-      errorMessage = 'Password must contain at least 5 characters';
-      setState(ViewState.Idle);
-      return null;
-    } else if (!emailValid) {
-      errorMessage = 'Please enter a valid e-mail address';
-      setState(ViewState.Idle);
-      return null;
-    }
+    bool isValidated =  await validateCredentials(null, email, password,);
+    if (!isValidated) return null;
 
     var response = await _authenticationService.signIn(email, password);
 
@@ -52,12 +39,46 @@ class AuthenticateModel extends BaseModel {
       setState(ViewState.Idle);
       return null;
     }
-
     //return response;
 
     setState(ViewState.Idle);
     //return success;
   }
 
-  Future register() {}
+  Future register(String login, String email, String password, ) async {
+    setState(ViewState.Busy);
+    validateCredentials(email, password, login);
+    bool isValidated =  await validateCredentials(null, email, password,);
+    if (!isValidated) return null;
+
+    var response = await _authenticationService.register(login, email, password);
+
+    if (response == null) {
+      errorMessage = null;
+      setState(ViewState.Idle);
+      return null;
+    }
+
+  }
+
+  Future<bool> validateCredentials(String login, String email, String password,) async {
+    bool emailValid = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(email);
+
+    if (password.isEmpty || email.isEmpty ) {
+      errorMessage = 'All fields are required';
+      setState(ViewState.Idle);
+      return false;
+    } else if (password.length < 5) {
+      errorMessage = 'Password must contain at least 5 characters';
+      setState(ViewState.Idle);
+      return false;
+    } else if (!emailValid) {
+      errorMessage = 'Please enter a valid e-mail address';
+      setState(ViewState.Idle);
+      return false;
+    }
+
+    return true;
+  }
+
 }
