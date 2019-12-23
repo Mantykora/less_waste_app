@@ -10,8 +10,7 @@ class HomeModel extends BaseModel {
   Api _api = locator<Api>();
   List<Post> posts;
 
-  final AuthService _authenticationService =
-  locator<AuthService>();
+  final AuthService _authenticationService = locator<AuthService>();
 
   Future getPosts(int userId) async {
     setState(ViewState.Busy);
@@ -19,10 +18,9 @@ class HomeModel extends BaseModel {
     setState(ViewState.Idle);
   }
 
-  Future logout() async{
+  Future logout() async {
     setState(ViewState.Busy);
     await _authenticationService.signOut();
     setState(ViewState.Idle);
-
   }
 }

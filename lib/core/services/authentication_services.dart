@@ -10,6 +10,7 @@ class AuthenticationService {
   Api _api = locator<Api>();
 
   StreamController<User> userController = StreamController<User>();
+
   Future<bool> login(int userId) async {
     // Not real login, we'll just request the user profile
     var fetcheduser = await _api.getUserProfile(userId);
@@ -19,5 +20,4 @@ class AuthenticationService {
     }
     return hasUser;
   }
-
 }

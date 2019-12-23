@@ -20,13 +20,17 @@ class _LoginViewState extends State<LoginView> {
     return BaseView<AuthenticateModel>(
       builder: (context, model, child) => Scaffold(
         backgroundColor: Colors.blueAccent,
-        resizeToAvoidBottomInset : false,
+        resizeToAvoidBottomInset: false,
         body: Stack(
           children: <Widget>[
             Opacity(
-              child: Image.asset('assets/background.jpg', fit: BoxFit.cover,
-              height: double.infinity, width: double.infinity,
-              ), opacity: 0.3,
+              child: Image.asset(
+                'assets/background.jpg',
+                fit: BoxFit.cover,
+                height: double.infinity,
+                width: double.infinity,
+              ),
+              opacity: 0.3,
             ),
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -38,41 +42,38 @@ class _LoginViewState extends State<LoginView> {
                 ),
                 model.state == ViewState.Busy
                     ? Padding(
-                      padding: const EdgeInsets.all(27.0),
-                      child: CircularProgressIndicator(),
-                    )
+                        padding: const EdgeInsets.all(27.0),
+                        child: CircularProgressIndicator(),
+                      )
                     : Row(
-                      children: <Widget>[
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 24.0, right: 24.0, top: 50.0),
-                            child: Container(
-                              height: 40,
-                              child: FlatButton(
-                                shape: RoundedRectangleBorder(
+                        children: <Widget>[
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 24.0, right: 24.0, top: 50.0),
+                              child: Container(
+                                height: 40,
+                                child: FlatButton(
+                                  shape: RoundedRectangleBorder(
                                     borderRadius: new BorderRadius.circular(18.0),
+                                  ),
+                                  color: Colors.white,
+                                  child: Text(
+                                    'Login',
+                                    style: TextStyle(color: Colors.black),
+                                  ),
+                                  onPressed: () async {
+                                    var loginSuccess = await model.login(_loginController.text, _passController.text);
 
+                                    if (loginSuccess != null) {
+                                      Navigator.pushNamed(context, '/home');
+                                    }
+                                  },
                                 ),
-
-                                color:  Colors.white,
-                  child: Text(
-                              'Login',
-                              style: TextStyle(color: Colors.black),
-                  ),
-                  onPressed: () async {
-                              var loginSuccess = await model.login(_loginController.text, _passController.text);
-
-                              if (loginSuccess != null) {
-                                Navigator.pushNamed(context, '/home');
-                              }
-                  },
-
-                ),
+                              ),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
+                        ],
+                      ),
                 Padding(
                   padding: const EdgeInsets.only(top: 24.0),
                   child: Row(
@@ -88,12 +89,10 @@ class _LoginViewState extends State<LoginView> {
                           model.toggleView();
                         },
                       ),
-
                       Text(
                         '|',
                         style: TextStyle(color: Colors.white),
                       ),
-
                       FlatButton(
                         //color: Colors.white,
                         child: Text(
@@ -104,14 +103,12 @@ class _LoginViewState extends State<LoginView> {
                           model.toggleView();
                         },
                       ),
-
                     ],
                   ),
                 )
               ],
             ),
           ],
-
         ),
       ),
     );

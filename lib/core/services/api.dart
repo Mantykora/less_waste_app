@@ -5,7 +5,6 @@ import 'package:less_waste_app/core/models/post.dart';
 import 'package:less_waste_app/core/models/user.dart';
 import 'package:http/http.dart' as http;
 
-
 /// The service responsible for networking requests
 class Api {
   static const endpoint = 'https://jsonplaceholder.typicode.com';

@@ -25,26 +25,26 @@ class _RegisterViewState extends State<RegisterView> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             LoginHeader(
-             // validationMessage: model.errorMessage,
+              // validationMessage: model.errorMessage,
               loginController: _loginController,
               passController: _passController,
             ),
             model.state == ViewState.Busy
                 ? CircularProgressIndicator()
                 : FlatButton(
-              color: Colors.white,
-              child: Text(
-                'Register',
-                style: TextStyle(color: Colors.black),
-              ),
-              onPressed: () async {
+                    color: Colors.white,
+                    child: Text(
+                      'Register',
+                      style: TextStyle(color: Colors.black),
+                    ),
+                    onPressed: () async {
 //                var loginSuccess = await model.login(_loginController.text, _passController.text);
 //
 //                if (loginSuccess != null) {
 //                  Navigator.pushNamed(context, '/home');
 //                }
-              },
-            ),
+                    },
+                  ),
             FlatButton(
               color: Colors.white,
               child: Text(

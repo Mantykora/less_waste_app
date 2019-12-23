@@ -17,18 +17,14 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-
-
-
-    return  StreamProvider<User>.value(
+    return StreamProvider<User>.value(
       initialData: User.initial(),
       value: locator<AuthService>().user,
       child: MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(),
         home: Wrapper(),
-        initialRoute: '/wrapper'
-        ,
+        initialRoute: '/wrapper',
         onGenerateRoute: Router.generateRoute,
       ),
     );

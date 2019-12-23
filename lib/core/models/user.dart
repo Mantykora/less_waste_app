@@ -29,5 +29,4 @@ class User {
     data['postsNumber'] = this.postsNumber;
     return data;
   }
-
 }
