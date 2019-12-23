@@ -31,9 +31,29 @@ class AuthenticateModel extends BaseModel {
 //      setState(ViewState.Idle);
 //      return false;
 //    }
+
+    bool emailValid = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(email);
+
+    if(password.isEmpty || email.isEmpty) {
+      errorMessage = 'Enter e-mail and password';
+      setState(ViewState.Idle);
+      return null;
+    }
+    else if (password.length < 5)  {
+      errorMessage = 'Password must contain at least 5 characters';
+      setState(ViewState.Idle);
+      return null;
+    }
+    else if (!emailValid) {
+      errorMessage = 'Please enter a valid e-mail address';
+      setState(ViewState.Idle);
+      return null;
+    }
+
     var response =  await _authenticationService.signIn(email, password);
 
     if (response == null) {
+      errorMessage = null;
       setState(ViewState.Idle);
       return null;
     }

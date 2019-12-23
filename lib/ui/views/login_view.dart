@@ -37,7 +37,10 @@ class _LoginViewState extends State<LoginView> {
                   passController: _passController,
                 ),
                 model.state == ViewState.Busy
-                    ? CircularProgressIndicator()
+                    ? Padding(
+                      padding: const EdgeInsets.all(27.0),
+                      child: CircularProgressIndicator(),
+                    )
                     : Row(
                       children: <Widget>[
                         Expanded(

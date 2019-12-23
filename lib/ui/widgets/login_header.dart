@@ -14,8 +14,8 @@ class LoginHeader extends StatelessWidget {
         padding: const EdgeInsets.only(bottom: 24.0),
         child: Icon(Icons.person_outline, color: Colors.white, size: 70,),
       ),
-      LoginTextField(loginController, Icons.person_outline, 'login'),
-      LoginTextField(passController, Icons.lock_outline, 'password'),
+      LoginTextField(loginController, Icons.person_outline, 'login', false),
+      LoginTextField(passController, Icons.lock_outline, 'password', true),
       this.validationMessage != null
           ? Text(validationMessage, style: TextStyle(color: Colors.red))
           : Container()
@@ -27,8 +27,9 @@ class LoginTextField extends StatelessWidget {
   final TextEditingController controller;
   IconData icon;
   String hint;
+  bool isPass;
 
-  LoginTextField(this.controller, this.icon, this.hint);
+  LoginTextField(this.controller, this.icon, this.hint, this.isPass);
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +42,7 @@ class LoginTextField extends StatelessWidget {
 //      decoration: BoxDecoration(
 //          color: Colors.white, borderRadius: BorderRadius.circular(10.0)),
       child: TextField(
+        obscureText: isPass,
 
         style: TextStyle(color: Colors.white),
 
