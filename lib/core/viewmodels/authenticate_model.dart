@@ -12,13 +12,16 @@ class AuthenticateModel extends BaseModel {
 
   final AuthService _authenticationService = locator<AuthService>();
 
+  String errorMessage;
+
+
   void toggleView() {
     setState(ViewState.Busy);
     isSignInView = !isSignInView;
+    errorMessage = null;
     setState(ViewState.Idle);
   }
 
-  String errorMessage;
 
   Future login(String email, String password) async {
     setState(ViewState.Busy);
@@ -58,6 +61,8 @@ class AuthenticateModel extends BaseModel {
       setState(ViewState.Idle);
       return null;
     }
+
+    isSignInView = true;
 
   }
 
