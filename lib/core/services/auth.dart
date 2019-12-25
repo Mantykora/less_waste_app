@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:less_waste_app/core/models/user.dart';
 
+import 'database.dart';
+
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -40,7 +42,13 @@ class AuthService {
   Future register(String login, String email, String password) async {
     try {
       AuthResult result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
+      FirebaseUser user = result.user;
       print(result.toString());
+      print(user.uid);
+
+      await DatabaseService(userId: user.uid).updateUserData(login);
+
+      return user;
     } catch (e) {
       print(e.toString());
       return null;
