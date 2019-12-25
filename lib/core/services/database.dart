@@ -13,4 +13,8 @@ class DatabaseService {
       'login': login
     });
   }
+
+  Stream<QuerySnapshot> get users  {
+    return collection.snapshots();
+  }
 }
