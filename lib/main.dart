@@ -7,6 +7,7 @@ import 'package:less_waste_app/ui/views/wrapper.dart';
 import 'package:provider/provider.dart';
 
 import 'core/models/user.dart';
+import 'core/models/user_data.dart';
 import 'core/services/auth.dart';
 import 'core/services/authentication_services.dart';
 import 'core/services/database.dart';
@@ -19,20 +20,16 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return
-
-      MultiProvider(
-        providers: [
-      StreamProvider<User>.value(
-      initialData: User.initial(),
-    value: locator<AuthService>().user,),
-        StreamProvider<QuerySnapshot>.value(
+    return MultiProvider(
+      providers: [
+        StreamProvider<User>.value(
+          initialData: User.initial(),
+          value: locator<AuthService>().user,
+        ),
+        StreamProvider<List<UserData>>.value(
           value: DatabaseService().users,
         )
-
-
-
-        ],
+      ],
       child: MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(),
@@ -40,9 +37,8 @@ class MyApp extends StatelessWidget {
         initialRoute: '/wrapper',
         onGenerateRoute: Router.generateRoute,
       ),
-
-      );
-      StreamProvider<User>.value(
+    );
+    StreamProvider<User>.value(
       initialData: User.initial(),
       value: locator<AuthService>().user,
       child: MaterialApp(

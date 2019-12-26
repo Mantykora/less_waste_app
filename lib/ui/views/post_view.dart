@@ -20,7 +20,7 @@ class PostView extends StatelessWidget {
           children: <Widget>[
             Text(post.title),
             Text(
-              'by ${Provider.of<User>(context).name}',
+              'by ',
               style: TextStyle(fontSize: 9.0),
             ),
             Text(post.body),

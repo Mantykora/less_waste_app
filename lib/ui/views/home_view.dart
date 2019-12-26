@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:less_waste_app/core/enums/viewstate.dart';
 import 'package:less_waste_app/core/models/post.dart';
 import 'package:less_waste_app/core/models/user.dart';
+import 'package:less_waste_app/core/models/user_data.dart';
 import 'package:less_waste_app/core/services/database.dart';
 import 'package:less_waste_app/core/viewmodels/home_model.dart';
 import 'package:less_waste_app/ui/widgets/postlist_item.dart';
@@ -16,7 +17,7 @@ class HomeView extends StatelessWidget {
     final user = Provider.of<User>(context);
     print(user.id);
 
-    final users = Provider.of<QuerySnapshot>(context).documents;
+    final users = Provider.of<List<UserData>>(context);
 
     return  BaseView<HomeModel>(
         //onModelReady: (model) => model.getPosts(Provider.of<User>(context).id),
@@ -32,7 +33,7 @@ class HomeView extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(left: 20.0),
                         child: Text(
-                          'Welcome ${users[0].data.values}',
+                          'Welcome ${users[0].username}',
                         ),
                       ),
                       Padding(

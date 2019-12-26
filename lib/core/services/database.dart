@@ -1,5 +1,6 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:less_waste_app/core/models/user_data.dart';
 
 class DatabaseService {
 
@@ -14,7 +15,13 @@ class DatabaseService {
     });
   }
 
-  Stream<QuerySnapshot> get users  {
-    return collection.snapshots();
+  List<UserData> _userListFromSnapshot(QuerySnapshot snapshot) {
+    return snapshot.documents.map((doc) {
+      return UserData(id: doc.documentID, username: doc.data['login']);
+    }).toList();
+  }
+
+  Stream<List<UserData>> get users  {
+    return collection.snapshots().map(_userListFromSnapshot);
   }
 }

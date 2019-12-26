@@ -45,7 +45,6 @@ class AuthService {
       FirebaseUser user = result.user;
       print(result.toString());
       print(user.uid);
-
       await DatabaseService(userId: user.uid).updateUserData(login);
 
       return user;
