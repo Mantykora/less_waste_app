@@ -24,11 +24,27 @@ class HomeView extends StatelessWidget {
         builder: (context, model, child) =>
 
             Scaffold(
-            backgroundColor: Colors.red,
+              appBar: AppBar(
+                title: Text('Home'),
+                actions: <Widget>[
+                  IconButton(
+                      onPressed: () async {
+                        await model.logout();
+                        },
+                     icon: Icon(Icons.vpn_key))
+
+                ],
+
+              ),
+            floatingActionButton: FloatingActionButton(
+              onPressed: () {},
+            ),
+            backgroundColor: Color(0xff78A7F7),
             body: model.state == ViewState.Busy
                 ? Center(child: CircularProgressIndicator())
                 : Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.max,
                     children: <Widget>[
                       Padding(
                         padding: const EdgeInsets.only(left: 20.0),
@@ -41,13 +57,18 @@ class HomeView extends StatelessWidget {
                         child: Text(Provider.of<User>(context).id),
                       ),
 
-                      FlatButton(
-                          onPressed: () async {
-                            await model.logout();
-                          },
-                          child: Text('logout')),
+
+
+//                      Align(
+//                        alignment: Alignment.bottomRight,
+//                        child: FloatingActionButton(
+//                          onPressed: () {},
+//                        ),
+//                      )
                       // Expanded(child: getPostsUi(model.posts)),
                     ],
+
+
                   )),
     );
   }

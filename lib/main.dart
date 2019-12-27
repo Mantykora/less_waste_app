@@ -32,7 +32,10 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
-        theme: ThemeData(),
+        theme: ThemeData(
+          primaryColor: Color(0xff287538),
+          accentColor: Color(0xffD2932C),
+        ),
         home: Wrapper(),
         initialRoute: '/wrapper',
         onGenerateRoute: Router.generateRoute,

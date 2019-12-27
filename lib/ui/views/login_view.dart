@@ -65,7 +65,7 @@ class _LoginViewState extends State<LoginView> {
                                     var loginSuccess = await model.login(_emailController.text, _passController.text);
 
                                     if (loginSuccess != null) {
-                                      Navigator.pushNamed(context, '/home');
+                                      Navigator.pushNamedAndRemoveUntil(context, '/home', (Route<dynamic> route) => false);
                                     }
                                   },
                                 ),
