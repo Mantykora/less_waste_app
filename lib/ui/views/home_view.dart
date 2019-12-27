@@ -19,45 +19,108 @@ class HomeView extends StatelessWidget {
 
     final users = Provider.of<List<UserData>>(context);
 
-    return  BaseView<HomeModel>(
-        //onModelReady: (model) => model.getPosts(Provider.of<User>(context).id),
-        builder: (context, model, child) =>
+    return BaseView<HomeModel>(
+      //onModelReady: (model) => model.getPosts(Provider.of<User>(context).id),
+      builder: (context, model, child) => Scaffold(
+          appBar: AppBar(
+            title: Text('Home'),
+            actions: <Widget>[
+              IconButton(
+                  onPressed: () async {
+                    await model.logout();
+                  },
+                  icon: Icon(Icons.vpn_key))
+            ],
+          ),
+          floatingActionButton: FloatingActionButton(
+            child: Icon(Icons.add),
+            onPressed: () {},
+          ),
+          //  backgroundColor: Color(0xff78A7F7),
+          body: model.state == ViewState.Busy
+              ? Center(child: CircularProgressIndicator())
+              : Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.max,
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.only(left: 20.0),
+                      child: Text(
+                        'Welcome ${users[0].username}',
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 20.0),
+                      child: Text(Provider.of<User>(context).id),
+                    ),
 
-            Scaffold(
-              appBar: AppBar(
-                title: Text('Home'),
-                actions: <Widget>[
-                  IconButton(
-                      onPressed: () async {
-                        await model.logout();
-                        },
-                     icon: Icon(Icons.vpn_key))
+                    Row(
+                      children: <Widget>[
+                        Expanded(
+                          child: Card(
 
-                ],
-
-              ),
-            floatingActionButton: FloatingActionButton(
-              onPressed: () {},
-            ),
-            backgroundColor: Color(0xff78A7F7),
-            body: model.state == ViewState.Busy
-                ? Center(child: CircularProgressIndicator())
-                : Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.max,
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.only(left: 20.0),
-                        child: Text(
-                          'Welcome ${users[0].username}',
+                              color: Color(0x805C892A),
+                              child: InkWell(
+                                splashColor: Colors.blue.withAlpha(30),
+                                onTap: () {
+                                  print('Card tapped.');
+                                },
+                                child: Column(
+                                  children: <Widget>[
+                                    Container(
+                                      color: Colors.yellow,
+                                    //  width: 300,
+                                      height: 100,
+                                ),
+                                    Container(
+                                      width: 300,
+                                      height: 100,
+//                                  child: Column(
+//                                    crossAxisAlignment: CrossAxisAlignment.stretch,
+//
+//                                    children: <Widget>[
+//                                     Container(
+//                                       //constraints: BoxConstraints(m),
+//                                       //width: 300,
+//                                       height: 40,
+//                                       color: Colors.red,
+//                                     )
+//                                    ],
+//                                  ),
+                                    ),
+                                  ],
+                                ),
+                              )),
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 20.0),
-                        child: Text(Provider.of<User>(context).id),
-                      ),
+                      ],
+                    ),
 
-
+                    Card(
+                        color: Color(0x80E9D0A0),
+                        child: InkWell(
+                          splashColor: Colors.blue.withAlpha(30),
+                          onTap: () {
+                            print('Card tapped.');
+                          },
+                          child: Container(
+                            width: 300,
+                            height: 100,
+                            child: Text('A card that can be tapped'),
+                          ),
+                        )),
+                    Card(
+                        color: Color(0x8078A7F7),
+                        child: InkWell(
+                          splashColor: Colors.blue.withAlpha(30),
+                          onTap: () {
+                            print('Card tapped.');
+                          },
+                          child: Container(
+                            width: 300,
+                            height: 100,
+                            child: Text('A card that can be tapped'),
+                          ),
+                        ))
 
 //                      Align(
 //                        alignment: Alignment.bottomRight,
@@ -65,11 +128,9 @@ class HomeView extends StatelessWidget {
 //                          onPressed: () {},
 //                        ),
 //                      )
-                      // Expanded(child: getPostsUi(model.posts)),
-                    ],
-
-
-                  )),
+                    // Expanded(child: getPostsUi(model.posts)),
+                  ],
+                )),
     );
   }
 
