@@ -39,5 +39,16 @@ class DatabaseService {
       'category': post.category
     });
   }
-  
+
+  List<Post> _postListFromSnapshot(QuerySnapshot snapshot) {
+    return snapshot.documents.map((doc) {
+      return Post(id: doc.documentID, userId: doc.data['userId'], body: doc.data['body'], category: doc.data['category']);
+    }).toList();
+  }
+
+  Stream<List<Post>> get posts  {
+    return postsCollection.snapshots().map(_postListFromSnapshot);
+  }
+
+
 }

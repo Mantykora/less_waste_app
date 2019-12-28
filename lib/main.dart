@@ -6,6 +6,7 @@ import 'package:less_waste_app/ui/views/login_view.dart';
 import 'package:less_waste_app/ui/views/wrapper.dart';
 import 'package:provider/provider.dart';
 
+import 'core/models/post.dart';
 import 'core/models/user.dart';
 import 'core/models/user_data.dart';
 import 'core/services/auth.dart';
@@ -28,6 +29,9 @@ class MyApp extends StatelessWidget {
         ),
         StreamProvider<List<UserData>>.value(
           value: DatabaseService().users,
+        ),
+        StreamProvider<List<Post>>.value(
+          value: DatabaseService().posts,
         )
       ],
       child: MaterialApp(

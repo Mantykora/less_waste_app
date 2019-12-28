@@ -24,7 +24,7 @@ class PostView extends StatelessWidget {
               style: TextStyle(fontSize: 9.0),
             ),
             Text(post.body),
-            Comments(post.id)
+           // Comments(post.id)
           ],
         ),
       ),

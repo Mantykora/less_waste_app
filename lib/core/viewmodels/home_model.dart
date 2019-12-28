@@ -8,15 +8,16 @@ import '../../service_locator.dart';
 import 'base_model.dart';
 
 class HomeModel extends BaseModel {
-  Api _api = locator<Api>();
+ // Api _api = locator<Api>();
   List<Post> posts;
 
   final AuthService _authenticationService = locator<AuthService>();
+  final DatabaseService database = DatabaseService();
 
-  Future getPosts(int userId) async {
-    setState(ViewState.Busy);
-    posts = await _api.getPostsForUser(userId);
-    setState(ViewState.Idle);
+ Stream<List<Post>> getPosts()  {
+    //setState(ViewState.Busy);
+      database.posts;
+   // setState(ViewState.Idle);
   }
 
   Future logout() async {
@@ -27,6 +28,6 @@ class HomeModel extends BaseModel {
 
   Future addPostToDatabase(Post post) async {
     setState(ViewState.Busy);
-    await DatabaseService().updatePost(post);
+    await database.updatePost(post);
     setState(ViewState.Idle);
   }}

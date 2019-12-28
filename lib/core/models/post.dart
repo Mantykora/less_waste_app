@@ -1,6 +1,6 @@
 class Post {
   String userId;
-  int id;
+  String id;
   String body;
   int category;
 

@@ -19,8 +19,10 @@ class HomeView extends StatelessWidget {
 
     final users = Provider.of<List<UserData>>(context);
 
+    var posts = Provider.of<List<Post>>(context);
+
     return BaseView<HomeModel>(
-      //onModelReady: (model) => model.getPosts(Provider.of<User>(context).id),
+      onModelReady: (model) => model.getPosts(),
       builder: (context, model, child) => Scaffold(
           appBar: AppBar(
             title: Text('Home'),
@@ -35,7 +37,7 @@ class HomeView extends StatelessWidget {
           floatingActionButton: FloatingActionButton(
             child: Icon(Icons.add),
             onPressed: () {
-              model.addPostToDatabase(Post(userId: user.id, id: 5, body: 'bla', category: 3));
+              model.addPostToDatabase(Post(userId: user.id, id: '5', body: 'bla', category: 3));
             },
           ),
           // backgroundColor: Color(0xff5C892A),
@@ -59,18 +61,24 @@ class HomeView extends StatelessWidget {
 
 
 
-                    // Expanded(child: getPostsUi(model.posts)),
+                     Expanded(child: getPostsUi(posts),)
                   ],
                 )),
     );
   }
 
   Widget getPostsUi(List<Post> posts) => ListView.builder(
-      itemCount: posts.length,
+      itemCount: posts.isNotEmpty ? posts.length : 0,
       itemBuilder: (context, index) => PostListItem(
-            post: posts[index],
-            onTap: () {
-              Navigator.pushNamed(context, '/post', arguments: posts[index]);
-            },
-          ));
+        post: posts[index],
+        onTap: () {
+
+        },
+      )
+
+
+
+
+
+  );
 }
