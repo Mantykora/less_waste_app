@@ -34,7 +34,9 @@ class HomeView extends StatelessWidget {
           ),
           floatingActionButton: FloatingActionButton(
             child: Icon(Icons.add),
-            onPressed: () {},
+            onPressed: () {
+              model.addPostToDatabase(Post(userId: user.id, id: 5, body: 'bla', category: 3));
+            },
           ),
           // backgroundColor: Color(0xff5C892A),
           body: model.state == ViewState.Busy
@@ -55,7 +57,7 @@ class HomeView extends StatelessWidget {
 //                    ),
 
 
-                  
+
 
                     // Expanded(child: getPostsUi(model.posts)),
                   ],

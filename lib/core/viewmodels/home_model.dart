@@ -2,6 +2,7 @@ import 'package:less_waste_app/core/enums/viewstate.dart';
 import 'package:less_waste_app/core/models/post.dart';
 import 'package:less_waste_app/core/services/api.dart';
 import 'package:less_waste_app/core/services/auth.dart';
+import 'package:less_waste_app/core/services/database.dart';
 
 import '../../service_locator.dart';
 import 'base_model.dart';
@@ -23,4 +24,9 @@ class HomeModel extends BaseModel {
     await _authenticationService.signOut();
     setState(ViewState.Idle);
   }
-}
+
+  Future addPostToDatabase(Post post) async {
+    setState(ViewState.Busy);
+    await DatabaseService().updatePost(post);
+    setState(ViewState.Idle);
+  }}
