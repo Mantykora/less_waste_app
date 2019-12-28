@@ -18,7 +18,7 @@ class PostView extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text(post.title),
+           // Text(post.title),
             Text(
               'by ',
               style: TextStyle(fontSize: 9.0),

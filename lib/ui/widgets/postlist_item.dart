@@ -9,23 +9,52 @@ class PostListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 20.0, vertical: 15.0),
-        padding: EdgeInsets.all(10.0),
-        decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(5.0), boxShadow: [BoxShadow(blurRadius: 3.0, offset: Offset(0.0, 2.0), color: Color.fromARGB(80, 0, 0, 0))]),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text(
-              post.title,
-              style: TextStyle(fontWeight: FontWeight.w900, fontSize: 16.0),
-            ),
-            Text(post.body, maxLines: 2, overflow: TextOverflow.ellipsis)
-          ],
+    return       Row(
+      children: <Widget>[
+        Expanded(
+          child: Card(
+            // color: Color(0x805C892A),
+              child: InkWell(
+                splashColor: Colors.blue.withAlpha(30),
+                onTap: () {
+                  print('Card tapped.');
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Container(
+                        child: Container(
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                              Padding(
+                                padding: const EdgeInsets.only(right: 8.0, bottom: 8.0),
+                                child: Icon(Icons.fastfood),
+                              ),
+                              Text(
+                                'Żywność',
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Text(
+                          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8.0),
+                        child: Row(
+                          children: <Widget>[Text('by '), Text('Piotruś '), Icon(Icons.star)],
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              )),
         ),
-      ),
+      ],
     );
   }
 }
