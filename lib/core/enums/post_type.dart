@@ -1,0 +1,1 @@
+enum PostType { food, cleaning, beauty, clothes, others }

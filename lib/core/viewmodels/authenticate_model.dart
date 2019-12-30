@@ -14,14 +14,12 @@ class AuthenticateModel extends BaseModel {
 
   String errorMessage;
 
-
   void toggleView() {
     setState(ViewState.Busy);
     isSignInView = !isSignInView;
     errorMessage = null;
     setState(ViewState.Idle);
   }
-
 
   Future login(String email, String password) async {
     setState(ViewState.Busy);
@@ -32,7 +30,11 @@ class AuthenticateModel extends BaseModel {
 //      return false;
 //    }
 
-    bool isValidated =  await validateCredentials(null, email, password,);
+    bool isValidated = await validateCredentials(
+      null,
+      email,
+      password,
+    );
     if (!isValidated) return null;
 
     var response = await _authenticationService.signIn(email, password);
@@ -48,10 +50,18 @@ class AuthenticateModel extends BaseModel {
     //return success;
   }
 
-  Future register(String login, String email, String password, ) async {
+  Future register(
+    String login,
+    String email,
+    String password,
+  ) async {
     setState(ViewState.Busy);
     validateCredentials(email, password, login);
-    bool isValidated =  await validateCredentials(null, email, password,);
+    bool isValidated = await validateCredentials(
+      null,
+      email,
+      password,
+    );
     if (!isValidated) return null;
 
     var response = await _authenticationService.register(login, email, password);
@@ -63,13 +73,16 @@ class AuthenticateModel extends BaseModel {
     }
 
     isSignInView = true;
-
   }
 
-  Future<bool> validateCredentials(String login, String email, String password,) async {
+  Future<bool> validateCredentials(
+    String login,
+    String email,
+    String password,
+  ) async {
     bool emailValid = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(email);
 
-    if (password.isEmpty || email.isEmpty ) {
+    if (password.isEmpty || email.isEmpty) {
       errorMessage = 'All fields are required';
       setState(ViewState.Idle);
       return false;
@@ -85,5 +98,4 @@ class AuthenticateModel extends BaseModel {
 
     return true;
   }
-
 }

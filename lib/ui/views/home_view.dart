@@ -37,7 +37,8 @@ class HomeView extends StatelessWidget {
           floatingActionButton: FloatingActionButton(
             child: Icon(Icons.add),
             onPressed: () {
-              model.addPostToDatabase(Post(userId: user.id, id: '5', body: 'bla', category: 3));
+              Navigator.pushNamed(context, '/create_post');
+              //model.addPostToDatabase(Post(userId: user.id, id: '5', body: 'bla', category: 3));
             },
           ),
           // backgroundColor: Color(0xff5C892A),

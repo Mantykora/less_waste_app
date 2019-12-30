@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:less_waste_app/core/models/post.dart';
+import 'package:less_waste_app/ui/views/create_post_view.dart';
 import 'package:less_waste_app/ui/views/home_view.dart';
 import 'package:less_waste_app/ui/views/login_view.dart';
 import 'package:less_waste_app/ui/views/post_view.dart';
@@ -20,6 +21,8 @@ class Router {
         return MaterialPageRoute(builder: (_) => PostView(post: post));
       case '/wrapper':
         return MaterialPageRoute(builder: (_) => Wrapper());
+      case '/create_post':
+        return MaterialPageRoute(builder: (_) => CreatePostView());
       default:
         return MaterialPageRoute(
             builder: (_) => Scaffold(
