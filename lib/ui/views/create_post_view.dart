@@ -6,6 +6,7 @@ import 'package:less_waste_app/core/models/post.dart';
 import 'package:less_waste_app/core/models/user.dart';
 import 'package:less_waste_app/core/models/user_data.dart';
 import 'package:less_waste_app/core/services/database.dart';
+import 'package:less_waste_app/core/viewmodels/create_post_model.dart';
 import 'package:less_waste_app/core/viewmodels/home_model.dart';
 import 'package:less_waste_app/ui/widgets/postlist_item.dart';
 import 'package:provider/provider.dart';
@@ -27,20 +28,20 @@ class CreatePostView extends StatelessWidget {
     PostType _postType = PostType.food;
 
 
-    return BaseView<HomeModel>(
-      onModelReady: (model) => model.getPosts(),
+    return BaseView<CreatePostModel>(
+      //onModelReady: (model) => model.getPosts(),
       builder: (context, model, child) => Scaffold(
         resizeToAvoidBottomInset: false,
 
         appBar: AppBar(
             title: Text('Create a post'),
-            actions: <Widget>[
-              IconButton(
-                  onPressed: () async {
-                    await model.logout();
-                  },
-                  icon: Icon(Icons.vpn_key))
-            ],
+//            actions: <Widget>[
+//              IconButton(
+//                  onPressed: () async {
+//                    await model.logout();
+//                  },
+//                  icon: Icon(Icons.vpn_key))
+//            ],
           ),
           floatingActionButton: FloatingActionButton(
             child: Icon(Icons.check),
@@ -68,7 +69,7 @@ class CreatePostView extends StatelessWidget {
                   value: PostType.food,
                   groupValue: _postType,
                   onChanged: (value) {
-
+                    _postType = model.onRadioChange(_postType, value);
                   }
                 ),
               ),
@@ -77,7 +78,8 @@ class CreatePostView extends StatelessWidget {
                 leading: Radio(
                   value: PostType.cleaning,
                   groupValue: _postType,
-                  onChanged: (PostType value) {
+                  onChanged: (PostType value,) {
+                    _postType = model.onRadioChange(_postType, value);
                   }
                 ),
               ),
@@ -87,7 +89,7 @@ class CreatePostView extends StatelessWidget {
                     value: PostType.beauty,
                     groupValue: _postType,
                     onChanged: (value) {
-
+                      _postType = model.onRadioChange(_postType, value);
                     }
                 ),
               ),
@@ -97,7 +99,7 @@ class CreatePostView extends StatelessWidget {
                     value: PostType.clothes,
                     groupValue: _postType,
                     onChanged: (value) {
-
+                      _postType = model.onRadioChange(_postType, value);
                     }
                 ),
               ),
@@ -107,7 +109,7 @@ class CreatePostView extends StatelessWidget {
                     value: PostType.others,
                     groupValue: _postType,
                     onChanged: (value) {
-
+                      _postType = model.onRadioChange(_postType, value);
                     }
                 ),
               ),

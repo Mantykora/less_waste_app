@@ -1,3 +1,4 @@
+import 'package:less_waste_app/core/enums/post_type.dart';
 import 'package:less_waste_app/core/enums/viewstate.dart';
 import 'package:less_waste_app/core/models/comment.dart';
 import 'package:less_waste_app/core/models/post.dart';
@@ -16,6 +17,14 @@ class CreatePostModel extends BaseModel {
     setState(ViewState.Idle);
   }
 
+  PostType onRadioChange(PostType value, PostType second)  {
+    setState(ViewState.Busy);
+
+    value = second;
+    setState(ViewState.Idle);
+
+    return value;
+  }
 
 }
 
