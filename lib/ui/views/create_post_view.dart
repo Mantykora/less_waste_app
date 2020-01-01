@@ -46,8 +46,12 @@ class CreatePostView extends StatelessWidget {
           floatingActionButton: FloatingActionButton(
             child: Icon(Icons.check),
             onPressed: () {
-             // model.
-              //model.addPostToDatabase(Post(userId: user.id, id: '5', body: 'bla', category: 3));
+             var addPost = model.addPostToDatabase(Post(userId: user.id, body: controller.text, category: _postType.index));
+             if (addPost != null) {
+               Navigator.of(context).pop();
+             } else {
+               print('error');
+             }
             },
           ),
           // backgroundColor: Color(0xff5C892A),

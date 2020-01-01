@@ -13,7 +13,14 @@ class CreatePostModel extends BaseModel {
 
   Future addPostToDatabase(Post post) async {
     setState(ViewState.Busy);
-    await database.updatePost(post);
+    await database.updatePost(post).then((onValue) {
+      print('post added to database');
+    })
+      .catchError((onError) {
+      print('error adding post');
+      return null;
+    });
+
     setState(ViewState.Idle);
   }
 
