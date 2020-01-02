@@ -1,14 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:less_waste_app/core/models/post.dart';
+import 'package:less_waste_app/core/models/user_data.dart';
 
 class PostListItem extends StatelessWidget {
   final Post post;
-  final Function onTap;
+ // final Function onTap;
+  final UserData userData;
 
-  const PostListItem({this.post, this.onTap});
+  final Function getUserData;
+
+
+  PostListItem({this.post, this.userData, this.getUserData});
+
 
   @override
   Widget build(BuildContext context) {
+
+    List<String> categories = [ "Żywność", "Środki czystości", "Uroda", "Ubrania", "Inne" ];
+    List assets = [Icons.fastfood, Icons.local_laundry_service, Icons.face, Icons.accessibility, Icons.autorenew];
+
     return       Row(
       children: <Widget>[
         Expanded(
@@ -31,10 +41,11 @@ class PostListItem extends StatelessWidget {
                             children: <Widget>[
                               Padding(
                                 padding: const EdgeInsets.only(right: 8.0, bottom: 8.0),
-                                child: Icon(Icons.fastfood),
+                                child: Icon(assets[post.category]),
                               ),
                               Text(
-                                'Żywność',
+                                categories[post.category],
+                                //'Żywność',
                                 style: TextStyle(fontWeight: FontWeight.bold),
                               ),
                             ],
@@ -42,11 +53,13 @@ class PostListItem extends StatelessWidget {
                         ),
                       ),
                       Text(
-                          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'),
+                           post.body),
+                         // 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'),
                       Padding(
                         padding: const EdgeInsets.only(top: 8.0),
                         child: Row(
-                          children: <Widget>[Text('by '), Text('Piotruś '), Icon(Icons.star)],
+                          children: <Widget>[Text('by '), Text(userData.username),
+                            Icon(Icons.star)],
                         ),
                       )
                     ],
