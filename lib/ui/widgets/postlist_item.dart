@@ -5,12 +5,12 @@ import 'package:less_waste_app/core/models/user_data.dart';
 class PostListItem extends StatelessWidget {
   final Post post;
  // final Function onTap;
-  final UserData userData;
+  final List<UserData> users;
 
   final Function getUserData;
 
 
-  PostListItem({this.post, this.userData, this.getUserData});
+  PostListItem({this.post, this.users, this.getUserData});
 
 
   @override
@@ -18,6 +18,13 @@ class PostListItem extends StatelessWidget {
 
     List<String> categories = [ "Żywność", "Środki czystości", "Uroda", "Ubrania", "Inne" ];
     List assets = [Icons.fastfood, Icons.local_laundry_service, Icons.face, Icons.accessibility, Icons.autorenew];
+
+
+    String user = users.firstWhere((e) => e.id == post.userId).username;
+    print(user);
+
+    print(users[0].id);
+    print(post.userId.toString());
 
     return       Row(
       children: <Widget>[
@@ -58,7 +65,10 @@ class PostListItem extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(top: 8.0),
                         child: Row(
-                          children: <Widget>[Text('by '), Text(userData.username),
+                          children: <Widget>[Text('by '),
+
+                            Text
+                              (user),
                             Icon(Icons.star)],
                         ),
                       )

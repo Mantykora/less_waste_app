@@ -13,7 +13,8 @@ class DatabaseService {
 
   Future updateUserData(String login) async {
     return await userDataCollection.document(userId).setData({
-      'login': login
+      'login': login,
+     // 'userId': userId
     });
   }
 

@@ -12,10 +12,10 @@ import 'package:provider/provider.dart';
 import 'base_view.dart';
 
 class HomeView extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
-    print(user.id);
 
     final users = Provider.of<List<UserData>>(context);
 
@@ -38,7 +38,6 @@ class HomeView extends StatelessWidget {
             child: Icon(Icons.add),
             onPressed: () {
               Navigator.pushNamed(context, '/create_post');
-              //model.addPostToDatabase(Post(userId: user.id, id: '5', body: 'bla', category: 3));
             },
           ),
           // backgroundColor: Color(0xff5C892A),
@@ -60,26 +59,22 @@ class HomeView extends StatelessWidget {
 //                    ),
 
 
-
-
-                     Expanded(child: getPostsUi(posts),)
+                     Expanded(child: getPostsUi(posts, users))
                   ],
                 )),
     );
   }
 
-  Widget getPostsUi(List<Post> posts) => ListView.builder(
+  Widget getPostsUi(List<Post> posts, List<UserData> users) => ListView.builder(
       itemCount: posts.isNotEmpty ? posts.length : 0,
       itemBuilder: (context, index) => PostListItem(
         post: posts[index],
-        onTap: () {
+        users: users
 
-        },
+//        onTap: () {
+//
+//        },
       )
-
-
-
-
 
   );
 }
