@@ -66,7 +66,7 @@ class HomeView extends StatelessWidget {
   }
 
   Widget getPostsUi(List<Post> posts, List<UserData> users) => ListView.builder(
-      itemCount: posts.isNotEmpty ? posts.length : 0,
+      itemCount: posts != null && posts.isNotEmpty ? posts.length : 0,
       itemBuilder: (context, index) => PostListItem(
         post: posts[index],
         users: users
