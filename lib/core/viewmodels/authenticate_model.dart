@@ -31,9 +31,12 @@ class AuthenticateModel extends BaseModel {
 //    }
 
     bool isValidated = await validateCredentials(
-      null,
-      email,
-      password,
+      login: null,
+      email: email,
+      password: password
+//      null,
+//      email,
+//      password,
     );
     if (!isValidated) return null;
 
@@ -56,11 +59,21 @@ class AuthenticateModel extends BaseModel {
     String password,
   ) async {
     setState(ViewState.Busy);
-    validateCredentials(email, password, login);
+    validateCredentials(
+        login: login,
+        email: email,
+        password: password
+
+    );
+
     bool isValidated = await validateCredentials(
-      null,
-      email,
-      password,
+      login: login,
+       email: email,
+       password: password
+
+//      null,
+//      email,
+ //     password,
     );
     if (!isValidated) return null;
 
@@ -75,11 +88,11 @@ class AuthenticateModel extends BaseModel {
     isSignInView = true;
   }
 
-  Future<bool> validateCredentials(
+  Future<bool> validateCredentials({
     String login,
     String email,
     String password,
-  ) async {
+  }) async {
     bool emailValid = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(email);
 
     if (password.isEmpty || email.isEmpty) {
