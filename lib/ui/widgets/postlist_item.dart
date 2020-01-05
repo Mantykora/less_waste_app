@@ -4,13 +4,13 @@ import 'package:less_waste_app/core/models/user_data.dart';
 
 class PostListItem extends StatelessWidget {
   final Post post;
- // final Function onTap;
+  final Function onTap;
   final List<UserData> users;
 
   final Function getUserData;
 
 
-  PostListItem({this.post, this.users, this.getUserData});
+  PostListItem({this.post, this.users, this.getUserData, this.onTap});
 
 
   @override
@@ -33,9 +33,7 @@ class PostListItem extends StatelessWidget {
             // color: Color(0x805C892A),
               child: InkWell(
                 splashColor: Colors.blue.withAlpha(30),
-                onTap: () {
-                  print('Card tapped.');
-                },
+                onTap: onTap,
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Column(
