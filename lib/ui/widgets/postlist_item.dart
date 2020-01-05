@@ -65,13 +65,27 @@ class PostListItem extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(top: 8.0),
                         child: Row(
-                          children: <Widget>[Text('by '),
+
+                          children: <Widget>[Text('autor: '),
 
                             Text
                               (user),
-                            Icon(Icons.star)],
+                           ],
                         ),
-                      )
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 16.0),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            Text("4"),
+                            Icon(Icons.star_border),
+                            Spacer(),
+                            Text("4"),
+                            Text(" komentarze")
+                          ],
+                        ),
+                      ),
                     ],
                   ),
                 ),
