@@ -1,4 +1,6 @@
 
+
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:less_waste_app/core/models/post.dart';
 import 'package:less_waste_app/core/models/user_data.dart';
@@ -29,13 +31,16 @@ class DatabaseService {
   }
   
   Future updatePost(Post post) async {
-    return await postsCollection.document().setData({
+    var docdoc =  postsCollection.document();
+    var docdocUid = docdoc.documentID;
+    print(docdocUid);
+     docdoc.setData({
 //    int userId;
 //    int id;
 //    String body;
 //    int category;
       'userId': post.userId,
-      'id': post.id,
+      'id': docdocUid,
       'body': post.body,
       'category': post.category
     });
@@ -51,5 +56,10 @@ class DatabaseService {
     return postsCollection.snapshots().map(_postListFromSnapshot);
   }
 
+
+
+//  Future updateComment(Comment comment) async {
+//    return await postsCollection.document().setData(data)
+//  }
 
 }
