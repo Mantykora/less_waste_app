@@ -11,27 +11,6 @@ import 'base_model.dart';
 class PostModel extends BaseModel {
   final DatabaseService database = DatabaseService();
 
-  Future addPostToDatabase(Post post) async {
-    setState(ViewState.Busy);
-    await database.updatePost(post).then((onValue) {
-      print('post added to database');
-    }).catchError((onError) {
-      print('error adding post');
-      return null;
-    });
-
-    setState(ViewState.Idle);
-  }
-
-  PostType onRadioChange(PostType value, PostType second) {
-    setState(ViewState.Busy);
-
-    value = second;
-    setState(ViewState.Idle);
-
-    return value;
-  }
-
   Future addCommentToDatabase(Comment comment, String postId) async {
     setState(ViewState.Busy);
     await database.updateComment(comment, postId).then((onValue) {
@@ -40,6 +19,13 @@ class PostModel extends BaseModel {
       print('error adding comment');
       return null;
     });
+    setState(ViewState.Idle);
+  }
+
+
+  Stream<List<Comment>> getComments(String postId)  {
+    setState(ViewState.Busy);
+    database.getComments(postId);
     setState(ViewState.Idle);
   }
 }

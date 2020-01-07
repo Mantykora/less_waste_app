@@ -1,17 +1,17 @@
 import 'package:less_waste_app/core/enums/viewstate.dart';
 import 'package:less_waste_app/core/models/comment.dart';
-import 'package:less_waste_app/core/services/api.dart';
+import 'package:less_waste_app/core/services/database.dart';
 
-import '../../service_locator.dart';
 import 'base_model.dart';
 
 class CommentsModel extends BaseModel {
-  Api _api = locator<Api>();
-  List<Comment> comments;
 
-  Future fetchComments(int postId) async {
+  List<Comment> comments;
+  final DatabaseService database = DatabaseService();
+
+  Stream<List<Comment>> getComments(String postId)  {
     setState(ViewState.Busy);
-    comments = await _api.getCommentsForPost(postId);
+    database.getComments(postId);
     setState(ViewState.Idle);
   }
 }

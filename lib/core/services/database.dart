@@ -57,4 +57,15 @@ class DatabaseService {
   Future updateComment(Comment comment, String postId) async {
     return await postsCollection.document(postId).collection('comments').document().setData({'body': comment.body});
   }
+
+  List<Comment> _commentsListFromSnapshot(QuerySnapshot snapshot) {
+    return snapshot.documents.map((doc) {
+      return Comment(body: doc.data['body']);
+    }).toList();
+  }
+
+  Stream<List<Comment>> getComments(String postId) {
+
+    return postsCollection.document(postId).collection('comments').snapshots().map(_commentsListFromSnapshot);
+  }
 }

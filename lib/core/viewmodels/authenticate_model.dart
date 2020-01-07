@@ -23,20 +23,11 @@ class AuthenticateModel extends BaseModel {
 
   Future login(String email, String password) async {
     setState(ViewState.Busy);
-    //var userId = int.tryParse(userIdText);
-//    if (userId == null) {
-    //errorMessage = 'Value entered is not a number';
-//      setState(ViewState.Idle);
-//      return false;
-//    }
 
     bool isValidated = await validateCredentials(
       login: null,
       email: email,
       password: password
-//      null,
-//      email,
-//      password,
     );
     if (!isValidated) return null;
 
@@ -47,10 +38,8 @@ class AuthenticateModel extends BaseModel {
       setState(ViewState.Idle);
       return null;
     }
-    //return response;
 
     setState(ViewState.Idle);
-    //return success;
   }
 
   Future register(
@@ -70,10 +59,6 @@ class AuthenticateModel extends BaseModel {
       login: login,
        email: email,
        password: password
-
-//      null,
-//      email,
- //     password,
     );
     if (!isValidated) return null;
 

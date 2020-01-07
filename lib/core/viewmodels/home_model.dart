@@ -17,7 +17,7 @@ class HomeModel extends BaseModel {
 
  Stream<List<Post>> getPosts()  {
     setState(ViewState.Busy);
-      database.posts;
+    database.posts;
     setState(ViewState.Idle);
   }
 

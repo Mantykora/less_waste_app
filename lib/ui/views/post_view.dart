@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:less_waste_app/core/models/comment.dart';
 import 'package:less_waste_app/core/models/post.dart';
 import 'package:less_waste_app/core/models/user.dart';
+import 'package:less_waste_app/core/services/database.dart';
 import 'package:less_waste_app/core/viewmodels/post_model.dart';
 import 'package:less_waste_app/ui/widgets/comments.dart';
 import 'package:provider/provider.dart';
@@ -13,18 +14,15 @@ class PostView extends StatelessWidget {
 
   PostView({this.post});
 
+  final TextEditingController _commentController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     List<String> categories = ["Żywność", "Środki czystości", "Uroda", "Ubrania", "Inne"];
     List assets = [Icons.fastfood, Icons.local_laundry_service, Icons.face, Icons.accessibility, Icons.autorenew];
 
-    //String user = users.firstWhere((e) => e.id == post.userId).username;
-    //print(user);
-
-    //print(users[0].id);
-    print(post.userId.toString());
-
     return BaseView<PostModel>(
+      // onModelReady: (model) { comments =  model.getComments(post.id); },
       builder: (context, model, child) => Scaffold(
         appBar: AppBar(
           title: Text('Post'),
@@ -69,16 +67,30 @@ class PostView extends StatelessWidget {
               ),
             ),
             TextField(
+                controller: _commentController,
                 decoration: InputDecoration(
                     suffixIcon: IconButton(
-              icon: Icon(Icons.send),
-              onPressed: () {
-                model.addCommentToDatabase(Comment(body: "witaj"), post.id);
-              },
-            )))
+                  icon: Icon(Icons.send),
+                  onPressed: () {
+                    model.addCommentToDatabase(Comment(body: _commentController.text), post.id);
+                  },
+                ))),
+            getCommentsUI(post.id, DatabaseService().getComments(post.id))
           ]),
         ),
       ),
     );
   }
+}
+
+Widget getCommentsUI(String postId, Stream stream) {
+  return StreamBuilder<List<Comment>>(
+    stream: stream,
+    builder: (context, snapshot) {
+      return Comments(
+        postId: postId,
+        comments: snapshot.data,
+      );
+    },
+  );
 }

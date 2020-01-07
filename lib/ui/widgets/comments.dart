@@ -1,24 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:less_waste_app/core/enums/viewstate.dart';
 import 'package:less_waste_app/core/models/comment.dart';
+import 'package:less_waste_app/core/models/user_data.dart';
 import 'package:less_waste_app/core/viewmodels/comments_model.dart';
+import 'package:less_waste_app/core/viewmodels/post_model.dart';
 import 'package:less_waste_app/ui/views/base_view.dart';
+import 'package:provider/provider.dart';
 
 class Comments extends StatelessWidget {
-  final int postId;
+  final String postId;
+  final List<Comment> comments;
 
-  Comments(this.postId);
+  Comments({this.postId, this.comments});
 
   @override
   Widget build(BuildContext context) {
-    return BaseView<CommentsModel>(
-        onModelReady: (model) => model.fetchComments(postId),
+    return BaseView<PostModel>(
         builder: (context, model, child) => model.state == ViewState.Busy
             ? Center(child: CircularProgressIndicator())
             : Expanded(
-                child: ListView(
-                  children: model.comments.map((comment) => CommentItem(comment)).toList(),
-                ),
+                child: ListView.builder(
+                    itemCount: comments != null && comments.isNotEmpty ? comments.length : 0,
+                    itemBuilder: (context, index) => CommentItem(
+                          comment: comments[index],
+                        )),
               ));
   }
 }
@@ -27,7 +32,7 @@ class Comments extends StatelessWidget {
 class CommentItem extends StatelessWidget {
   final Comment comment;
 
-  const CommentItem(this.comment);
+  const CommentItem({this.comment});
 
   @override
   Widget build(BuildContext context) {
@@ -38,10 +43,10 @@ class CommentItem extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text(
-            comment.name,
-            style: TextStyle(fontWeight: FontWeight.bold),
-          ),
+//          Text(
+//            comment.name,
+//            style: TextStyle(fontWeight: FontWeight.bold),
+//          ),
           Text(comment.body),
         ],
       ),
