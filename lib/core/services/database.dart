@@ -1,14 +1,12 @@
-
-
-
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:less_waste_app/core/models/comment.dart';
 import 'package:less_waste_app/core/models/post.dart';
 import 'package:less_waste_app/core/models/user_data.dart';
 
 class DatabaseService {
-
   final String userId;
-  DatabaseService ({this.userId});
+
+  DatabaseService({this.userId});
 
   final CollectionReference userDataCollection = Firestore.instance.collection('userData');
   final CollectionReference postsCollection = Firestore.instance.collection('posts');
@@ -16,7 +14,7 @@ class DatabaseService {
   Future updateUserData(String login) async {
     return await userDataCollection.document(userId).setData({
       'login': login,
-     // 'userId': userId
+      // 'userId': userId
     });
   }
 
@@ -26,15 +24,15 @@ class DatabaseService {
     }).toList();
   }
 
-  Stream<List<UserData>> get users  {
+  Stream<List<UserData>> get users {
     return userDataCollection.snapshots().map(_userListFromSnapshot);
   }
-  
+
   Future updatePost(Post post) async {
-    var docdoc =  postsCollection.document();
+    var docdoc = postsCollection.document();
     var docdocUid = docdoc.documentID;
     print(docdocUid);
-     docdoc.setData({
+    docdoc.setData({
 //    int userId;
 //    int id;
 //    String body;
@@ -52,14 +50,11 @@ class DatabaseService {
     }).toList();
   }
 
-  Stream<List<Post>> get posts  {
+  Stream<List<Post>> get posts {
     return postsCollection.snapshots().map(_postListFromSnapshot);
   }
 
-
-
-//  Future updateComment(Comment comment) async {
-//    return await postsCollection.document().setData(data)
-//  }
-
+  Future updateComment(Comment comment, String postId) async {
+    return await postsCollection.document(postId).collection('comments').document().setData({'body': comment.body});
+  }
 }
