@@ -41,6 +41,7 @@ class DatabaseService {
       'id': docdocUid,
       'body': post.body,
       'category': post.category
+
     });
   }
 
@@ -55,17 +56,23 @@ class DatabaseService {
   }
 
   Future updateComment(Comment comment, String postId) async {
-    return await postsCollection.document(postId).collection('comments').document().setData({'body': comment.body});
+    return await postsCollection.document(postId).collection('comments').document().setData({
+      'body': comment.body,
+      'time': Timestamp.now()
+    });
   }
 
   List<Comment> _commentsListFromSnapshot(QuerySnapshot snapshot) {
-    return snapshot.documents.map((doc) {
+    return snapshot.documents
+        .map((doc) {
       return Comment(body: doc.data['body']);
     }).toList();
   }
 
   Stream<List<Comment>> getComments(String postId) {
 
-    return postsCollection.document(postId).collection('comments').snapshots().map(_commentsListFromSnapshot);
+    return postsCollection.document(postId).collection('comments')
+         .orderBy("time", descending: true)
+        .snapshots().map(_commentsListFromSnapshot);
   }
 }

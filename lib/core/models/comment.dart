@@ -4,8 +4,9 @@ class Comment {
   String name;
   String email;
   String body;
+  String time;
 
-  Comment({this.postId, this.id, this.name, this.email, this.body});
+  Comment({this.postId, this.id, this.name, this.email, this.body, this.time});
 
   Comment.fromJson(Map<String, dynamic> json) {
     postId = json['postId'];
@@ -13,6 +14,7 @@ class Comment {
     name = json['name'];
     email = json['email'];
     body = json['body'];
+    time = json['time'];
   }
 
   Map<String, dynamic> toJson() {
@@ -22,6 +24,7 @@ class Comment {
     data['name'] = this.name;
     data['email'] = this.email;
     data['body'] = this.body;
+    data['time'] = this.time;
     return data;
   }
 }
