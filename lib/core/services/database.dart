@@ -40,14 +40,30 @@ class DatabaseService {
       'userId': post.userId,
       'id': docdocUid,
       'body': post.body,
-      'category': post.category
+      'category': post.category,
+      'count': post.commentsCount
 
+    });
+  }
+
+
+
+  Future updatePostById(String id, int count) async {
+    return postsCollection.document(id)
+        .updateData({
+      'count': count
+    });
+  }
+
+  Stream<Post> getPostById(String id) {
+    return postsCollection.document(id).snapshots().map((doc) {
+      return Post(id: doc.documentID, userId: doc.data['userId'], body: doc.data['body'], category: doc.data['category'], commentsCount: doc.data['count']);
     });
   }
 
   List<Post> _postListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.documents.map((doc) {
-      return Post(id: doc.documentID, userId: doc.data['userId'], body: doc.data['body'], category: doc.data['category']);
+      return Post(id: doc.documentID, userId: doc.data['userId'], body: doc.data['body'], category: doc.data['category'], commentsCount: doc.data['count']);
     }).toList();
   }
 
@@ -58,7 +74,8 @@ class DatabaseService {
   Future updateComment(Comment comment, String postId) async {
     return await postsCollection.document(postId).collection('comments').document().setData({
       'body': comment.body,
-      'time': Timestamp.now()
+      'time': Timestamp.now(),
+
     });
   }
 
@@ -70,7 +87,6 @@ class DatabaseService {
   }
 
   Stream<List<Comment>> getComments(String postId) {
-
     return postsCollection.document(postId).collection('comments')
          .orderBy("time", descending: true)
         .snapshots().map(_commentsListFromSnapshot);

@@ -3,14 +3,16 @@ class Post {
   String id;
   String body;
   int category;
+  int commentsCount;
 
-  Post({this.userId, this.id, this.body, this.category});
+  Post({this.userId, this.id, this.body, this.category, this.commentsCount});
 
   Post.fromJson(Map<String, dynamic> json) {
     userId = json['userId'];
     id = json['id'];
     body = json['body'];
     category = json['category'];
+    commentsCount = json['commentsCount'];
   }
 
   Map<String, dynamic> toJson() {
@@ -19,6 +21,7 @@ class Post {
     data['id'] = this.id;
     data['body'] = this.body;
     data['category'] = this.category;
+    data['commentsCount'] = this.commentsCount;
     return data;
   }
 }
