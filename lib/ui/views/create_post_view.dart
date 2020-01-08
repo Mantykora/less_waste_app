@@ -1,14 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:less_waste_app/core/enums/post_type.dart';
-import 'package:less_waste_app/core/enums/viewstate.dart';
 import 'package:less_waste_app/core/models/post.dart';
 import 'package:less_waste_app/core/models/user.dart';
-import 'package:less_waste_app/core/models/user_data.dart';
-import 'package:less_waste_app/core/services/database.dart';
 import 'package:less_waste_app/core/viewmodels/create_post_model.dart';
-import 'package:less_waste_app/core/viewmodels/home_model.dart';
-import 'package:less_waste_app/ui/widgets/postlist_item.dart';
 import 'package:provider/provider.dart';
 
 import 'base_view.dart';
@@ -18,10 +12,6 @@ class CreatePostView extends StatelessWidget {
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
     print(user.id);
-
-    final users = Provider.of<List<UserData>>(context);
-
-    var posts = Provider.of<List<Post>>(context);
 
     TextEditingController controller = TextEditingController();
 

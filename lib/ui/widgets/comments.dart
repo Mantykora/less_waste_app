@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:less_waste_app/core/enums/viewstate.dart';
 import 'package:less_waste_app/core/models/comment.dart';
-import 'package:less_waste_app/core/models/user_data.dart';
-import 'package:less_waste_app/core/viewmodels/comments_model.dart';
 import 'package:less_waste_app/core/viewmodels/post_model.dart';
 import 'package:less_waste_app/ui/views/base_view.dart';
-import 'package:provider/provider.dart';
 
 class Comments extends StatelessWidget {
   final String postId;

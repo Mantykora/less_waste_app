@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:less_waste_app/core/enums/viewstate.dart';
-import 'package:less_waste_app/core/services/authentication_services.dart';
 import 'package:less_waste_app/core/viewmodels/authenticate_model.dart';
 import 'package:less_waste_app/ui/widgets/login_header.dart';
-import 'package:provider/provider.dart';
-import '../../service_locator.dart';
 import 'base_view.dart';
 
 class RegisterView extends StatefulWidget {
@@ -66,7 +63,11 @@ class _RegisterViewState extends State<RegisterView> {
                                     style: TextStyle(color: Colors.black),
                                   ),
                                   onPressed: () async {
-                                    var loginSuccess = await model.register(_loginController.text, _emailController.text, _passController.text, );
+                                    var loginSuccess = await model.register(
+                                      _loginController.text,
+                                      _emailController.text,
+                                      _passController.text,
+                                    );
 
                                     if (loginSuccess != null) {
                                       Navigator.pushNamed(context, '/home');

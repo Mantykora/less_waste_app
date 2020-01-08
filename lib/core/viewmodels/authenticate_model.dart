@@ -1,7 +1,5 @@
-import 'package:flutter/foundation.dart';
 import 'package:less_waste_app/core/enums/viewstate.dart';
 import 'package:less_waste_app/core/services/auth.dart';
-import 'package:less_waste_app/core/services/authentication_services.dart';
 
 import '../../service_locator.dart';
 import 'base_model.dart';
@@ -24,11 +22,7 @@ class AuthenticateModel extends BaseModel {
   Future login(String email, String password) async {
     setState(ViewState.Busy);
 
-    bool isValidated = await validateCredentials(
-      login: null,
-      email: email,
-      password: password
-    );
+    bool isValidated = await validateCredentials(login: null, email: email, password: password);
     if (!isValidated) return null;
 
     var response = await _authenticationService.signIn(email, password);
@@ -48,18 +42,9 @@ class AuthenticateModel extends BaseModel {
     String password,
   ) async {
     setState(ViewState.Busy);
-    validateCredentials(
-        login: login,
-        email: email,
-        password: password
+    validateCredentials(login: login, email: email, password: password);
 
-    );
-
-    bool isValidated = await validateCredentials(
-      login: login,
-       email: email,
-       password: password
-    );
+    bool isValidated = await validateCredentials(login: login, email: email, password: password);
     if (!isValidated) return null;
 
     var response = await _authenticationService.register(login, email, password);

@@ -3,8 +3,7 @@ class User {
 
   User({this.id});
 
-  User.initial()
-      : id = "0";
+  User.initial() : id = "0";
 
   User.fromJson(Map<String, dynamic> json) {
     id = json['id'];
