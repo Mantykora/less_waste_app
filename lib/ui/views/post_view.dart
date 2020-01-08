@@ -67,8 +67,8 @@ class PostView extends StatelessWidget {
                   padding: const EdgeInsets.only(top: 16.0, bottom: 8.0),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[Text("4"), Icon(Icons.star_border), Spacer(), Text(post.commentsCount == null ? "" : post.commentsCount.toString()), Text(
-                        getTextForCommentsCount(post.commentsCount))],
+                    children: <Widget>[Text("4"), Icon(Icons.star_border), Spacer(), Text(snapshot.data.commentsCount == null ? "" : snapshot.data.commentsCount.toString()), Text(
+                        getTextForCommentsCount(snapshot.data.commentsCount))],
                   ),
                 ),
                 TextField(
