@@ -3,6 +3,7 @@ import 'package:less_waste_app/core/models/comment.dart';
 import 'package:less_waste_app/core/models/post.dart';
 import 'package:less_waste_app/core/models/user.dart';
 import 'package:less_waste_app/core/services/database.dart';
+import 'package:less_waste_app/core/utils/get_text_for_comments.dart';
 import 'package:less_waste_app/core/viewmodels/post_model.dart';
 import 'package:less_waste_app/ui/widgets/comments.dart';
 import 'package:provider/provider.dart';
@@ -66,7 +67,8 @@ class PostView extends StatelessWidget {
                   padding: const EdgeInsets.only(top: 16.0, bottom: 8.0),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[Text("4"), Icon(Icons.star_border), Spacer(), Text("4"), Text(" komentarze")],
+                    children: <Widget>[Text("4"), Icon(Icons.star_border), Spacer(), Text(post.commentsCount == null ? "" : post.commentsCount.toString()), Text(
+                        getTextForCommentsCount(post.commentsCount))],
                   ),
                 ),
                 TextField(
@@ -75,7 +77,10 @@ class PostView extends StatelessWidget {
                         suffixIcon: IconButton(
                           icon: Icon(Icons.send),
                           onPressed: () {
-                            model.addCommentToDatabase(Comment(body: _commentController.text), post.id, snapshot.data.commentsCount);
+                           var success =  model.addCommentToDatabase(Comment(body: _commentController.text), post.id, snapshot.data.commentsCount);
+                           if (success != null) {
+                             _commentController.clear();
+                           }
                           },
                         ))),
                 getCommentsUI(post.id, DatabaseService().getComments(post.id))
@@ -100,3 +105,5 @@ Widget getCommentsUI(String postId, Stream stream) {
     },
   );
 }
+
+

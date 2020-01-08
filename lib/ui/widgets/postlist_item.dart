@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:less_waste_app/core/models/post.dart';
 import 'package:less_waste_app/core/models/user_data.dart';
+import 'package:less_waste_app/core/utils/get_text_for_comments.dart';
 
 class PostListItem extends StatelessWidget {
   final Post post;
@@ -8,7 +9,6 @@ class PostListItem extends StatelessWidget {
   final List<UserData> users;
 
   final Function getUserData;
-
 
   PostListItem({this.post, this.users, this.getUserData, this.onTap});
 
@@ -79,8 +79,8 @@ class PostListItem extends StatelessWidget {
                             Text("4"),
                             Icon(Icons.star_border),
                             Spacer(),
-                            Text("4"),
-                            Text(" komentarze")
+                            Text(post.commentsCount == null ? "" : post.commentsCount.toString()),
+                            Text(getTextForCommentsCount(post.commentsCount))
                           ],
                         ),
                       ),
@@ -93,3 +93,5 @@ class PostListItem extends StatelessWidget {
     );
   }
 }
+
+
