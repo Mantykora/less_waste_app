@@ -17,6 +17,8 @@ class PostView extends StatelessWidget {
 
   final TextEditingController _commentController = TextEditingController();
 
+  var v;
+
   @override
   Widget build(BuildContext context) {
     List<String> categories = ["Żywność", "Środki czystości", "Uroda", "Ubrania", "Inne"];
@@ -26,10 +28,13 @@ class PostView extends StatelessWidget {
         providers: [
           StreamProvider<Post>.value(
             value: DatabaseService().getPostById(post.id),
-          )
+          ),
+          StreamProvider<List<Like>>.value(
+              value: DatabaseService().getUserLikeForPost(post.id, Provider.of<User>(context).id,))
         ],
         child: BaseView<PostModel>(
-          // onModelReady: (model) { comments =  model.getComments(post.id); },
+
+            // onModelReady: (model) { comments =  model.getComments(post.id); },
           builder: (context, model, child) => Scaffold(
             appBar: AppBar(
               title: Text('Post'),
@@ -82,16 +87,16 @@ class PostView extends StatelessWidget {
                         },
                         child: Row(
                           children: <Widget>[
-                            Text("4"),
+                            Text(Provider.of<List<Like>>(context) != null && Provider.of<List<Like>>(context).isNotEmpty ? Provider.of<List<Like>>(context)[0].userId :  ""),
                             Icon(Icons.star_border),
                           ],
                         ),
                       ),
                       Spacer(),
                       Text(
-                        Provider.of<Post>(context) == null ? "" : Provider.of<Post>(context).commentsCount.toString(),
+                        Provider.of<Post>(context) == null  ? "" : Provider.of<Post>(context).commentsCount.toString(),
                       ),
-                      Text(getTextForCommentsCount(Provider.of<Post>(context).commentsCount))
+                     // Text(getTextForCommentsCount(Provider.of<Post>(context).commentsCount))
                     ],
                   ),
                 ),

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:less_waste_app/core/models/comment.dart';
+import 'package:less_waste_app/core/models/like.dart';
 import 'package:less_waste_app/core/models/post.dart';
 import 'package:less_waste_app/core/models/user_data.dart';
 
@@ -10,6 +11,7 @@ class DatabaseService {
 
   final CollectionReference userDataCollection = Firestore.instance.collection('userData');
   final CollectionReference postsCollection = Firestore.instance.collection('posts');
+
 
   Future updateUserData(String login) async {
     return await userDataCollection.document(userId).setData({
@@ -81,4 +83,33 @@ class DatabaseService {
   Stream<List<Comment>> getComments(String postId) {
     return postsCollection.document(postId).collection('comments').orderBy("time", descending: true).snapshots().map(_commentsListFromSnapshot);
   }
+
+  Future updateLikes(Like like, String postId) async {
+    return await postsCollection.document(postId).collection('likes').document().setData({
+    'userId': like.userId,
+    'id': like.id,
+    'postId': like.postId,
+    });
+  }
+
+  Stream<List<Like>> getUserLikeForPost(String postId, String userId)  {
+    return postsCollection
+        .document(postId).collection('likes')
+        .where("userId", isEqualTo: userId)
+
+        .snapshots()
+        .map(_likeFromSnapshot);
+
+  }
+
+  List<Like> _likeFromSnapshot(QuerySnapshot snapshot) {
+    return snapshot.documents.map((doc) {
+           return Like(userId: doc.data["userId"], postId: doc.data["postId"],);
+    }).toList();
+
+
+  }
+
+
+
 }
