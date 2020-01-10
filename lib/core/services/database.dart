@@ -58,13 +58,25 @@ class DatabaseService {
 
   Stream<Post> getPostById(String id) {
     return postsCollection.document(id).snapshots().map((doc) {
-      return Post(id: doc.documentID, userId: doc.data['userId'], body: doc.data['body'], category: doc.data['category'], commentsCount: doc.data['count']);
+      return Post(id: doc.documentID,
+          userId: doc.data['userId'],
+          body: doc.data['body'],
+          category: doc.data['category'],
+          commentsCount: doc.data['count'],
+          likesCount: doc.data['likesCount']
+      );
     });
   }
 
   List<Post> _postListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.documents.map((doc) {
-      return Post(id: doc.documentID, userId: doc.data['userId'], body: doc.data['body'], category: doc.data['category'], commentsCount: doc.data['count']);
+      return Post(id: doc.documentID,
+          userId: doc.data['userId'],
+          body: doc.data['body'],
+          category: doc.data['category'],
+          commentsCount: doc.data['count'],
+          likesCount: doc.data['likesCount']
+      );
     }).toList();
   }
 

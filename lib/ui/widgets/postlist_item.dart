@@ -76,7 +76,7 @@ class PostListItem extends StatelessWidget {
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
-                            Text("4"),
+                            Text(post.likesCount.toString()),
                             Icon(Icons.star_border),
                             Spacer(),
                             Text(post.commentsCount == null ? "" : post.commentsCount.toString()),

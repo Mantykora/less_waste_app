@@ -95,7 +95,7 @@ class PostView extends StatelessWidget {
                         },
                         child: Row(
                           children: <Widget>[
-                            Text(Provider.of<List<Like>>(context) != null && Provider.of<List<Like>>(context).isNotEmpty ? Provider.of<List<Like>>(context)[0].userId : ""),
+                            Text(Provider.of<Post>(context).likesCount != null ? Provider.of<Post>(context).likesCount.toString() : ""),
                             Icon(Provider.of<List<Like>>(context) != null && Provider.of<List<Like>>(context).isNotEmpty ? Icons.star : Icons.star_border),
                           ],
                         ),
@@ -104,7 +104,7 @@ class PostView extends StatelessWidget {
                       Text(
                         Provider.of<Post>(context) == null ? "" : Provider.of<Post>(context).commentsCount.toString(),
                       ),
-                      // Text(getTextForCommentsCount(Provider.of<Post>(context).commentsCount))
+                       Text(getTextForCommentsCount(Provider.of<Post>(context).commentsCount))
                     ],
                   ),
                 ),
