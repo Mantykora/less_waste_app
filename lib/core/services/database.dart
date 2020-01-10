@@ -118,7 +118,7 @@ class DatabaseService {
   Stream<List<Like>> getUserLikeForPost(String postId, String userId)  {
     return postsCollection
         .document(postId).collection('likes')
-       // .where("userId", isEqualTo: userId)
+        .where("userId", isEqualTo: userId)
         .snapshots()
         .map(_likeFromSnapshot);
 

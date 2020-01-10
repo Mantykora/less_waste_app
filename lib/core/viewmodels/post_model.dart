@@ -36,6 +36,7 @@ class PostModel extends BaseModel {
 
   Future updateLike(Like like, String postId, int likesCount) async {
     await database.updateLikes(like, postId);
+    print(likesCount.toString());
     updatePostLikeById(postId, likesCount == null ? 1 : likesCount + 1);
 
   }
@@ -46,7 +47,8 @@ class PostModel extends BaseModel {
 
   Future deleteLike(String likeId, String postId, int likesCount) async {
     await database.deleteLike(likeId, postId);
-    updatePostLikeById(postId, likesCount == null || likesCount == 1 ? 0 : likesCount + 1);
+    print(likesCount.toString());
+    updatePostLikeById(postId, likesCount == null || likesCount == 1 ? 0 : likesCount - 1);
   }
 
 

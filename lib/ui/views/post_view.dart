@@ -81,7 +81,7 @@ class PostView extends StatelessWidget {
                           if (Provider.of<List<Like>>(context) != null && Provider.of<List<Like>>(context).isNotEmpty) {
                             String likeId = Provider.of<List<Like>>(context).first.id;
                             print(likeId);
-                            model.deleteLike(likeId, post.id, post.likesCount);
+                            model.deleteLike(likeId, post.id, Provider.of<Post>(context).likesCount);
                           } else {
                             model.updateLike(
                                 Like(
@@ -89,7 +89,7 @@ class PostView extends StatelessWidget {
                                   postId: post.id,
                                 ),
                                 post.id,
-                                post.likesCount
+                                Provider.of<Post>(context).likesCount
                              );
                           }
                         },
