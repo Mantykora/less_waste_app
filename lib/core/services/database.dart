@@ -43,7 +43,8 @@ class DatabaseService {
       'id': docdocUid,
       'body': post.body,
       'category': post.category,
-      'count': post.commentsCount
+      'count': post.commentsCount,
+      'likesCount': post.likesCount
     });
   }
 
@@ -101,8 +102,7 @@ class DatabaseService {
   Stream<List<Like>> getUserLikeForPost(String postId, String userId)  {
     return postsCollection
         .document(postId).collection('likes')
-        .where("userId", isEqualTo: userId)
-
+       // .where("userId", isEqualTo: userId)
         .snapshots()
         .map(_likeFromSnapshot);
 
@@ -113,6 +113,8 @@ class DatabaseService {
            return Like(userId: doc.data["userId"], postId: doc.data["postId"],  id: doc.data["id"]);
     }).toList();
   }
+
+
 
 
 

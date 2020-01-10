@@ -30,16 +30,19 @@ class PostModel extends BaseModel {
     setState(ViewState.Idle);
   }
 
-  Future updateLike(Like like, String postId) async {
+  Future updateLike(Like like, String postId, int likesCount) async {
     await database.updateLikes(like, postId);
+    updatePostById(postId, likesCount == null ? 1 : likesCount + 1);
+
   }
 
   Stream<List<Like>> getUserLikeForPost( String postId, String userId) {
     database.getUserLikeForPost(postId, userId);
   }
 
-  Future deleteLike(String likeId, String postId) async {
+  Future deleteLike(String likeId, String postId, int likesCount) async {
     await database.deleteLike(likeId, postId);
+    updatePostById(postId, likesCount == null || likesCount == 1 ? 0 : likesCount + 1);
   }
 
 
