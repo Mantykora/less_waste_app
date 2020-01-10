@@ -52,6 +52,10 @@ class DatabaseService {
     return postsCollection.document(id).updateData({'count': count});
   }
 
+  Future updateLikesCountPostById(String id, int likesCount) async {
+    return postsCollection.document(id).updateData({'likesCount': likesCount});
+  }
+
   Stream<Post> getPostById(String id) {
     return postsCollection.document(id).snapshots().map((doc) {
       return Post(id: doc.documentID, userId: doc.data['userId'], body: doc.data['body'], category: doc.data['category'], commentsCount: doc.data['count']);

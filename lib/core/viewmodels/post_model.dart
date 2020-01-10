@@ -24,6 +24,10 @@ class PostModel extends BaseModel {
     await database.updatePostById(postId, count);
   }
 
+  Future updatePostLikeById(String postId, int likesCount) async {
+    await database.updateLikesCountPostById(postId, likesCount);
+  }
+
   Stream<List<Comment>> getComments(String postId) {
     setState(ViewState.Busy);
     database.getComments(postId);
@@ -32,7 +36,7 @@ class PostModel extends BaseModel {
 
   Future updateLike(Like like, String postId, int likesCount) async {
     await database.updateLikes(like, postId);
-    updatePostById(postId, likesCount == null ? 1 : likesCount + 1);
+    updatePostLikeById(postId, likesCount == null ? 1 : likesCount + 1);
 
   }
 
@@ -42,7 +46,7 @@ class PostModel extends BaseModel {
 
   Future deleteLike(String likeId, String postId, int likesCount) async {
     await database.deleteLike(likeId, postId);
-    updatePostById(postId, likesCount == null || likesCount == 1 ? 0 : likesCount + 1);
+    updatePostLikeById(postId, likesCount == null || likesCount == 1 ? 0 : likesCount + 1);
   }
 
 
