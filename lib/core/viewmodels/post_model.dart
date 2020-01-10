@@ -38,5 +38,9 @@ class PostModel extends BaseModel {
     database.getUserLikeForPost(postId, userId);
   }
 
+  Future deleteLike(String likeId, String postId) async {
+    await database.deleteLike(likeId, postId);
+  }
+
 
 }

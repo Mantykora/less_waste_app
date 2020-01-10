@@ -17,8 +17,6 @@ class PostView extends StatelessWidget {
 
   final TextEditingController _commentController = TextEditingController();
 
-  var v;
-
   @override
   Widget build(BuildContext context) {
     List<String> categories = ["Żywność", "Środki czystości", "Uroda", "Ubrania", "Inne"];
@@ -30,11 +28,13 @@ class PostView extends StatelessWidget {
             value: DatabaseService().getPostById(post.id),
           ),
           StreamProvider<List<Like>>.value(
-              value: DatabaseService().getUserLikeForPost(post.id, Provider.of<User>(context).id,))
+              value: DatabaseService().getUserLikeForPost(
+            post.id,
+            Provider.of<User>(context).id,
+          ))
         ],
         child: BaseView<PostModel>(
-
-            // onModelReady: (model) { comments =  model.getComments(post.id); },
+          // onModelReady: (model) { comments =  model.getComments(post.id); },
           builder: (context, model, child) => Scaffold(
             appBar: AppBar(
               title: Text('Post'),
@@ -78,25 +78,31 @@ class PostView extends StatelessWidget {
                     children: <Widget>[
                       InkWell(
                         onTap: () {
-                          model.updateLike(
-                              Like(
-                                userId: Provider.of<User>(context).id,
-                                postId: post.id,
-                              ),
-                              post.id);
+                          if (Provider.of<List<Like>>(context) != null && Provider.of<List<Like>>(context).isNotEmpty) {
+                            String likeId = Provider.of<List<Like>>(context).first.id;
+                            print(likeId);
+                            model.deleteLike(likeId, post.id);
+                          } else {
+                            model.updateLike(
+                                Like(
+                                  userId: Provider.of<User>(context).id,
+                                  postId: post.id,
+                                ),
+                                post.id);
+                          }
                         },
                         child: Row(
                           children: <Widget>[
-                            Text(Provider.of<List<Like>>(context) != null && Provider.of<List<Like>>(context).isNotEmpty ? Provider.of<List<Like>>(context)[0].userId :  ""),
-                            Icon(Icons.star_border),
+                            Text(Provider.of<List<Like>>(context) != null && Provider.of<List<Like>>(context).isNotEmpty ? Provider.of<List<Like>>(context)[0].userId : ""),
+                            Icon(Provider.of<List<Like>>(context) != null && Provider.of<List<Like>>(context).isNotEmpty ? Icons.star : Icons.star_border),
                           ],
                         ),
                       ),
                       Spacer(),
                       Text(
-                        Provider.of<Post>(context) == null  ? "" : Provider.of<Post>(context).commentsCount.toString(),
+                        Provider.of<Post>(context) == null ? "" : Provider.of<Post>(context).commentsCount.toString(),
                       ),
-                     // Text(getTextForCommentsCount(Provider.of<Post>(context).commentsCount))
+                      // Text(getTextForCommentsCount(Provider.of<Post>(context).commentsCount))
                     ],
                   ),
                 ),
@@ -106,10 +112,10 @@ class PostView extends StatelessWidget {
                         suffixIcon: IconButton(
                       icon: Icon(Icons.send),
                       onPressed: () {
-                         var success = model.addCommentToDatabase(Comment(body: _commentController.text), post.id, Provider.of<Post>(context).commentsCount);
-                                  if (success != null) {
-                                    _commentController.clear();
-                                  }
+                        var success = model.addCommentToDatabase(Comment(body: _commentController.text), post.id, Provider.of<Post>(context).commentsCount);
+                        if (success != null) {
+                          _commentController.clear();
+                        }
                       },
                     ))),
                 getCommentsUI(post.id, DatabaseService().getComments(post.id))

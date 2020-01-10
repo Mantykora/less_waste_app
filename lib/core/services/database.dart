@@ -85,11 +85,17 @@ class DatabaseService {
   }
 
   Future updateLikes(Like like, String postId) async {
-    return await postsCollection.document(postId).collection('likes').document().setData({
+    var doc = postsCollection.document(postId).collection('likes').document();
+    var docId = doc.documentID;
+    return await doc.setData({
     'userId': like.userId,
-    'id': like.id,
+    'id': docId,
     'postId': like.postId,
     });
+  }
+
+  Future deleteLike(String likeId, String postId) async {
+    return await postsCollection.document(postId).collection('likes').document(likeId).delete();
   }
 
   Stream<List<Like>> getUserLikeForPost(String postId, String userId)  {
@@ -104,10 +110,8 @@ class DatabaseService {
 
   List<Like> _likeFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.documents.map((doc) {
-           return Like(userId: doc.data["userId"], postId: doc.data["postId"],);
+           return Like(userId: doc.data["userId"], postId: doc.data["postId"],  id: doc.data["id"]);
     }).toList();
-
-
   }
 
 
