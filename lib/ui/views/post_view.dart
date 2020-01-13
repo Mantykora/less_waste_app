@@ -95,7 +95,7 @@ class PostView extends StatelessWidget {
                         },
                         child: Row(
                           children: <Widget>[
-                            Text(Provider.of<Post>(context) != null || Provider.of<Post>(context).likesCount != null ? Provider.of<Post>(context).likesCount.toString() : ""),
+                            Text(Provider.of<Post>(context) != null && Provider.of<Post>(context).likesCount != null ? Provider.of<Post>(context).likesCount.toString() : "0"),
                             Icon(Provider.of<List<Like>>(context) != null && Provider.of<List<Like>>(context).isNotEmpty ? Icons.star : Icons.star_border),
                           ],
                         ),
@@ -109,6 +109,7 @@ class PostView extends StatelessWidget {
                   ),
                 ),
                 TextField(
+                  maxLines: null,
                     controller: _commentController,
                     decoration: InputDecoration(
                         suffixIcon: IconButton(
