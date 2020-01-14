@@ -104,7 +104,7 @@ class PostView extends StatelessWidget {
                       Text(
                         Provider.of<Post>(context) == null || Provider.of<Post>(context).commentsCount == null ? "" : Provider.of<Post>(context).commentsCount.toString(),
                       ),
-                       Text(getTextForCommentsCount(Provider.of<Post>(context).commentsCount))
+                       Text(getTextForCommentsCount( Provider.of<Post>(context) == null ? 0 : Provider.of<Post>(context).commentsCount))
                     ],
                   ),
                 ),
