@@ -19,19 +19,47 @@ class HomeView extends StatelessWidget {
       builder: (context, model, child) => Scaffold(
           appBar: AppBar(
             title: Text('Home'),
-            actions: <Widget>[
-              IconButton(
-                  onPressed: () async {
-                    await model.logout();
-                  },
-                  icon: Icon(Icons.vpn_key))
-            ],
+           
           ),
           floatingActionButton: FloatingActionButton(
             child: Icon(Icons.add),
             onPressed: () {
               Navigator.pushNamed(context, '/create_post');
             },
+          ),
+          drawer: Drawer(
+            child: ListView(
+              padding: EdgeInsets.zero,
+              children: <Widget>[
+                DrawerHeader(
+                  decoration: BoxDecoration(
+                    color: Colors.blue,
+                  ),
+                  child: Text(
+                    'User',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 24,
+                    ),
+                  ),
+                ),
+                ListTile(
+                  leading: Icon(Icons.vpn_key),
+                  title: Text('Wyloguj się'),
+                  onTap: () async {
+                    await model.logout();
+                  },
+                ),
+                ListTile(
+                  leading: Icon(Icons.person),
+                  title: Text('Profil'),
+                ),
+                ListTile(
+                  leading: Icon(Icons.settings),
+                  title: Text('Ustawienia'),
+                ),
+              ],
+            ),
           ),
           // backgroundColor: Color(0xff5C892A),
           body: model.state == ViewState.Busy
