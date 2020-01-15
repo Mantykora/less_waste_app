@@ -53,6 +53,10 @@ class HomeView extends StatelessWidget {
                 ListTile(
                   leading: Icon(Icons.person),
                   title: Text('Profil'),
+                  onTap: () async {
+                    Navigator.pop(context);
+                    Navigator.pushNamed(context, '/profile');
+                  },
                 ),
                 ListTile(
                   leading: Icon(Icons.settings),
