@@ -2,10 +2,12 @@ class UserData {
   String id;
   String name;
   String username;
+  String lastName;
+  String description;
   DateTime joinDate;
   int postsNumber;
 
-  UserData({this.id, this.name, this.username, this.joinDate, this.postsNumber});
+  UserData({this.id, this.name, this.username, this.lastName, this.description, this.joinDate, this.postsNumber});
 
   UserData.initial()
       : id = "0",
@@ -18,6 +20,8 @@ class UserData {
     username = json['username'];
     joinDate = json['joinDate'];
     postsNumber = json['postsNumber'];
+    lastName = json['lastName'];
+    description = json['description'];
   }
 
   Map<String, dynamic> toJson() {
@@ -27,6 +31,8 @@ class UserData {
     data['username'] = this.username;
     data['joinDate'] = this.joinDate;
     data['postsNumber'] = this.postsNumber;
+    data['lastName'] = this.lastName;
+    data['description'] = this.description;
     return data;
   }
 }

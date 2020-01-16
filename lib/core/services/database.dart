@@ -22,13 +22,28 @@ class DatabaseService {
 
   List<UserData> _userListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.documents.map((doc) {
-      return UserData(id: doc.documentID, username: doc.data['login']);
+      return UserData(id: doc.documentID,
+                   username: doc.data['login'],
+                   name: doc.data['name'],
+                   lastName: doc.data['lastName'],
+                   description: doc.data['description']
+      );
     }).toList();
   }
 
   Stream<List<UserData>> get users {
     return userDataCollection.snapshots().map(_userListFromSnapshot);
   }
+
+  Future updateUserById(String id, String name, String lastName, String description) async {
+    return userDataCollection.document(id)
+        .updateData({
+      'name': name,
+      'lastName': lastName,
+      'description': description
+    },);
+  }
+
 
   Future updatePost(Post post) async {
     var docdoc = postsCollection.document();

@@ -7,12 +7,8 @@ import 'base_model.dart';
 class ProfileModel extends BaseModel {
   final DatabaseService database = DatabaseService();
 
-
-  Stream<List<Comment>> getComments(String postId) {
-    setState(ViewState.Busy);
-    database.getComments(postId);
-    setState(ViewState.Idle);
+  Future updateUserById({String userId, String name, String lastName, String description}) async {
+    await database.updateUserById(userId, name, lastName, description);
   }
-
 
 }

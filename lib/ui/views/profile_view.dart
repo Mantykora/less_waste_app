@@ -13,10 +13,9 @@ class ProfileView extends StatelessWidget {
     final users = Provider.of<List<UserData>>(context);
     UserData user = users.firstWhere((e) => e.id == currentUserId);
 
-    final TextEditingController nameController = TextEditingController();
-    final TextEditingController lastNameController = TextEditingController();
-    final TextEditingController aboutMeController = TextEditingController();
-
+    final TextEditingController nameController = TextEditingController(text: user.name);
+    final TextEditingController lastNameController = TextEditingController(text: user.lastName);
+    final TextEditingController aboutMeController = TextEditingController(text: user.description);
     print(user.username);
 
     return BaseView<ProfileModel>(
@@ -32,7 +31,28 @@ class ProfileView extends StatelessWidget {
               SliverList(
                 //itemExtent: 50.0,
                 delegate: SliverChildListDelegate(
-                    [ProfileTextField(nameController, "imię", false), ProfileTextField(lastNameController, "nazwisko", false), ProfileTextField(aboutMeController, "o mnie", true)]),
+                    [
+                      ProfileTextField(nameController, "imię", false),
+                      ProfileTextField(lastNameController, "nazwisko", false),
+                      ProfileTextField(aboutMeController, "o mnie", true),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 54.0, right: 24.0, left: 24.0),
+                        child:  RaisedButton(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: new BorderRadius.circular(18.0),
+
+                              ),
+                              color: Theme.of(context).accentColor,
+                              child: Text("Aktualizuj"),
+                              onPressed: () {
+                             model.updateUserById(userId: user.id, name: nameController.text, lastName: lastNameController.text, description: aboutMeController.text );
+                          }
+
+                          ),
+
+                      )
+                    ]
+                ),
               )
             ])));
   }

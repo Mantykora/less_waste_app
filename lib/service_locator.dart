@@ -5,6 +5,7 @@ import 'core/viewmodels/comments_model.dart';
 import 'core/viewmodels/create_post_model.dart';
 import 'core/viewmodels/home_model.dart';
 import 'core/viewmodels/post_model.dart';
+import 'core/viewmodels/profile_model.dart';
 
 GetIt locator = GetIt();
 
@@ -15,4 +16,5 @@ void setupLocator() {
   locator.registerFactory(() => CommentsModel());
   locator.registerFactory(() => CreatePostModel());
   locator.registerFactory(() => PostModel());
+  locator.registerFactory(() => ProfileModel());
 }
