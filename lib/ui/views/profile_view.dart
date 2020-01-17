@@ -21,13 +21,40 @@ class ProfileView extends StatelessWidget {
     return BaseView<ProfileModel>(
         builder: (context, model, child) => Scaffold(
                 body: CustomScrollView(slivers: <Widget>[
-              SliverAppBar(
-                pinned: true,
-                expandedHeight: 250.0,
-                flexibleSpace: FlexibleSpaceBar(
-                  title: Text(user.username),
-                ),
-              ),
+                  SliverAppBar(
+                    stretch: true,
+                    onStretchTrigger: () {
+                      // Function callback for stretch
+                      return;
+                    },
+                    expandedHeight: 300.0,
+                    flexibleSpace: FlexibleSpaceBar(
+                      stretchModes: <StretchMode>[
+                        StretchMode.zoomBackground,
+                        StretchMode.blurBackground,
+                        StretchMode.fadeTitle,
+                      ],
+                      centerTitle: true,
+                      title: const Text('Flight Report'),
+                      background: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          Container(
+                              margin: EdgeInsets.only(top: 16.0),
+                              padding: EdgeInsets.only(left: 32.0, right: 32.0),
+                              child: ClipOval(
+                                child: Container(
+                                  color: Colors.red,
+                                  width: 150,
+                                  height: 150,
+                                ),
+                              )
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
               SliverList(
                 //itemExtent: 50.0,
                 delegate: SliverChildListDelegate(
