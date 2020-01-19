@@ -1,4 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:less_waste_app/core/enums/dialog_type.dart';
 import 'package:less_waste_app/core/models/user.dart';
 import 'package:less_waste_app/core/models/user_data.dart';
 import 'package:less_waste_app/core/viewmodels/profile_model.dart';
@@ -17,6 +21,8 @@ class ProfileView extends StatelessWidget {
     final TextEditingController lastNameController = TextEditingController(text: user.lastName);
     final TextEditingController aboutMeController = TextEditingController(text: user.description);
     print(user.username);
+
+    ImageSource imageSource;
 
     return BaseView<ProfileModel>(
         builder: (context, model, child) => Scaffold(
@@ -46,7 +52,10 @@ class ProfileView extends StatelessWidget {
                           child: ClipOval(
                             child: InkWell(
                               customBorder: CircleBorder(),
-                              onTap: () {},
+                              onTap: () async {
+                                imageSource = await _choosePhoto(context);
+                                ImagePicker.pickImage(source: imageSource);
+                              },
                               child: Container(
                                 color: Colors.black38,
                                 width: 150,
@@ -84,5 +93,36 @@ class ProfileView extends StatelessWidget {
                 ]),
               )
             ])));
+  }
+}
+
+Future<ImageSource> _choosePhoto(BuildContext context) async {
+  switch (await showDialog<DialogType>(
+      context: context,
+      builder: (BuildContext context) {
+        return SimpleDialog(
+          title: const Text('Dodaj zdjęcie:'),
+          children: <Widget>[
+            SimpleDialogOption(
+              onPressed: () {
+                Navigator.pop(context, DialogType.camera);
+              },
+              child: const Text('Z aparatu'),
+            ),
+            SimpleDialogOption(
+              onPressed: () {
+                Navigator.pop(context, DialogType.gallery);
+              },
+              child: const Text('Z galerii'),
+            ),
+          ],
+        );
+      })) {
+    case DialogType.camera:
+      return ImageSource.camera;
+      break;
+    case DialogType.gallery:
+      return ImageSource.gallery;
+      break;
   }
 }
