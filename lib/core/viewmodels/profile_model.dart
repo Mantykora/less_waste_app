@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:less_waste_app/core/enums/viewstate.dart';
 import 'package:less_waste_app/core/models/comment.dart';
 import 'package:less_waste_app/core/models/like.dart';
@@ -9,6 +11,10 @@ class ProfileModel extends BaseModel {
 
   Future updateUserById({String userId, String name, String lastName, String description}) async {
     await database.updateUserById(userId, name, lastName, description);
+  }
+
+  Future uploadImage(File image) async {
+   await database.uploadImage(image);
   }
 
 }

@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:less_waste_app/core/enums/dialog_type.dart';
 import 'package:less_waste_app/core/models/user.dart';
@@ -54,7 +55,31 @@ class ProfileView extends StatelessWidget {
                               customBorder: CircleBorder(),
                               onTap: () async {
                                 imageSource = await _choosePhoto(context);
-                                ImagePicker.pickImage(source: imageSource);
+                                //TODO if imageSource != null
+                                File file = await ImagePicker.pickImage(source: imageSource);
+
+                                File croppedFile = await ImageCropper.cropImage(
+                                    sourcePath: file.path,
+                                    cropStyle: CropStyle.circle,
+                                    aspectRatioPresets: [
+                                      CropAspectRatioPreset.square,
+                                      CropAspectRatioPreset.ratio3x2,
+                                      CropAspectRatioPreset.original,
+                                      CropAspectRatioPreset.ratio4x3,
+                                      CropAspectRatioPreset.ratio16x9
+                                    ],
+                                    androidUiSettings: AndroidUiSettings(
+                                        toolbarTitle: 'Przytnij zdjęcie',
+                                        toolbarColor: Theme.of(context).primaryColor,
+                                        toolbarWidgetColor: Colors.white,
+                                        activeControlsWidgetColor: Theme.of(context).accentColor,
+                                        initAspectRatio: CropAspectRatioPreset.original,
+                                        lockAspectRatio: false),
+                                    iosUiSettings: IOSUiSettings(
+                                      minimumAspectRatio: 1.0,
+                                    ));
+
+                                model.uploadImage(croppedFile);
                               },
                               child: Container(
                                 color: Colors.black38,

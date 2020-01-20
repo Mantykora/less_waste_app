@@ -1,4 +1,8 @@
+
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:less_waste_app/core/models/comment.dart';
 import 'package:less_waste_app/core/models/like.dart';
 import 'package:less_waste_app/core/models/post.dart';
@@ -12,6 +16,7 @@ class DatabaseService {
   final CollectionReference userDataCollection = Firestore.instance.collection('userData');
   final CollectionReference postsCollection = Firestore.instance.collection('posts');
 
+  final StorageReference storageReference = FirebaseStorage.instance.ref();
 
   Future updateUserData(String login) async {
     return await userDataCollection.document(userId).setData({
@@ -145,8 +150,17 @@ class DatabaseService {
     }).toList();
   }
 
-
-
+  Future uploadImage(File image) async {
+    StorageReference storageReference = FirebaseStorage.instance
+        .ref()
+        .child('profile/image${image.path})}');
+    StorageUploadTask uploadTask = storageReference
+        .putFile(image);
+    await uploadTask.onComplete;
+    print('image uploaded');
+    String url = await storageReference.getDownloadURL();
+    print(url);
+  }
 
 
 }
