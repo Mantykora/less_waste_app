@@ -1,4 +1,3 @@
-
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -27,12 +26,7 @@ class DatabaseService {
 
   List<UserData> _userListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.documents.map((doc) {
-      return UserData(id: doc.documentID,
-                   username: doc.data['login'],
-                   name: doc.data['name'],
-                   lastName: doc.data['lastName'],
-                   description: doc.data['description']
-      );
+      return UserData(id: doc.documentID, username: doc.data['login'], name: doc.data['name'], lastName: doc.data['lastName'], description: doc.data['description']);
     }).toList();
   }
 
@@ -40,15 +34,11 @@ class DatabaseService {
     return userDataCollection.snapshots().map(_userListFromSnapshot);
   }
 
-  Future updateUserById(String id, String name, String lastName, String description) async {
-    return userDataCollection.document(id)
-        .updateData({
-      'name': name,
-      'lastName': lastName,
-      'description': description
-    },);
+  Future updateUserById({String id, String name, String lastName, String description, String profilePhotoUrl}) async {
+    return userDataCollection.document(id).updateData(
+      {'name': name, 'lastName': lastName, 'description': description, 'profilePhotoUrl': profilePhotoUrl},
+    );
   }
-
 
   Future updatePost(Post post) async {
     var docdoc = postsCollection.document();
@@ -78,25 +68,13 @@ class DatabaseService {
 
   Stream<Post> getPostById(String id) {
     return postsCollection.document(id).snapshots().map((doc) {
-      return Post(id: doc.documentID,
-          userId: doc.data['userId'],
-          body: doc.data['body'],
-          category: doc.data['category'],
-          commentsCount: doc.data['count'],
-          likesCount: doc.data['likesCount']
-      );
+      return Post(id: doc.documentID, userId: doc.data['userId'], body: doc.data['body'], category: doc.data['category'], commentsCount: doc.data['count'], likesCount: doc.data['likesCount']);
     });
   }
 
   List<Post> _postListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.documents.map((doc) {
-      return Post(id: doc.documentID,
-          userId: doc.data['userId'],
-          body: doc.data['body'],
-          category: doc.data['category'],
-          commentsCount: doc.data['count'],
-          likesCount: doc.data['likesCount']
-      );
+      return Post(id: doc.documentID, userId: doc.data['userId'], body: doc.data['body'], category: doc.data['category'], commentsCount: doc.data['count'], likesCount: doc.data['likesCount']);
     }).toList();
   }
 
@@ -125,9 +103,9 @@ class DatabaseService {
     var doc = postsCollection.document(postId).collection('likes').document();
     var docId = doc.documentID;
     return await doc.setData({
-    'userId': like.userId,
-    'id': docId,
-    'postId': like.postId,
+      'userId': like.userId,
+      'id': docId,
+      'postId': like.postId,
     });
   }
 
@@ -135,32 +113,26 @@ class DatabaseService {
     return await postsCollection.document(postId).collection('likes').document(likeId).delete();
   }
 
-  Stream<List<Like>> getUserLikeForPost(String postId, String userId)  {
-    return postsCollection
-        .document(postId).collection('likes')
-        .where("userId", isEqualTo: userId)
-        .snapshots()
-        .map(_likeFromSnapshot);
-
+  Stream<List<Like>> getUserLikeForPost(String postId, String userId) {
+    return postsCollection.document(postId).collection('likes').where("userId", isEqualTo: userId).snapshots().map(_likeFromSnapshot);
   }
 
   List<Like> _likeFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.documents.map((doc) {
-           return Like(userId: doc.data["userId"], postId: doc.data["postId"],  id: doc.data["id"]);
+      return Like(userId: doc.data["userId"], postId: doc.data["postId"], id: doc.data["id"]);
     }).toList();
   }
 
-  Future uploadImage(File image) async {
-    StorageReference storageReference = FirebaseStorage.instance
-        .ref()
-        .child('profile/image${image.path})}');
-    StorageUploadTask uploadTask = storageReference
-        .putFile(image);
+  Future<String> uploadImage(File image) async {
+    String path = image.path;
+    String lastSegmentPath = path.substring(path.lastIndexOf('/') + 1);
+    print(lastSegmentPath);
+
+    StorageReference storageReference = FirebaseStorage.instance.ref().child('profile/image${lastSegmentPath}');
+    StorageUploadTask uploadTask = storageReference.putFile(image);
     await uploadTask.onComplete;
     print('image uploaded');
     String url = await storageReference.getDownloadURL();
-    print(url);
+    return url;
   }
-
-
 }

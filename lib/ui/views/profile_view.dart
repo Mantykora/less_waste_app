@@ -79,7 +79,7 @@ class ProfileView extends StatelessWidget {
                                       minimumAspectRatio: 1.0,
                                     ));
 
-                                model.uploadImage(croppedFile);
+                                model.uploadImage(image: croppedFile, userId: user.id);
                               },
                               child: Container(
                                 color: Colors.black38,

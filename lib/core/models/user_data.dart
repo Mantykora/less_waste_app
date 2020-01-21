@@ -6,8 +6,9 @@ class UserData {
   String description;
   DateTime joinDate;
   int postsNumber;
+  String profilePhotoUrl;
 
-  UserData({this.id, this.name, this.username, this.lastName, this.description, this.joinDate, this.postsNumber});
+  UserData({this.id, this.name, this.username, this.lastName, this.description, this.joinDate, this.postsNumber, this.profilePhotoUrl});
 
   UserData.initial()
       : id = "0",
@@ -22,6 +23,7 @@ class UserData {
     postsNumber = json['postsNumber'];
     lastName = json['lastName'];
     description = json['description'];
+    profilePhotoUrl = json['profilePhotoUrl'];
   }
 
   Map<String, dynamic> toJson() {
@@ -33,6 +35,7 @@ class UserData {
     data['postsNumber'] = this.postsNumber;
     data['lastName'] = this.lastName;
     data['description'] = this.description;
+    data['profilePhotoUrl'] = this.profilePhotoUrl;
     return data;
   }
 }
