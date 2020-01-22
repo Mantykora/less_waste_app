@@ -63,10 +63,6 @@ class ProfileView extends StatelessWidget {
                                     cropStyle: CropStyle.circle,
                                     aspectRatioPresets: [
                                       CropAspectRatioPreset.square,
-                                      CropAspectRatioPreset.ratio3x2,
-                                      CropAspectRatioPreset.original,
-                                      CropAspectRatioPreset.ratio4x3,
-                                      CropAspectRatioPreset.ratio16x9
                                     ],
                                     androidUiSettings: AndroidUiSettings(
                                         toolbarTitle: 'Przytnij zdjęcie',
@@ -77,20 +73,33 @@ class ProfileView extends StatelessWidget {
                                         lockAspectRatio: false),
                                     iosUiSettings: IOSUiSettings(
                                       minimumAspectRatio: 1.0,
-                                    ));
-
-                                model.uploadImage(image: croppedFile, userId: user.id);
+                                    )).then((image) {
+                                  //TODO replace old photo in Storage with new one
+                                  model.uploadImage(image: image, userId: user.id);
+                                });
                               },
-                              child: Container(
-                                color: Colors.black38,
-                                width: 150,
-                                height: 150,
-                                child: Icon(
-                                  Icons.add_a_photo,
-                                  color: Colors.white,
-                                  size: 45,
-                                ),
-                              ),
+                              child:
+                                  //TODO remove photo
+                                  user.profilePhotoUrl == null
+                                      ? Container(
+                                          color: Colors.black38,
+                                          width: 150,
+                                          height: 150,
+                                          child: Icon(
+                                            Icons.add_a_photo,
+                                            color: Colors.white,
+                                            size: 45,
+                                          ),
+                                        )
+                                      : Container(
+                                          height: 150,
+                                          width: 150,
+                                          child: Image.network(
+                                            user.profilePhotoUrl,
+                                            width: 150,
+                                            height: 150,
+                                            fit: BoxFit.fill,
+                                          )),
                             ),
                           )),
                     ],
