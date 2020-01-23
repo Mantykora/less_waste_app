@@ -9,13 +9,13 @@ import 'base_model.dart';
 class ProfileModel extends BaseModel {
   final DatabaseService database = DatabaseService();
 
-  Future updateUserById({String userId, String name, String lastName, String description, String profilePhotoUrl}) async {
-    await database.updateUserById(id: userId, name: name, lastName: lastName, description: description, profilePhotoUrl: profilePhotoUrl);
+  Future updateUserById({String userId, String name, String lastName, String description}) async {
+    await database.updateUserById(id: userId, name: name, lastName: lastName, description: description);
   }
 
   Future uploadImage({File image, String userId}) async {
    await database.uploadImage(image).then((url) {
-     updateUserById(userId: userId, profilePhotoUrl: url);
+     database.updateUserById(id: userId, profilePhotoUrl: url);
    });
   }
 

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:less_waste_app/core/enums/dialog_type.dart';
+import 'package:less_waste_app/core/enums/viewstate.dart';
 import 'package:less_waste_app/core/models/user.dart';
 import 'package:less_waste_app/core/models/user_data.dart';
 import 'package:less_waste_app/core/viewmodels/profile_model.dart';
@@ -24,6 +25,10 @@ class ProfileView extends StatelessWidget {
     print(user.username);
 
     ImageSource imageSource;
+
+    File choosenPhoto;
+
+    bool isProfilePicFromServer = true;
 
     return BaseView<ProfileModel>(
         builder: (context, model, child) => Scaffold(
@@ -58,7 +63,7 @@ class ProfileView extends StatelessWidget {
                                 //TODO if imageSource != null
                                 File file = await ImagePicker.pickImage(source: imageSource);
 
-                                File croppedFile = await ImageCropper.cropImage(
+                                await ImageCropper.cropImage(
                                     sourcePath: file.path,
                                     cropStyle: CropStyle.circle,
                                     aspectRatioPresets: [
@@ -75,11 +80,15 @@ class ProfileView extends StatelessWidget {
                                       minimumAspectRatio: 1.0,
                                     )).then((image) {
                                   //TODO replace old photo in Storage with new one
-                                  model.uploadImage(image: image, userId: user.id);
+                                  isProfilePicFromServer = false;
+                                  choosenPhoto = image;
+                                  //model.uploadImage(image: image, userId: user.id);
+                                  model.setState(ViewState.Idle);
                                 });
                               },
                               child:
                                   //TODO remove photo
+                                  //no photo is shown
                                   user.profilePhotoUrl == null
                                       ? Container(
                                           color: Colors.black38,
@@ -91,15 +100,27 @@ class ProfileView extends StatelessWidget {
                                             size: 45,
                                           ),
                                         )
-                                      : Container(
-                                          height: 150,
-                                          width: 150,
-                                          child: Image.network(
-                                            user.profilePhotoUrl,
-                                            width: 150,
-                                            height: 150,
-                                            fit: BoxFit.fill,
-                                          )),
+                                      //photo from the server
+                                      : isProfilePicFromServer
+                                          ? Container(
+                                              height: 150,
+                                              width: 150,
+                                              child: Image.network(
+                                                user.profilePhotoUrl,
+                                                width: 150,
+                                                height: 150,
+                                                fit: BoxFit.fill,
+                                              ))
+                                          //photo chosen from the gallery/camera
+                                          : Container(
+                                              height: 150,
+                                              width: 150,
+                                              child: Image.file(
+                                                choosenPhoto,
+                                                width: 150,
+                                                height: 150,
+                                                fit: BoxFit.fill,
+                                              )),
                             ),
                           )),
                     ],
@@ -119,8 +140,9 @@ class ProfileView extends StatelessWidget {
                           borderRadius: new BorderRadius.circular(18.0),
                         ),
                         color: Theme.of(context).accentColor,
-                        child: Text("Aktualizuj"),
+                        child: Text("Zapisz"),
                         onPressed: () {
+                          //TODO upload photo on button click
                           model.updateUserById(userId: user.id, name: nameController.text, lastName: lastNameController.text, description: aboutMeController.text);
                         }),
                   )
