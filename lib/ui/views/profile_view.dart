@@ -55,72 +55,94 @@ class ProfileView extends StatelessWidget {
                       Container(
                           margin: EdgeInsets.only(top: 16.0),
                           padding: EdgeInsets.only(left: 32.0, right: 32.0),
-                          child: ClipOval(
-                            child: InkWell(
-                              customBorder: CircleBorder(),
-                              onTap: () async {
-                                imageSource = await _choosePhoto(context);
-                                //TODO if imageSource != null
-                                File file = await ImagePicker.pickImage(source: imageSource);
-                                //TODO only square cropp
-                                await ImageCropper.cropImage(
-                                    sourcePath: file.path,
-                                    cropStyle: CropStyle.circle,
-                                    aspectRatioPresets: [
-                                      CropAspectRatioPreset.square,
-                                    ],
-                                    androidUiSettings: AndroidUiSettings(
-                                        toolbarTitle: 'Przytnij zdjęcie',
-                                        toolbarColor: Theme.of(context).primaryColor,
-                                        toolbarWidgetColor: Colors.white,
-                                        activeControlsWidgetColor: Theme.of(context).accentColor,
-                                        initAspectRatio: CropAspectRatioPreset.original,
-                                        lockAspectRatio: false),
-                                    iosUiSettings: IOSUiSettings(
-                                      minimumAspectRatio: 1.0,
-                                    )).then((image) {
-                                  isProfilePicFromServer = false;
-                                  choosenPhoto = image;
-                                  //model.uploadImage(image: image, userId: user.id);
-                                  model.setState(ViewState.Idle);
-                                });
-                              },
-                              child:
-                                  //TODO remove photo
-                                  //no photo is shown
-                                  user.profilePhotoUrl == null
-                                      ? Container(
-                                          color: Colors.black38,
-                                          width: 150,
-                                          height: 150,
-                                          child: Icon(
-                                            Icons.add_a_photo,
-                                            color: Colors.white,
-                                            size: 45,
-                                          ),
-                                        )
-                                      //photo from the server
-                                      : isProfilePicFromServer
-                                          ? Container(
-                                              height: 150,
-                                              width: 150,
-                                              child: Image.network(
-                                                user.profilePhotoUrl,
+                          child: Stack(
+                            children: <Widget>[
+                              Align(
+                                alignment: Alignment.center,
+                                child: ClipOval(
+                                  child: InkWell(
+                                    customBorder: CircleBorder(),
+                                    onTap: () async {
+                                      imageSource = await _choosePhoto(context);
+                                      //TODO if imageSource != null
+                                      File file = await ImagePicker.pickImage(source: imageSource);
+                                      //TODO only square cropp
+                                      await ImageCropper.cropImage(
+                                          sourcePath: file.path,
+                                          cropStyle: CropStyle.circle,
+                                          aspectRatioPresets: [
+                                            CropAspectRatioPreset.square,
+                                          ],
+                                          androidUiSettings: AndroidUiSettings(
+                                              toolbarTitle: 'Przytnij zdjęcie',
+                                              toolbarColor: Theme.of(context).primaryColor,
+                                              toolbarWidgetColor: Colors.white,
+                                              activeControlsWidgetColor: Theme.of(context).accentColor,
+                                              initAspectRatio: CropAspectRatioPreset.original,
+                                              lockAspectRatio: false),
+                                          iosUiSettings: IOSUiSettings(
+                                            minimumAspectRatio: 1.0,
+                                          )).then((image) {
+                                        isProfilePicFromServer = false;
+                                        choosenPhoto = image;
+                                        //model.uploadImage(image: image, userId: user.id);
+                                        model.setState(ViewState.Idle);
+                                      });
+                                    },
+                                    child:
+                                        //TODO remove photo
+                                        //no photo is shown
+                                        user.profilePhotoUrl == null
+                                            ? Container(
+                                                color: Colors.black38,
                                                 width: 150,
                                                 height: 150,
-                                                fit: BoxFit.fill,
-                                              ))
-                                          //photo chosen from the gallery/camera
-                                          : Container(
-                                              height: 150,
-                                              width: 150,
-                                              child: Image.file(
-                                                choosenPhoto,
-                                                width: 150,
-                                                height: 150,
-                                                fit: BoxFit.fill,
-                                              )),
-                            ),
+                                                child: Icon(
+                                                  Icons.add_a_photo,
+                                                  color: Colors.white,
+                                                  size: 45,
+                                                ),
+                                              )
+                                            //photo from the server
+                                            : isProfilePicFromServer
+                                                ? Container(
+                                                    height: 150,
+                                                    width: 150,
+                                                    child: Image.network(
+                                                      user.profilePhotoUrl,
+                                                      width: 150,
+                                                      height: 150,
+                                                      fit: BoxFit.fill,
+                                                    ))
+                                                //photo chosen from the gallery/camera
+                                                : Container(
+                                                    height: 150,
+                                                    width: 150,
+                                                    child: Image.file(
+                                                      choosenPhoto,
+                                                      width: 150,
+                                                      height: 150,
+                                                      fit: BoxFit.fill,
+                                                    )),
+                                  ),
+                                ),
+                              ),
+                              Positioned(
+                                right: 75.0,
+                                // alignment: Alignment.center,
+                                child: ClipOval(
+                                  child: Container(
+                                      color: Colors.white,
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(4.0),
+                                        child: Icon(
+                                          Icons.delete,
+                                          color: Theme.of(context).accentColor,
+                                        ),
+                                      )),
+                                ),
+                              ),
+                            ],
                           )),
                     ],
                   ),
