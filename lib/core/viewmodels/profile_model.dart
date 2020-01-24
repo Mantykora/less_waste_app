@@ -14,7 +14,7 @@ class ProfileModel extends BaseModel {
   }
 
   Future uploadImage({File image, String userId}) async {
-   await database.uploadImage(image).then((url) {
+   await database.uploadImage(image, userId).then((url) {
      database.updateUserById(id: userId, profilePhotoUrl: url);
    });
   }

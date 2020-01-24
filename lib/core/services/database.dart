@@ -123,12 +123,14 @@ class DatabaseService {
     }).toList();
   }
 
-  Future<String> uploadImage(File image) async {
+  Future<String> uploadImage(File image, String userId) async {
     String path = image.path;
     String lastSegmentPath = path.substring(path.lastIndexOf('/') + 1);
     print(lastSegmentPath);
+    String completePath = "profile/$userId/profilePic";
 
-    StorageReference storageReference = FirebaseStorage.instance.ref().child('profile/image${lastSegmentPath}');
+    //StorageReference storageReference = FirebaseStorage.instance.ref().child('profile/image${lastSegmentPath}');
+    StorageReference storageReference = FirebaseStorage.instance.ref().child(completePath);
     StorageUploadTask uploadTask = storageReference.putFile(image);
     await uploadTask.onComplete;
     print('image uploaded');

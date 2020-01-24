@@ -62,7 +62,7 @@ class ProfileView extends StatelessWidget {
                                 imageSource = await _choosePhoto(context);
                                 //TODO if imageSource != null
                                 File file = await ImagePicker.pickImage(source: imageSource);
-
+                                //TODO only square cropp
                                 await ImageCropper.cropImage(
                                     sourcePath: file.path,
                                     cropStyle: CropStyle.circle,
@@ -79,7 +79,6 @@ class ProfileView extends StatelessWidget {
                                     iosUiSettings: IOSUiSettings(
                                       minimumAspectRatio: 1.0,
                                     )).then((image) {
-                                  //TODO replace old photo in Storage with new one
                                   isProfilePicFromServer = false;
                                   choosenPhoto = image;
                                   //model.uploadImage(image: image, userId: user.id);
@@ -142,7 +141,8 @@ class ProfileView extends StatelessWidget {
                         color: Theme.of(context).accentColor,
                         child: Text("Zapisz"),
                         onPressed: () {
-                          //TODO upload photo on button click
+                          //upload profile photo, update user data
+                          model.uploadImage(image: choosenPhoto, userId: user.id);
                           model.updateUserById(userId: user.id, name: nameController.text, lastName: lastNameController.text, description: aboutMeController.text);
                         }),
                   )
