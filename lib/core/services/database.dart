@@ -137,4 +137,15 @@ class DatabaseService {
     String url = await storageReference.getDownloadURL();
     return url;
   }
+
+  Future deleteImage(String userId) async {
+
+    String completePath = "profile/$userId/profilePic";
+
+    var deleteTask = FirebaseStorage.instance.ref().child(completePath).delete();
+
+    await deleteTask;
+    print('image deleted');
+
+  }
 }

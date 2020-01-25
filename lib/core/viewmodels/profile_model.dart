@@ -14,9 +14,16 @@ class ProfileModel extends BaseModel {
   }
 
   Future uploadImage({File image, String userId}) async {
-   await database.uploadImage(image, userId).then((url) {
-     database.updateUserById(id: userId, profilePhotoUrl: url);
-   });
+    await database.uploadImage(image, userId).then((url) {
+      database.updateUserById(id: userId, profilePhotoUrl: url);
+    });
   }
 
+  Future deleteImage({String userId}) async {
+    setState(ViewState.Busy);
+    await database.deleteImage(userId).then((url) {
+      database.updateUserById(id: userId, profilePhotoUrl: null);
+      setState(ViewState.Idle);
+    });
+  }
 }

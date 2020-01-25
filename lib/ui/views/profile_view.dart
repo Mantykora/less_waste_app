@@ -130,16 +130,21 @@ class ProfileView extends StatelessWidget {
                               Positioned(
                                 right: 75.0,
                                 // alignment: Alignment.center,
-                                child: ClipOval(
-                                  child: Container(
-                                      color: Colors.white,
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(4.0),
-                                        child: Icon(
-                                          Icons.delete,
-                                          color: Theme.of(context).accentColor,
-                                        ),
-                                      )),
+                                child: InkWell(
+                                  onTap: () {
+                                    model.deleteImage(userId: user.id);
+                                  },
+                                  child: ClipOval(
+                                    child: Container(
+                                        color: Colors.white,
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(4.0),
+                                          child: Icon(
+                                            Icons.delete,
+                                            color: Theme.of(context).accentColor,
+                                          ),
+                                        )),
+                                  ),
                                 ),
                               ),
                             ],
