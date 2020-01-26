@@ -3,6 +3,7 @@ import 'package:less_waste_app/core/models/comment.dart';
 import 'package:less_waste_app/core/models/like.dart';
 import 'package:less_waste_app/core/models/post.dart';
 import 'package:less_waste_app/core/models/user.dart';
+import 'package:less_waste_app/core/models/user_data.dart';
 import 'package:less_waste_app/core/services/database.dart';
 import 'package:less_waste_app/core/utils/get_text_for_comments.dart';
 import 'package:less_waste_app/core/viewmodels/post_model.dart';
@@ -21,6 +22,9 @@ class PostView extends StatelessWidget {
   Widget build(BuildContext context) {
     List<String> categories = ["Żywność", "Środki czystości", "Uroda", "Ubrania", "Inne"];
     List assets = [Icons.fastfood, Icons.local_laundry_service, Icons.face, Icons.accessibility, Icons.autorenew];
+
+    final users = Provider.of<List<UserData>>(context);
+    UserData user = users.firstWhere((e) => e.id == post.userId);
 
     return MultiProvider(
         providers: [
@@ -67,7 +71,7 @@ class PostView extends StatelessWidget {
                   child: Row(
                     children: <Widget>[
                       Text('autor: '),
-                      Text('user'),
+                      Text(user.username),
                     ],
                   ),
                 ),

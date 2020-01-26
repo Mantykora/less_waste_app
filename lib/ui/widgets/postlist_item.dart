@@ -24,6 +24,10 @@ class PostListItem extends StatelessWidget {
     List<String> categories = ["Żywność", "Środki czystości", "Uroda", "Ubrania", "Inne"];
     List assets = [Icons.fastfood, Icons.local_laundry_service, Icons.face, Icons.accessibility, Icons.autorenew];
 
+
+    final users = Provider.of<List<UserData>>(context);
+    UserData user = users.firstWhere((e) => e.id == post.userId);
+
     return MultiProvider(
         providers: [
           StreamProvider<Post>.value(
@@ -72,7 +76,7 @@ class PostListItem extends StatelessWidget {
                               child: Row(
                                 children: <Widget>[
                                   Text('autor: '),
-                                  Text('user'),
+                                  Text(user.username),
                                 ],
                               ),
                             ),
