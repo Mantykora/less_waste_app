@@ -56,6 +56,7 @@ class AuthenticateModel extends BaseModel {
     }
 
     isSignInView = true;
+    setState(ViewState.Idle);
   }
 
   Future<bool> validateCredentials({
