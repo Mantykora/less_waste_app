@@ -65,34 +65,37 @@ class ProfileView extends StatelessWidget {
                                     onTap: () async {
                                       imageSource = await _choosePhoto(context);
                                       //TODO if imageSource != null
-                                      File file = await ImagePicker.pickImage(source: imageSource);
-                                      //TODO only square cropp
-                                      await ImageCropper.cropImage(
-                                          sourcePath: file.path,
-                                          cropStyle: CropStyle.circle,
-                                          aspectRatioPresets: [
-                                            CropAspectRatioPreset.square,
-                                          ],
-                                          androidUiSettings: AndroidUiSettings(
-                                              toolbarTitle: 'Przytnij zdjęcie',
-                                              toolbarColor: Theme.of(context).primaryColor,
-                                              toolbarWidgetColor: Colors.white,
-                                              activeControlsWidgetColor: Theme.of(context).accentColor,
-                                              initAspectRatio: CropAspectRatioPreset.original,
-                                              lockAspectRatio: false),
-                                          iosUiSettings: IOSUiSettings(
-                                            minimumAspectRatio: 1.0,
-                                          )).then((image) {
-                                        isProfilePicFromServer = false;
-                                        choosenPhoto = image;
-                                        //model.uploadImage(image: image, userId: user.id);
-                                        model.setState(ViewState.Idle);
-                                      });
+                                      if (imageSource != null) {
+                                        File file = await ImagePicker.pickImage(source: imageSource);
+                                        //TODO only square cropp
+                                        await ImageCropper.cropImage(
+                                            sourcePath: file.path,
+                                            cropStyle: CropStyle.circle,
+                                            aspectRatioPresets: [
+                                              CropAspectRatioPreset.square,
+                                            ],
+                                            androidUiSettings: AndroidUiSettings(
+                                                toolbarTitle: 'Przytnij zdjęcie',
+                                                toolbarColor: Theme.of(context).primaryColor,
+                                                toolbarWidgetColor: Colors.white,
+                                                activeControlsWidgetColor: Theme.of(context).accentColor,
+                                                initAspectRatio: CropAspectRatioPreset.original,
+                                                lockAspectRatio: false),
+                                            iosUiSettings: IOSUiSettings(
+                                              minimumAspectRatio: 1.0,
+                                            )).then((image) {
+                                          isProfilePicFromServer = false;
+                                          choosenPhoto = image;
+                                          //model.uploadImage(image: image, userId: user.id);
+                                          model.setState(ViewState.Idle);
+                                        });
+                                      }
+
                                     },
                                     child:
                                         //TODO remove photo
                                         //no photo is shown
-                                        user.profilePhotoUrl == null
+                                        user.profilePhotoUrl == null && choosenPhoto == null
                                             ? Container(
                                                 color: Colors.black38,
                                                 width: 150,
@@ -169,7 +172,10 @@ class ProfileView extends StatelessWidget {
                         child: Text("Zapisz"),
                         onPressed: () {
                           //upload profile photo, update user data
-                          model.uploadImage(image: choosenPhoto, userId: user.id);
+
+                          if (choosenPhoto != null) {
+                            model.uploadImage(image: choosenPhoto, userId: user.id);
+                          }
                           model.updateUserById(userId: user.id, name: nameController.text, lastName: lastNameController.text, description: aboutMeController.text);
                         }),
                   )
