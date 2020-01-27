@@ -113,6 +113,7 @@ class PostView extends StatelessWidget {
                   ),
                 ),
                 TextField(
+                  maxLength: 8000,
                   maxLines: null,
                     controller: _commentController,
                     decoration: InputDecoration(

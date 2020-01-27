@@ -50,7 +50,11 @@ class CreatePostView extends StatelessWidget {
                     padding: const EdgeInsets.all(16.0),
                     child: TextField(
                       maxLines: 8,
+                      maxLength: 60000,
                       controller: controller,
+                      onChanged: (text) {
+
+                      },
                     ),
                   ),
                   Padding(
