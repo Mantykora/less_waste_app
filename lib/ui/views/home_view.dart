@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:less_waste_app/core/enums/viewstate.dart';
 import 'package:less_waste_app/core/models/post.dart';
+import 'package:less_waste_app/core/models/user.dart';
 import 'package:less_waste_app/core/models/user_data.dart';
 import 'package:less_waste_app/core/viewmodels/home_model.dart';
 import 'package:less_waste_app/ui/widgets/postlist_item.dart';
@@ -13,13 +14,16 @@ class HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     final users = Provider.of<List<UserData>>(context);
     var posts = Provider.of<List<Post>>(context);
+    UserData user;
+
+//    if(users != null) {
+//      user = users.firstWhere((e) => e.id == Provider.of<User>(context).id);
+//    }
 
     return BaseView<HomeModel>(
-      onModelReady: (model) => model.getPosts(),
       builder: (context, model, child) => Scaffold(
           appBar: AppBar(
             title: Text('Home'),
-           
           ),
           floatingActionButton: FloatingActionButton(
             child: Icon(Icons.add),
@@ -36,7 +40,8 @@ class HomeView extends StatelessWidget {
                     color: Theme.of(context).primaryColor,
                   ),
                   child: Text(
-                    'User',
+                    '',
+                    //user.username,
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 24,
