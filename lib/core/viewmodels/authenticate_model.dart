@@ -30,12 +30,13 @@ class AuthenticateModel extends BaseModel {
 
     response = await _authenticationService.signIn(email, password);
 
+    isResponseSuccessful(response);
+
     if (response == null) {
       errorMessage = null;
       setState(ViewState.Idle);
       return null;
     }
-
     setState(ViewState.Idle);
   }
 
@@ -50,46 +51,9 @@ class AuthenticateModel extends BaseModel {
     bool isValidated = await validateCredentials(login: login, email: email, password: password);
     if (!isValidated) return null;
     var response = await _authenticationService.register(login, email, password);
-
-    if (response != null && response.runtimeType == String) {
-      setState(ViewState.Idle);
-      print(response.toString());
-      switch (response.toString()) {
-        case "ERROR_INVALID_EMAIL":
-          errorMessage = "Twój adres email jest nieprawidłowy.";
-          return null;
-          break;
-        case "ERROR_EMAIL_ALREADY_IN_USE":
-          errorMessage = "Istnieje już konto założone na podany adres email.";
-          print('istnieje');
-          return null;
-          break;
-        case "ERROR_TOO_MANY_REQUESTS":
-          errorMessage = "Spróbuj ponownie później.";
-          return null;
-          break;
-        case "ERROR_NETWORK_ERROR":
-          errorMessage = "Błąd połączenia.";
-          return null;
-          break;
-        default:
-          errorMessage = "Wystąpił błąd";
-          return null;
-      }
-    }
-
-    if (response == null) {
-      errorMessage = null;
-      setState(ViewState.Idle);
-      return null;
-    }
-
-    if (response != null) {
-      errorMessage = null;
-    }
-
-    isSignInView = true;
     setState(ViewState.Idle);
+
+    isSignInView = isResponseSuccessful(response);
   }
 
   Future<bool> validateCredentials({
@@ -114,5 +78,43 @@ class AuthenticateModel extends BaseModel {
     }
 
     return true;
+  }
+
+  String mapResponseToErrorMessage(String response) {
+    switch (response.toString()) {
+      case "ERROR_INVALID_EMAIL":
+        return "Twój adres email jest nieprawidłowy.";
+      case "ERROR_EMAIL_ALREADY_IN_USE":
+        print('istnieje');
+        return "Istnieje już konto założone na podany adres email.";
+      case "ERROR_TOO_MANY_REQUESTS":
+        return "Spróbuj ponownie później.";
+      case "ERROR_NETWORK_ERROR":
+        return "Błąd połączenia.";
+      case "ERROR_INVALID_EMAIL":
+        return "Podany adres email jest nieprawidłowy.";
+      case "ERROR_WRONG_PASSWORD":
+        return "Nieprawidłowe hasło.";
+      case "ERROR_USER_NOT_FOUND":
+        return "Nie znaleziono użytkownika.";
+      case "ERROR_WEAK_PASSWORD":
+        return "Hasło musi się składać conajmniej z 6 znaków,";
+      default:
+        return "Wystąpił błąd";
+    }
+  }
+
+  bool isResponseSuccessful(dynamic response) {
+    if (response != null && response.runtimeType == String) {
+      print(response.toString());
+      errorMessage = mapResponseToErrorMessage(response);
+      return false;
+    } else if(response == null) {
+      errorMessage == null;
+      return false;
+    } else {
+      errorMessage = null;
+      return true;
+    }
   }
 }
