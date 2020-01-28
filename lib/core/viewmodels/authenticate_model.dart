@@ -5,7 +5,6 @@ import '../../service_locator.dart';
 import 'base_model.dart';
 import 'package:flutter/services.dart';
 
-
 /// Represents the state of the view
 class AuthenticateModel extends BaseModel {
   bool isSignInView = true;
@@ -29,8 +28,7 @@ class AuthenticateModel extends BaseModel {
 
     var response;
 
-      response = await _authenticationService.signIn(email, password);
-
+    response = await _authenticationService.signIn(email, password);
 
     if (response == null) {
       errorMessage = null;
@@ -53,11 +51,10 @@ class AuthenticateModel extends BaseModel {
     if (!isValidated) return null;
     var response = await _authenticationService.register(login, email, password);
 
-    if(response != null){
-      isSignInView = true;
+    if (response != null && response.runtimeType == String) {
       setState(ViewState.Idle);
       print(response.toString());
-            switch(response.toString()) {
+      switch (response.toString()) {
         case "ERROR_INVALID_EMAIL":
           errorMessage = "Twój adres email jest nieprawidłowy.";
           return null;
@@ -76,7 +73,7 @@ class AuthenticateModel extends BaseModel {
           return null;
           break;
         default:
-          errorMessage = null;
+          errorMessage = "Wystąpił błąd";
           return null;
       }
     }
@@ -87,6 +84,9 @@ class AuthenticateModel extends BaseModel {
       return null;
     }
 
+    if (response != null) {
+      errorMessage = null;
+    }
 
     isSignInView = true;
     setState(ViewState.Idle);
