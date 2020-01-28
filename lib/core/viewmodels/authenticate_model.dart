@@ -26,17 +26,10 @@ class AuthenticateModel extends BaseModel {
     bool isValidated = await validateCredentials(login: null, email: email, password: password);
     if (!isValidated) return null;
 
-    var response;
-
-    response = await _authenticationService.signIn(email, password);
+    var response = await _authenticationService.signIn(email, password);
 
     isResponseSuccessful(response);
 
-    if (response == null) {
-      errorMessage = null;
-      setState(ViewState.Idle);
-      return null;
-    }
     setState(ViewState.Idle);
   }
 
