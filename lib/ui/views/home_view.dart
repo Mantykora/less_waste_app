@@ -52,7 +52,9 @@ class HomeView extends StatelessWidget {
                   leading: Icon(Icons.vpn_key),
                   title: Text('Wyloguj się'),
                   onTap: () async {
+                    Navigator.pop(context);
                     await model.logout();
+
                   },
                 ),
                 ListTile(
