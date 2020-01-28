@@ -48,7 +48,9 @@ class PostModel extends BaseModel {
   Future deleteLike(String likeId, String postId, int likesCount) async {
     await database.deleteLike(likeId, postId);
     print(likesCount.toString());
-    updatePostLikeById(postId, likesCount == null || likesCount == 1 ? 0 : likesCount - 1);
+    if (likesCount > 0) {
+      updatePostLikeById(postId, likesCount == null || likesCount == 1 ? 0 : likesCount - 1);
+    }
   }
 
 
