@@ -15,6 +15,7 @@ class _LoginViewState extends State<LoginView> {
 
   @override
   Widget build(BuildContext context) {
+
     return BaseView<AuthenticateModel>(
       builder: (context, model, child) => Scaffold(
         backgroundColor: Colors.blueAccent,
@@ -37,6 +38,7 @@ class _LoginViewState extends State<LoginView> {
                   validationMessage: model.errorMessage,
                   emailController: _emailController,
                   passController: _passController,
+                  isForgot: model.isForgotView,
                 ),
                 model.state == ViewState.Busy
                     ? Padding(
@@ -56,7 +58,9 @@ class _LoginViewState extends State<LoginView> {
                                   ),
                                   color: Colors.white,
                                   child: Text(
-                                    'Login',
+                                    model.isForgotView
+                                    ? 'Resetuj hasło'
+                                    : 'Login',
                                     style: TextStyle(color: Colors.black),
                                   ),
                                   onPressed: () async {
@@ -94,11 +98,13 @@ class _LoginViewState extends State<LoginView> {
                       FlatButton(
                         //color: Colors.white,
                         child: Text(
-                          'Forgot password',
+                          model.isForgotView
+                          ? 'Login'
+                          : 'Forgot password',
                           style: TextStyle(color: Colors.white),
                         ),
                         onPressed: () async {
-                          model.toggleView();
+                          model.toggleForgot();
                         },
                       ),
                     ],

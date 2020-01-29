@@ -6,8 +6,9 @@ class LoginHeader extends StatelessWidget {
   final TextEditingController passController;
   final String validationMessage;
   final bool isSignUp;
+  final bool isForgot;
 
-  LoginHeader({this.loginController,  @required this.emailController, @required this.passController, this.validationMessage, this.isSignUp});
+  LoginHeader({this.loginController,  @required this.emailController, @required this.passController, this.validationMessage, this.isSignUp, this.isForgot});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +23,9 @@ class LoginHeader extends StatelessWidget {
       ),
       this.isSignUp != null ? LoginTextField(loginController, Icons.person_outline, 'login', false) : Container(),
       LoginTextField(emailController, Icons.email, 'e-mail', false),
-      LoginTextField(passController, Icons.lock_outline, 'password', true),
+      Visibility(
+          visible: !isForgot,
+          child: LoginTextField(passController, Icons.lock_outline, 'password', true)),
       this.validationMessage != null ? Text(validationMessage, style: TextStyle(color: Colors.red)) : Container()
     ]);
   }

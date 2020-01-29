@@ -8,6 +8,7 @@ import 'package:flutter/services.dart';
 /// Represents the state of the view
 class AuthenticateModel extends BaseModel {
   bool isSignInView = true;
+  bool isForgotView = false;
 
   final AuthService _authenticationService = locator<AuthService>();
 
@@ -18,6 +19,12 @@ class AuthenticateModel extends BaseModel {
     isSignInView = !isSignInView;
     errorMessage = null;
     setState(ViewState.Idle);
+  }
+
+  void toggleForgot() {
+    isForgotView = !isForgotView;
+    setState(ViewState.Idle);
+
   }
 
   Future login(String email, String password) async {

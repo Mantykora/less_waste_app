@@ -40,6 +40,7 @@ class _RegisterViewState extends State<RegisterView> {
                   emailController: _emailController,
                   passController: _passController,
                   isSignUp: true,
+                  isForgot: false,
                 ),
                 model.state == ViewState.Busy
                     ? Padding(
