@@ -64,11 +64,20 @@ class _LoginViewState extends State<LoginView> {
                                     style: TextStyle(color: Colors.black),
                                   ),
                                   onPressed: () async {
-                                    var loginSuccess = await model.login(_emailController.text, _passController.text);
+                                    if(model.isForgotView) {
+                                      var forgotSuccess = await model.remindPassword(_emailController.text);
 
-                                    if (loginSuccess != null) {
-                                      Navigator.pushNamedAndRemoveUntil(context, '/home', (Route<dynamic> route) => false);
+                                      if(forgotSuccess != null) {
+                                        print('forgot success');
+                                      }
+                                    } else {
+                                      var loginSuccess = await model.login(_emailController.text, _passController.text);
+
+                                      if (loginSuccess != null) {
+                                        Navigator.pushNamedAndRemoveUntil(context, '/home', (Route<dynamic> route) => false);
+                                      }
                                     }
+
                                   },
                                 ),
                               ),

@@ -17,14 +17,15 @@ class AuthenticateModel extends BaseModel {
   void toggleView() {
     setState(ViewState.Busy);
     isSignInView = !isSignInView;
+    isForgotView = false;
     errorMessage = null;
     setState(ViewState.Idle);
   }
 
   void toggleForgot() {
     isForgotView = !isForgotView;
+    errorMessage = null;
     setState(ViewState.Idle);
-
   }
 
   Future login(String email, String password) async {
@@ -54,16 +55,16 @@ class AuthenticateModel extends BaseModel {
     setState(ViewState.Idle);
 
     isSignInView = isResponseSuccessful(response);
+    isForgotView = false;
   }
 
   Future remindPassword(String email) async {
     setState(ViewState.Busy);
+    errorMessage = null;
     var response = await _authenticationService.remindPassword(email);
 
+    isForgotView = !isResponseSuccessful(response);
     setState(ViewState.Idle);
-
-    isSignInView = isResponseSuccessful(response);
-
   }
 
   Future<bool> validateCredentials({
@@ -119,8 +120,8 @@ class AuthenticateModel extends BaseModel {
       print(response.toString());
       errorMessage = mapResponseToErrorMessage(response);
       return false;
-    } else if(response == null) {
-      errorMessage == null;
+    } else if (response == null) {
+      errorMessage = null;
       return false;
     } else {
       errorMessage = null;
