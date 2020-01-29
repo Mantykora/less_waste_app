@@ -64,4 +64,19 @@ class AuthService {
       return null;
     }
   }
+
+  Future remindPassword(String email) async {
+    try {
+      await _auth.sendPasswordResetEmail(email: email);
+
+    } on PlatformException catch(e) {
+      print(e.code);
+      return(e.code);
+    }
+    catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
+
 }

@@ -49,6 +49,16 @@ class AuthenticateModel extends BaseModel {
     isSignInView = isResponseSuccessful(response);
   }
 
+  Future remindPassword(String email) async {
+    setState(ViewState.Busy);
+    var response = await _authenticationService.remindPassword(email);
+
+    setState(ViewState.Idle);
+
+    isSignInView = isResponseSuccessful(response);
+
+  }
+
   Future<bool> validateCredentials({
     String login,
     String email,
