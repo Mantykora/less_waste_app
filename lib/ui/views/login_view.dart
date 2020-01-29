@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:less_waste_app/core/enums/viewstate.dart';
 import 'package:less_waste_app/core/viewmodels/authenticate_model.dart';
@@ -69,6 +70,8 @@ class _LoginViewState extends State<LoginView> {
 
                                       if(forgotSuccess != null) {
                                         print('forgot success');
+                                        _showAlertDialog(context);
+
                                       }
                                     } else {
                                       var loginSuccess = await model.login(_emailController.text, _passController.text);
@@ -126,4 +129,25 @@ class _LoginViewState extends State<LoginView> {
       ),
     );
   }
+}
+
+
+Future<void> _showAlertDialog(BuildContext context) async {
+  return showDialog<void>(
+    context: context,
+    barrierDismissible: false,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text("Link został wysłany."),
+        content: Text("Link do zresetowania hasła został wysłany na Twoje konto email."),
+        actions: <Widget>[
+          FlatButton(
+              child: Text('ok'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              })
+        ],
+      );
+    },
+  );
 }
