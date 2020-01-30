@@ -1,5 +1,7 @@
 import 'package:less_waste_app/core/enums/viewstate.dart';
 import 'package:less_waste_app/core/models/post.dart';
+import 'package:less_waste_app/core/models/user.dart';
+import 'package:less_waste_app/core/models/user_data.dart';
 import 'package:less_waste_app/core/services/auth.dart';
 import 'package:less_waste_app/core/services/database.dart';
 
@@ -11,6 +13,8 @@ class HomeModel extends BaseModel {
 
   final AuthService _authenticationService = locator<AuthService>();
   final DatabaseService database = DatabaseService();
+
+  Stream<UserData> user;
 
   Stream<List<Post>> getPosts() {
     setState(ViewState.Busy);
@@ -29,4 +33,11 @@ class HomeModel extends BaseModel {
     await database.updatePost(post);
     setState(ViewState.Idle);
   }
+
+  Stream<UserData> getCurrentUser(String id) {
+   user = database.getCurrentUserById(id);
+  }
+
+
+
 }
