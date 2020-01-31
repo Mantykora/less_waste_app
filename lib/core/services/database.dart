@@ -41,9 +41,24 @@ class DatabaseService {
   }
 
   Future updateUserById({String id, String name, String lastName, String description, String profilePhotoUrl}) async {
-    return userDataCollection.document(id).updateData(
-      {'name': name, 'lastName': lastName, 'description': description, 'profilePhotoUrl': profilePhotoUrl},
-    );
+
+    if (profilePhotoUrl != null) {
+      return userDataCollection.document(id).updateData(
+        {  'name': name,
+          'lastName': lastName,
+          'description': description,
+          'profilePhotoUrl': profilePhotoUrl
+        },
+      );
+    } else {
+      return userDataCollection.document(id).updateData(
+        {  'name': name,
+          'lastName': lastName,
+          'description': description,
+        },
+      );
+    }
+
   }
 
   Future updatePost(Post post) async {

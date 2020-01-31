@@ -174,9 +174,10 @@ class ProfileView extends StatelessWidget {
                           //upload profile photo, update user data
 
                           if (choosenPhoto != null) {
-                            model.uploadImage(image: choosenPhoto, userId: user.id);
+                            model.uploadImage(image: choosenPhoto, userId: user.id, name: nameController.text, lastName: lastNameController.text, description: aboutMeController.text);
+                          } else {
+                            model.updateUserById(userId: user.id, name: nameController.text, lastName: lastNameController.text, description: aboutMeController.text);
                           }
-                          model.updateUserById(userId: user.id, name: nameController.text, lastName: lastNameController.text, description: aboutMeController.text);
                         }),
                   )
                 ]),
