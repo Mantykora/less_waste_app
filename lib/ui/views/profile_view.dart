@@ -13,11 +13,30 @@ import 'package:provider/provider.dart';
 import 'base_view.dart';
 
 class ProfileView extends StatelessWidget {
+  final  String profileUserId;
+  ProfileView(this.profileUserId);
+
+
   @override
   Widget build(BuildContext context) {
+
     final currentUserId = Provider.of<User>(context).id;
+
+    bool isThisUserMe;
+    if (profileUserId != null) {
+      isThisUserMe = false;
+    } else {
+      isThisUserMe = true;
+    }
+
     final users = Provider.of<List<UserData>>(context);
-    UserData user = users.firstWhere((e) => e.id == currentUserId);
+
+    UserData user =
+    isThisUserMe
+    ? users.firstWhere((e) => e.id == currentUserId)
+    : users.firstWhere((e) => e.id == profileUserId);
+
+
 
     final TextEditingController nameController = TextEditingController(text: user.name);
     final TextEditingController lastNameController = TextEditingController(text: user.lastName);

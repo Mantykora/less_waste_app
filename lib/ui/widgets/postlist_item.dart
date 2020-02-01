@@ -75,8 +75,15 @@ class PostListItem extends StatelessWidget {
                               padding: const EdgeInsets.only(top: 8.0),
                               child: Row(
                                 children: <Widget>[
-                                  Text('autor: '),
-                                  Text(user.username),
+                                  Text('autor:'),
+                                  InkWell(
+                                      onTap: () {
+                                        Navigator.pushNamed(context, '/profile', arguments:  post.userId);
+                                      },
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Text(user.username, style: TextStyle(fontWeight: FontWeight.w600),),
+                                      )),
                                 ],
                               ),
                             ),

@@ -25,7 +25,7 @@ class Router {
       case '/create_post':
         return MaterialPageRoute(builder: (_) => CreatePostView());
       case '/profile':
-        return MaterialPageRoute(builder: (_) => ProfileView());
+        return MaterialPageRoute(builder: (_) => ProfileView(settings.arguments));
       default:
         return MaterialPageRoute(
             builder: (_) => Scaffold(
