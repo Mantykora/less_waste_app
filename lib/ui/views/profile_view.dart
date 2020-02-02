@@ -36,8 +36,6 @@ class ProfileView extends StatelessWidget {
     ? users.firstWhere((e) => e.id == currentUserId)
     : users.firstWhere((e) => e.id == profileUserId);
 
-
-
     final TextEditingController nameController = TextEditingController(text: user.name);
     final TextEditingController lastNameController = TextEditingController(text: user.lastName);
     final TextEditingController aboutMeController = TextEditingController(text: user.description);
@@ -178,9 +176,9 @@ class ProfileView extends StatelessWidget {
               SliverList(
                 //itemExtent: 50.0,
                 delegate: SliverChildListDelegate([
-                  ProfileTextField(nameController, "imię", false),
-                  ProfileTextField(lastNameController, "nazwisko", false),
-                  ProfileTextField(aboutMeController, "o mnie", true),
+                  ProfileTextField(nameController, "imię", false, isThisUserMe),
+                  ProfileTextField(lastNameController, "nazwisko", false, isThisUserMe),
+                  ProfileTextField(aboutMeController, "o mnie", true, isThisUserMe),
                   Padding(
                     padding: const EdgeInsets.only(top: 54.0, right: 24.0, left: 24.0),
                     child: RaisedButton(
