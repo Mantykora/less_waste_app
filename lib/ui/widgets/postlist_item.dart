@@ -111,7 +111,10 @@ class PostListItem extends StatelessWidget {
                               child: Row(
                                 children: <Widget>[
                                   Text(Provider.of<Post>(context) != null && Provider.of<Post>(context).likesCount != null ? Provider.of<Post>(context).likesCount.toString() : "0"),
-                                  Icon(Provider.of<List<Like>>(context) != null && Provider.of<List<Like>>(context).isNotEmpty ? Icons.star : Icons.star_border),
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 4.0),
+                                    child: Image.asset(Provider.of<List<Like>>(context) != null && Provider.of<List<Like>>(context).isNotEmpty ?  "assets/fern_full.png" : "assets/fern_empty.png"),
+                                  ),
                                 ],
                               ),
                             ),

@@ -48,6 +48,8 @@ flutter:
   assets:
     - assets/background.jpg
     - assets/earth.png
+    - assets/fern_full.png
+    - assets/fern_empty.png
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
