@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gradient_app_bar/gradient_app_bar.dart';
 import 'package:less_waste_app/core/enums/viewstate.dart';
 import 'package:less_waste_app/core/models/post.dart';
 import 'package:less_waste_app/core/models/user.dart';
@@ -73,6 +74,14 @@ class HomeView extends StatelessWidget {
                   ListTile(
                     leading: Icon(Icons.settings),
                     title: Text('Ustawienia'),
+                  ),
+                  ListTile(
+                    leading: Icon(Icons.info),
+                    title: Text('O aplikacji'),
+                    onTap: () async {
+                      Navigator.pop(context);
+                      Navigator.pushNamed(context, '/about');
+                    },
                   ),
                 ],
               ),
