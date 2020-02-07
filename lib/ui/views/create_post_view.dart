@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gradient_app_bar/gradient_app_bar.dart';
 import 'package:less_waste_app/core/enums/post_type.dart';
 import 'package:less_waste_app/core/models/post.dart';
 import 'package:less_waste_app/core/models/user.dart';
@@ -22,15 +23,9 @@ class CreatePostView extends StatelessWidget {
         builder: (context, model, child) => Scaffold(
               resizeToAvoidBottomInset: false,
 
-              appBar: AppBar(
-                title: Text('Create a post'),
-//            actions: <Widget>[
-//              IconButton(
-//                  onPressed: () async {
-//                    await model.logout();
-//                  },
-//                  icon: Icon(Icons.vpn_key))
-//            ],
+              appBar: GradientAppBar(
+                  title: Text('Flutter'),
+                  gradient: LinearGradient(colors: [Colors.blue, Theme.of(context).primaryColor])
               ),
               floatingActionButton: FloatingActionButton(
                 child: Icon(Icons.check),

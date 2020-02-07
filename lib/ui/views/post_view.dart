@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gradient_app_bar/gradient_app_bar.dart';
 import 'package:less_waste_app/core/models/comment.dart';
 import 'package:less_waste_app/core/models/like.dart';
 import 'package:less_waste_app/core/models/post.dart';
@@ -40,8 +41,9 @@ class PostView extends StatelessWidget {
         child: BaseView<PostModel>(
           // onModelReady: (model) { comments =  model.getComments(post.id); },
           builder: (context, model, child) => Scaffold(
-            appBar: AppBar(
-              title: Text('Post'),
+            appBar: GradientAppBar(
+                title: Text('Post'),
+                gradient: LinearGradient(colors: [Colors.blue, Theme.of(context).primaryColor])
             ),
             body: Padding(
               padding: const EdgeInsets.all(16.0),
