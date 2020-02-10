@@ -21,7 +21,7 @@ class PostListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<String> categories = ["Żywność", "Środki czystości", "Uroda", "Ubrania", "Inne"];
-    List assets = [Icons.fastfood, Icons.local_laundry_service, Icons.face, Icons.accessibility, Icons.autorenew];
+    List assets = ['assets/watermelon.png', 'assets/spray.png', 'assets/makeup.png', 'assets/dress.png', 'assets/idea.png'];
 
     final users = Provider.of<List<UserData>>(context);
     UserData user = users.firstWhere((e) => e.id == post.userId);
@@ -55,8 +55,8 @@ class PostListItem extends StatelessWidget {
                             mainAxisSize: MainAxisSize.min,
                             children: <Widget>[
                               Padding(
-                                padding: const EdgeInsets.only(right: 8.0, bottom: 8.0),
-                                child: Icon(assets[post.category]),
+                                padding: EdgeInsets.only(right: 8.0, bottom: 8.0),
+                                child: Image.asset(assets[post.category]),
                               ),
                               Text(
                                 categories[post.category],

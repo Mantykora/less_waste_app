@@ -22,7 +22,7 @@ class PostView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<String> categories = ["Żywność", "Środki czystości", "Uroda", "Ubrania", "Inne"];
-    List assets = [Icons.fastfood, Icons.local_laundry_service, Icons.face, Icons.accessibility, Icons.autorenew];
+    List assets = ['assets/watermelon.png', 'assets/spray.png', 'assets/makeup.png', 'assets/dress.png', 'assets/idea.png'];
 
     final users = Provider.of<List<UserData>>(context);
     UserData user = users.firstWhere((e) => e.id == post.userId);
@@ -58,7 +58,7 @@ class PostView extends StatelessWidget {
                         children: <Widget>[
                           Padding(
                             padding: const EdgeInsets.only(right: 8.0, bottom: 8.0),
-                            child: Icon(assets[post.category]),
+                            child: Image.asset(assets[post.category]),
                           ),
                           Text(
                             categories[post.category],
@@ -104,7 +104,10 @@ class PostView extends StatelessWidget {
                           child: Row(
                             children: <Widget>[
                               Text(Provider.of<Post>(context) != null && Provider.of<Post>(context).likesCount != null ? Provider.of<Post>(context).likesCount.toString() : "0"),
-                              Icon(Provider.of<List<Like>>(context) != null && Provider.of<List<Like>>(context).isNotEmpty ? Icons.star : Icons.star_border),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 4.0),
+                                child: Image.asset(Provider.of<List<Like>>(context) != null && Provider.of<List<Like>>(context).isNotEmpty ?  "assets/fern_full.png" : "assets/fern_empty.png"),
+                              ),
                             ],
                           ),
                         ),
