@@ -56,13 +56,20 @@ class CreatePostView extends StatelessWidget {
                     padding: const EdgeInsets.only(top: 16.0),
                     child: Column(
                       children: <Widget>[
-                        Text(
-                          'Wybierz kategorię do której zalicza się Twój post:',
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 16.0),
+                          child: Text(
+                            'Wybierz kategorię do której zalicza się Twój post:',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
                         ),
                         ListTile(
                           title: Row(
                             children: <Widget>[
+                              Padding(
+                                padding: const EdgeInsets.only(right: 8.0),
+                                child: Image.asset("assets/watermelon.png"),
+                              ),
                               const Text('Żywność'),
                             ],
                           ),
@@ -74,7 +81,15 @@ class CreatePostView extends StatelessWidget {
                               }),
                         ),
                         ListTile(
-                          title: const Text('Środki czystości'),
+                          title: Row(
+                            children: <Widget>[
+                              Padding(
+                                padding: const EdgeInsets.only(right: 8.0),
+                                child: Image.asset("assets/spray.png"),
+                              ),
+                              const Text('Środki czystości'),
+                            ],
+                          ),
                           leading: Radio(
                               value: PostType.cleaning,
                               groupValue: _postType,
@@ -85,7 +100,15 @@ class CreatePostView extends StatelessWidget {
                               }),
                         ),
                         ListTile(
-                          title: const Text('Uroda'),
+                          title: Row(
+                            children: <Widget>[
+                              Padding(
+                                padding: const EdgeInsets.only(right: 8.0),
+                                child: Image.asset("assets/makeup.png"),
+                              ),
+                              const Text('Uroda'),
+                            ],
+                          ),
                           leading: Radio(
                               value: PostType.beauty,
                               groupValue: _postType,
@@ -94,7 +117,15 @@ class CreatePostView extends StatelessWidget {
                               }),
                         ),
                         ListTile(
-                          title: const Text('Ubrania'),
+                          title: Row(
+                            children: <Widget>[
+                              Padding(
+                                padding: const EdgeInsets.only(right: 8.0),
+                                child: Image.asset("assets/dress.png"),
+                              ),
+                              const Text('Ubrania'),
+                            ],
+                          ),
                           leading: Radio(
                               value: PostType.clothes,
                               groupValue: _postType,
@@ -103,7 +134,15 @@ class CreatePostView extends StatelessWidget {
                               }),
                         ),
                         ListTile(
-                          title: const Text('Inne'),
+                          title: Row(
+                            children: <Widget>[
+                              Padding(
+                                padding: const EdgeInsets.only(right: 8.0),
+                                child: Image.asset("assets/idea.png"),
+                              ),
+                              const Text('Inne'),
+                            ],
+                          ),
                           leading: Radio(
                               value: PostType.others,
                               groupValue: _postType,
