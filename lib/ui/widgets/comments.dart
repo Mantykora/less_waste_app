@@ -37,7 +37,7 @@ class CommentItem extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(10.0),
       margin: EdgeInsets.symmetric(vertical: 10.0),
-      decoration: BoxDecoration(borderRadius: BorderRadius.circular(10.0), color: Color(0xffD2932C)),
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(10.0), color: Color(0xff00AB5E)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -45,7 +45,7 @@ class CommentItem extends StatelessWidget {
 //            comment.name,
 //            style: TextStyle(fontWeight: FontWeight.bold),
 //          ),
-          Text(comment.body),
+          Text(comment.body, style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500),),
         ],
       ),
     );

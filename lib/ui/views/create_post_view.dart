@@ -70,7 +70,7 @@ class CreatePostView extends StatelessWidget {
                                 padding: const EdgeInsets.only(right: 8.0),
                                 child: Image.asset("assets/watermelon.png"),
                               ),
-                              const Text('Żywność'),
+                              const Text('Żywność', ),
                             ],
                           ),
                           leading: Radio(
