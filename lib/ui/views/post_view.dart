@@ -127,9 +127,11 @@ class PostView extends StatelessWidget {
                           suffixIcon: IconButton(
                         icon: Icon(Icons.send),
                         onPressed: () {
-                          var success = model.addCommentToDatabase(Comment(body: _commentController.text), post.id, Provider.of<Post>(context).commentsCount);
-                          if (success != null) {
-                            _commentController.clear();
+                          if( _commentController.text.trim().isNotEmpty) {
+                            var success = model.addCommentToDatabase(Comment(body: _commentController.text), post.id, Provider.of<Post>(context).commentsCount);
+                            if (success != null) {
+                              _commentController.clear();
+                            }
                           }
                         },
                       ))),
