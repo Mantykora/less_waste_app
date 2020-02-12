@@ -13,13 +13,12 @@ import 'package:provider/provider.dart';
 import 'base_view.dart';
 
 class ProfileView extends StatelessWidget {
-  final  String profileUserId;
-  ProfileView(this.profileUserId);
+  final String profileUserId;
 
+  ProfileView(this.profileUserId);
 
   @override
   Widget build(BuildContext context) {
-
     final currentUserId = Provider.of<User>(context).id;
 
     bool isThisUserMe;
@@ -31,10 +30,7 @@ class ProfileView extends StatelessWidget {
 
     final users = Provider.of<List<UserData>>(context);
 
-    UserData user =
-    isThisUserMe
-    ? users.firstWhere((e) => e.id == currentUserId)
-    : users.firstWhere((e) => e.id == profileUserId);
+    UserData user = isThisUserMe ? users.firstWhere((e) => e.id == currentUserId) : users.firstWhere((e) => e.id == profileUserId);
 
     final TextEditingController nameController = TextEditingController(text: user.name);
     final TextEditingController lastNameController = TextEditingController(text: user.lastName);
@@ -77,96 +73,101 @@ class ProfileView extends StatelessWidget {
                               Align(
                                 alignment: Alignment.center,
                                 child: ClipOval(
-                                  child: InkWell(
-                                    customBorder: CircleBorder(),
-                                    onTap: () async {
-                                      imageSource = await _choosePhoto(context);
-                                      //TODO if imageSource != null
-                                      if (imageSource != null) {
-                                        File file = await ImagePicker.pickImage(source: imageSource);
-                                        //TODO only square cropp
-                                        await ImageCropper.cropImage(
-                                            sourcePath: file.path,
-                                            cropStyle: CropStyle.circle,
-                                            aspectRatioPresets: [
-                                              CropAspectRatioPreset.square,
-                                            ],
-                                            androidUiSettings: AndroidUiSettings(
-                                                toolbarTitle: 'Przytnij zdjęcie',
-                                                toolbarColor: Theme.of(context).primaryColor,
-                                                toolbarWidgetColor: Colors.white,
-                                                activeControlsWidgetColor: Theme.of(context).accentColor,
-                                                initAspectRatio: CropAspectRatioPreset.original,
-                                                lockAspectRatio: false),
-                                            iosUiSettings: IOSUiSettings(
-                                              minimumAspectRatio: 1.0,
-                                            )).then((image) {
-                                          isProfilePicFromServer = false;
-                                          choosenPhoto = image;
-                                          //model.uploadImage(image: image, userId: user.id);
-                                          model.setState(ViewState.Idle);
-                                        });
-                                      }
-
-                                    },
-                                    child:
-                                        //TODO remove photo
-                                        //no photo is shown
-                                        user.profilePhotoUrl == null && choosenPhoto == null
-                                            ? Container(
-                                                color: Colors.black38,
-                                                width: 150,
-                                                height: 150,
+                                    child: InkWell(
+                                  enableFeedback: true,
+                                  customBorder: CircleBorder(),
+                                  //disable onTap if user is not me
+                                  onTap: isThisUserMe
+                                      ? () async {
+                                          imageSource = await _choosePhoto(context);
+                                          //TODO if imageSource != null
+                                          if (imageSource != null) {
+                                            File file = await ImagePicker.pickImage(source: imageSource);
+                                            //TODO only square cropp
+                                            await ImageCropper.cropImage(
+                                                sourcePath: file.path,
+                                                cropStyle: CropStyle.circle,
+                                                aspectRatioPresets: [
+                                                  CropAspectRatioPreset.square,
+                                                ],
+                                                androidUiSettings: AndroidUiSettings(
+                                                    toolbarTitle: 'Przytnij zdjęcie',
+                                                    toolbarColor: Theme.of(context).primaryColor,
+                                                    toolbarWidgetColor: Colors.white,
+                                                    activeControlsWidgetColor: Theme.of(context).accentColor,
+                                                    initAspectRatio: CropAspectRatioPreset.original,
+                                                    lockAspectRatio: false),
+                                                iosUiSettings: IOSUiSettings(
+                                                  minimumAspectRatio: 1.0,
+                                                )).then((image) {
+                                              isProfilePicFromServer = false;
+                                              choosenPhoto = image;
+                                              //model.uploadImage(image: image, userId: user.id);
+                                              model.setState(ViewState.Idle);
+                                            });
+                                          }
+                                        }
+                                      : null,
+                                  child:
+                                      //TODO remove photo
+                                      //no photo is shown
+                                      user.profilePhotoUrl == null && choosenPhoto == null
+                                          ? Container(
+                                              color: Colors.black38,
+                                              width: 150,
+                                              height: 150,
+                                              child: Icon(
+                                                isThisUserMe ? Icons.add_a_photo : Icons.person,
+                                                color: Colors.white,
+                                                size: 45,
+                                              ),
+                                            )
+                                          //photo from the server
+                                          : isProfilePicFromServer
+                                              ? Container(
+                                                  height: 150,
+                                                  width: 150,
+                                                  child: Image.network(
+                                                    user.profilePhotoUrl,
+                                                    width: 150,
+                                                    height: 150,
+                                                    fit: BoxFit.fill,
+                                                  ))
+                                              //photo chosen from the gallery/camera
+                                              : Container(
+                                                  height: 150,
+                                                  width: 150,
+                                                  child: Image.file(
+                                                    choosenPhoto,
+                                                    width: 150,
+                                                    height: 150,
+                                                    fit: BoxFit.fill,
+                                                  )),
+                                )),
+                              ),
+                              isThisUserMe
+                              //hide delete if user is not me
+                                  ? Positioned(
+                                      right: 75.0,
+                                      // alignment: Alignment.center,
+                                      child: InkWell(
+                                        onTap: () {
+                                          model.deleteImage(userId: user.id);
+                                        },
+                                        child: ClipOval(
+                                          child: Container(
+                                              color: Colors.white,
+                                              child: Padding(
+                                                padding: const EdgeInsets.all(4.0),
                                                 child: Icon(
-                                                  Icons.add_a_photo,
-                                                  color: Colors.white,
-                                                  size: 45,
+                                                  Icons.delete,
+                                                  color: Theme.of(context).accentColor,
                                                 ),
-                                              )
-                                            //photo from the server
-                                            : isProfilePicFromServer
-                                                ? Container(
-                                                    height: 150,
-                                                    width: 150,
-                                                    child: Image.network(
-                                                      user.profilePhotoUrl,
-                                                      width: 150,
-                                                      height: 150,
-                                                      fit: BoxFit.fill,
-                                                    ))
-                                                //photo chosen from the gallery/camera
-                                                : Container(
-                                                    height: 150,
-                                                    width: 150,
-                                                    child: Image.file(
-                                                      choosenPhoto,
-                                                      width: 150,
-                                                      height: 150,
-                                                      fit: BoxFit.fill,
-                                                    )),
-                                  ),
-                                ),
-                              ),
-                              Positioned(
-                                right: 75.0,
-                                // alignment: Alignment.center,
-                                child: InkWell(
-                                  onTap: () {
-                                    model.deleteImage(userId: user.id);
-                                  },
-                                  child: ClipOval(
-                                    child: Container(
-                                        color: Colors.white,
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(4.0),
-                                          child: Icon(
-                                            Icons.delete,
-                                            color: Theme.of(context).accentColor,
-                                          ),
-                                        )),
-                                  ),
-                                ),
-                              ),
+                                              )),
+                                        ),
+                                      ),
+                                    )
+                                  : Container()
                             ],
                           )),
                     ],
@@ -179,24 +180,29 @@ class ProfileView extends StatelessWidget {
                   ProfileTextField(nameController, "imię", false, isThisUserMe),
                   ProfileTextField(lastNameController, "nazwisko", false, isThisUserMe),
                   ProfileTextField(aboutMeController, "o mnie", true, isThisUserMe),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 54.0, right: 24.0, left: 24.0),
-                    child: RaisedButton(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: new BorderRadius.circular(18.0),
-                        ),
-                        color: Theme.of(context).accentColor,
-                        child: Text("Zapisz"),
-                        onPressed: () {
-                          //upload profile photo, update user data
+                  isThisUserMe
+                      ? Padding(
+                          padding: const EdgeInsets.only(top: 54.0, right: 24.0, left: 24.0),
+                          child: RaisedButton(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: new BorderRadius.circular(18.0),
+                              ),
+                              color: Theme.of(context).accentColor,
+                              child: Text(
+                                "Zapisz",
+                                style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700),
+                              ),
+                              onPressed: () {
+                                //upload profile photo, update user data
 
-                          if (choosenPhoto != null) {
-                            model.uploadImage(image: choosenPhoto, userId: user.id, name: nameController.text, lastName: lastNameController.text, description: aboutMeController.text);
-                          } else {
-                            model.updateUserById(userId: user.id, name: nameController.text, lastName: lastNameController.text, description: aboutMeController.text);
-                          }
-                        }),
-                  )
+                                if (choosenPhoto != null) {
+                                  model.uploadImage(image: choosenPhoto, userId: user.id, name: nameController.text, lastName: lastNameController.text, description: aboutMeController.text);
+                                } else {
+                                  model.updateUserById(userId: user.id, name: nameController.text, lastName: lastNameController.text, description: aboutMeController.text);
+                                }
+                              }),
+                        )
+                      : Container()
                 ]),
               )
             ])));
