@@ -161,7 +161,9 @@ class ProfileView extends StatelessWidget {
                                                 padding: const EdgeInsets.all(4.0),
                                                 child: Icon(
                                                   Icons.delete,
-                                                  color: Theme.of(context).accentColor,
+                                                  color: Colors.blue,
+
+                                                //  Theme.of(context).accentColor,
                                                 ),
                                               )),
                                         ),
@@ -187,7 +189,9 @@ class ProfileView extends StatelessWidget {
                               shape: RoundedRectangleBorder(
                                 borderRadius: new BorderRadius.circular(18.0),
                               ),
-                              color: Theme.of(context).accentColor,
+                              color: Colors.blue,
+
+                              //Theme.of(context).accentColor,
                               child: Text(
                                 "Zapisz",
                                 style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700),
