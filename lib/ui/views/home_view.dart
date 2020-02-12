@@ -56,7 +56,7 @@ class HomeView extends StatelessWidget {
                     ),
                   ),
                   ListTile(
-                    leading: Icon(Icons.vpn_key),
+                    leading: Icon(Icons.vpn_key, color: Colors.teal),
                     title: Text('Wyloguj się'),
                     onTap: () async {
                       Navigator.pop(context);
@@ -64,7 +64,7 @@ class HomeView extends StatelessWidget {
                     },
                   ),
                   ListTile(
-                    leading: Icon(Icons.person),
+                    leading: Icon(Icons.person, color: Colors.teal),
                     title: Text('Profil'),
                     onTap: () async {
                       Navigator.pop(context);
@@ -72,11 +72,11 @@ class HomeView extends StatelessWidget {
                     },
                   ),
                   ListTile(
-                    leading: Icon(Icons.settings),
+                    leading: Icon(Icons.settings, color: Colors.teal),
                     title: Text('Ustawienia'),
                   ),
                   ListTile(
-                    leading: Icon(Icons.info),
+                    leading: Icon(Icons.info, color: Colors.teal),
                     title: Text('O aplikacji'),
                     onTap: () async {
                       Navigator.pop(context);
