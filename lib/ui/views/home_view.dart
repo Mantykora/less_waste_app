@@ -29,7 +29,7 @@ class HomeView extends StatelessWidget {
         onModelReady: (model) {},
         builder: (context, model, child) => Scaffold(
             appBar: GradientAppBar(
-                title: Text('Flutter'),
+                title: Text('Przeglądaj inspiracje'),
                 gradient: LinearGradient(colors: [Colors.blue, Theme.of(context).primaryColor])
             ),
             floatingActionButton: FloatingActionButton(

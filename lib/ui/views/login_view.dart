@@ -96,7 +96,7 @@ class _LoginViewState extends State<LoginView> {
                       FlatButton(
                         //color: Colors.white,
                         child: Text(
-                          'Register',
+                          'Rejestracja',
                           style: TextStyle(color: Colors.white),
                         ),
                         onPressed: () async {
@@ -112,7 +112,7 @@ class _LoginViewState extends State<LoginView> {
                         child: Text(
                           model.isForgotView
                           ? 'Login'
-                          : 'Forgot password',
+                          : 'Resetuj hasło',
                           style: TextStyle(color: Colors.white),
                         ),
                         onPressed: () async {

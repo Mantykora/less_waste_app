@@ -25,7 +25,7 @@ class LoginHeader extends StatelessWidget {
       LoginTextField(emailController, Icons.email, 'e-mail', false),
       Visibility(
           visible: !isForgot,
-          child: LoginTextField(passController, Icons.lock_outline, 'password', true)),
+          child: LoginTextField(passController, Icons.lock_outline, 'hasło', true)),
       this.validationMessage != null ? Text(validationMessage, style: TextStyle(color: Colors.red)) : Container()
     ]);
   }

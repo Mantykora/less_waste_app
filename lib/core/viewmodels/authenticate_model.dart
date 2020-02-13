@@ -75,15 +75,15 @@ class AuthenticateModel extends BaseModel {
     bool emailValid = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(email);
 
     if (password.isEmpty || email.isEmpty) {
-      errorMessage = 'All fields are required';
+      errorMessage = 'Wszystkie pola są wymagane';
       setState(ViewState.Idle);
       return false;
     } else if (password.length < 6) {
-      errorMessage = 'Password must contain at least 6 characters';
+      errorMessage = 'Hasło musi zawierać conajmniej 6 znaków';
       setState(ViewState.Idle);
       return false;
     } else if (!emailValid) {
-      errorMessage = 'Please enter a valid e-mail address';
+      errorMessage = 'Podaj proszę prawidłowy adres e-mail';
       setState(ViewState.Idle);
       return false;
     }

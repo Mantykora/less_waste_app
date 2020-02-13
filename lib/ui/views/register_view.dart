@@ -60,7 +60,7 @@ class _RegisterViewState extends State<RegisterView> {
                                   ),
                                   color: Colors.white,
                                   child: Text(
-                                    'Register',
+                                    'Zarejestruj się',
                                     style: TextStyle(color: Colors.black),
                                   ),
                                   onPressed: () async {
@@ -88,7 +88,7 @@ class _RegisterViewState extends State<RegisterView> {
                       FlatButton(
                         //color: Colors.white,
                         child: Text(
-                          'Login',
+                          'Logowanie',
                           style: TextStyle(color: Colors.white),
                         ),
                         onPressed: () async {
