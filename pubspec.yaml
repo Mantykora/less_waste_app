@@ -55,6 +55,8 @@ flutter:
     - assets/spray.png
     - assets/watermelon.png
     - assets/idea.png
+    - assets/gallery.png
+    - assets/photograph.png
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.

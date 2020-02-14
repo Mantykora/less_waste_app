@@ -27,7 +27,7 @@ class AboutAppView extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: <Widget>[
-            Text("Ikonki wykonane przez Freepik z www.flaticon.com")
+            Text("Ikonki wykonane przez Freepik oraz Kiranshastry z www.flaticon.com")
           ],
         ),
       ),

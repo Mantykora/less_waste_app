@@ -218,19 +218,38 @@ Future<ImageSource> _choosePhoto(BuildContext context) async {
       context: context,
       builder: (BuildContext context) {
         return SimpleDialog(
-          title: const Text('Dodaj zdjęcie:'),
+          shape:  RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(20.0))
+          ),
+          title: const Text('Dodaj zdjęcie'),
           children: <Widget>[
             SimpleDialogOption(
               onPressed: () {
                 Navigator.pop(context, DialogType.camera);
               },
-              child: const Text('Z aparatu'),
+              child: Row(
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.only(right: 8.0),
+                    child: Image.asset("assets/photograph.png"),
+                  ),
+                  const Text('Aparat'),
+                ],
+              ),
             ),
             SimpleDialogOption(
               onPressed: () {
                 Navigator.pop(context, DialogType.gallery);
               },
-              child: const Text('Z galerii'),
+              child: Row(
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.only(right: 8.0),
+                    child: Image.asset("assets/gallery.png"),
+                  ),
+                  const Text('Galeria'),
+                ],
+              ),
             ),
           ],
         );
