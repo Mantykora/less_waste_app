@@ -46,6 +46,14 @@ class CommentItem extends StatelessWidget {
 //            style: TextStyle(fontWeight: FontWeight.bold),
 //          ),
           Text(comment.body, style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500),),
+
+          Row(
+            children: <Widget>[
+              Text('autor: ', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500),),
+              Text(comment.userName, style: TextStyle(color: Colors.white, fontWeight: FontWeight.w900),),
+            ],
+          ),
+
         ],
       ),
     );

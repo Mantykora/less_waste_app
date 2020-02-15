@@ -7,7 +7,7 @@ import 'base_model.dart';
 class PostModel extends BaseModel {
   final DatabaseService database = DatabaseService();
 
-  Future addCommentToDatabase(Comment comment, String postId, int postCount) async {
+  Future addCommentToDatabase(Comment comment, String postId, int postCount,) async {
     setState(ViewState.Busy);
     await database.updateComment(comment, postId).then((onValue) {
       print('comment added to database');

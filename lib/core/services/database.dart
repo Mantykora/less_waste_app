@@ -107,18 +107,20 @@ class DatabaseService {
         .map(_postListFromSnapshot);
   }
 
-  Future updateComment(Comment comment, String postId) async {
+  Future updateComment(Comment comment, String postId,) async {
     return await postsCollection.document(postId).collection('comments')
         .document()
         .setData({
       'body': comment.body,
+      'userName': comment.userName,
+      'userId': comment.userId,
       'time': Timestamp.now(),
     });
   }
 
   List<Comment> _commentsListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.documents.map((doc) {
-      return Comment(body: doc.data['body']);
+      return Comment(body: doc.data['body'], userName: doc.data['userName'], userId: doc.data['userName']);
     }).toList();
   }
 

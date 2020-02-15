@@ -1,7 +1,8 @@
 class Comment {
   int postId;
   int id;
-  String name;
+  String userName;
+  String userId;
   String email;
   String body;
   String time;
@@ -9,7 +10,8 @@ class Comment {
   Comment({
     this.postId,
     this.id,
-    this.name,
+    this.userName,
+    this.userId,
     this.email,
     this.body,
     this.time,
@@ -18,7 +20,8 @@ class Comment {
   Comment.fromJson(Map<String, dynamic> json) {
     postId = json['postId'];
     id = json['id'];
-    name = json['name'];
+    userName = json['userName'];
+    userId = json['userId'];
     email = json['email'];
     body = json['body'];
     time = json['time'];
@@ -28,7 +31,8 @@ class Comment {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['postId'] = this.postId;
     data['id'] = this.id;
-    data['name'] = this.name;
+    data['userName'] = this.userName;
+    data['userId'] = this.userId;
     data['email'] = this.email;
     data['body'] = this.body;
     data['time'] = this.time;
