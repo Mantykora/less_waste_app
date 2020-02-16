@@ -120,7 +120,7 @@ class DatabaseService {
 
   List<Comment> _commentsListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.documents.map((doc) {
-      return Comment(body: doc.data['body'], userName: doc.data['userName'], userId: doc.data['userName']);
+      return Comment(body: doc.data['body'], userName: doc.data['userName'], userId: doc.data['userId']);
     }).toList();
   }
 

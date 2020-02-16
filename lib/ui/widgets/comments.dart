@@ -47,11 +47,18 @@ class CommentItem extends StatelessWidget {
 //          ),
           Text(comment.body, style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500),),
 
-          Row(
-            children: <Widget>[
-              Text('autor: ', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500),),
-              Text(comment.userName, style: TextStyle(color: Colors.white, fontWeight: FontWeight.w900),),
-            ],
+          Padding(
+            padding: const EdgeInsets.only(top: 8.0),
+            child: InkWell(
+              onTap: () {
+                Navigator.pushNamed(context, '/profile', arguments: comment.userId);},
+              child: Row(
+                children: <Widget>[
+                  Text('autor: ', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500),),
+                  Text(comment.userName, style: TextStyle(color: Colors.white, fontWeight: FontWeight.w900),),
+                ],
+              ),
+            ),
           ),
 
         ],
