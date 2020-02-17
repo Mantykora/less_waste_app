@@ -72,7 +72,16 @@ class PostListItem extends StatelessWidget {
                         padding: const EdgeInsets.only(top: 8.0),
                         child: Row(
                           children: <Widget>[
-                            Text('autor:'),
+                           // Text('autor:'),
+                            user.profilePhotoUrl != null
+                            ? ClipOval(
+                              child: Container(
+                                  child: Image.network(user.profilePhotoUrl),
+                                 width: 40,
+                                height: 40,
+                              ),
+                            )
+                            : Container(),
                             InkWell(
                                 onTap: () {
                                   Navigator.pushNamed(context, '/profile', arguments: post.userId);
@@ -81,7 +90,7 @@ class PostListItem extends StatelessWidget {
                                   padding: const EdgeInsets.all(8.0),
                                   child: Text(
                                     user.username,
-                                    style: TextStyle(fontWeight: FontWeight.w600),
+                                    style: TextStyle(fontWeight: FontWeight.w600, fontSize: 17),
                                   ),
                                 )),
                           ],
