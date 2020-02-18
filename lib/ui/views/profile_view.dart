@@ -43,6 +43,7 @@ class ProfileView extends StatelessWidget {
 
     bool isProfilePicFromServer = true;
 
+    //TODO 2 show loading indication, alert/sth after updating profile
     return BaseView<ProfileModel>(
         builder: (context, model, child) => Scaffold(
                 body: CustomScrollView(slivers: <Widget>[

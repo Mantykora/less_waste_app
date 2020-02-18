@@ -69,31 +69,34 @@ class PostListItem extends StatelessWidget {
                       ),
                       (post.body.length > 100) ? Text("${post.body.substring(0, 100)}...") : Text(post.body),
                       Padding(
-                        padding: const EdgeInsets.only(top: 8.0),
-                        child: Row(
-                          children: <Widget>[
-                           // Text('autor:'),
-                            user.profilePhotoUrl != null
-                            ? ClipOval(
-                              child: Container(
-                                  child: Image.network(user.profilePhotoUrl),
-                                 width: 40,
-                                height: 40,
-                              ),
-                            )
-                            : Container(),
-                            InkWell(
-                                onTap: () {
-                                  Navigator.pushNamed(context, '/profile', arguments: post.userId);
-                                },
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text(
-                                    user.username,
-                                    style: TextStyle(fontWeight: FontWeight.w600, fontSize: 17),
+                        padding: const EdgeInsets.only(top: 16.0),
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.pushNamed(context, '/profile', arguments: post.userId);
+                          },
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                             // Text('autor:'),
+                              user.profilePhotoUrl != null
+                              ? ClipOval(
+                                child: Container(
+                                    child: Image.network(user.profilePhotoUrl),
+                                   width: 40,
+                                  height: 40,
+                                ),
+                              )
+                              : Container(),
+                              //TODO 1 inkwell na całość
+                               Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text(
+                                      user.username,
+                                      style: TextStyle(fontWeight: FontWeight.w600, fontSize: 17),
+                                    ),
                                   ),
-                                )),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                       Padding(
