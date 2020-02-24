@@ -52,11 +52,32 @@ class CommentItem extends StatelessWidget {
             child: InkWell(
               onTap: () {
                 Navigator.pushNamed(context, '/profile', arguments: comment.userId);},
-              child: Row(
-                children: <Widget>[
-                  Text('autor: ', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500),),
-                  Text(comment.userName, style: TextStyle(color: Colors.white, fontWeight: FontWeight.w900),),
-                ],
+              child: InkWell(
+                onTap: () {
+                  Navigator.pushNamed(context, '/profile', arguments: comment.userId);
+                },
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    // Text('autor:'),
+                    comment.profilePhotoUrl != null
+                        ? ClipOval(
+                      child: Container(
+                        child: Image.network(comment.profilePhotoUrl),
+                        width: 30,
+                        height: 30,
+                      ),
+                    )
+                        : Container(),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        comment.userName,
+                        style: TextStyle(fontWeight: FontWeight.w600, fontSize: 17),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

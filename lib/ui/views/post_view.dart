@@ -90,7 +90,6 @@ class PostView extends StatelessWidget {
                             ),
                           )
                               : Container(),
-                          //TODO 1 inkwell na całość
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
@@ -150,7 +149,7 @@ class PostView extends StatelessWidget {
                         icon: Icon(Icons.send),
                         onPressed: () {
                           if( _commentController.text.trim().isNotEmpty) {
-                            var success = model.addCommentToDatabase(Comment(body: _commentController.text, userId: user.id,  userName: user.username), post.id, Provider.of<Post>(context).commentsCount);
+                            var success = model.addCommentToDatabase(Comment(body: _commentController.text, userId: user.id,  userName: user.username, profilePhotoUrl: user.profilePhotoUrl), post.id, Provider.of<Post>(context).commentsCount);
                             if (success != null) {
                               _commentController.clear();
                             }

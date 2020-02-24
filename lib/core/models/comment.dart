@@ -6,6 +6,7 @@ class Comment {
   String email;
   String body;
   String time;
+  String profilePhotoUrl;
 
   Comment({
     this.postId,
@@ -15,6 +16,7 @@ class Comment {
     this.email,
     this.body,
     this.time,
+    this.profilePhotoUrl
   });
 
   Comment.fromJson(Map<String, dynamic> json) {
@@ -25,6 +27,7 @@ class Comment {
     email = json['email'];
     body = json['body'];
     time = json['time'];
+    profilePhotoUrl = json['profilePhotoUrl'];
   }
 
   Map<String, dynamic> toJson() {
@@ -36,6 +39,7 @@ class Comment {
     data['email'] = this.email;
     data['body'] = this.body;
     data['time'] = this.time;
+    data['profilePhotoUrl'] = this.profilePhotoUrl;
     return data;
   }
 }

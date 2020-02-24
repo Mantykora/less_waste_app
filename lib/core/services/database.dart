@@ -115,12 +115,13 @@ class DatabaseService {
       'userName': comment.userName,
       'userId': comment.userId,
       'time': Timestamp.now(),
+      'profilePhotoUrl': comment.profilePhotoUrl
     });
   }
 
   List<Comment> _commentsListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.documents.map((doc) {
-      return Comment(body: doc.data['body'], userName: doc.data['userName'], userId: doc.data['userId']);
+      return Comment(body: doc.data['body'], userName: doc.data['userName'], userId: doc.data['userId'], profilePhotoUrl: doc.data['profilePhotoUrl']);
     }).toList();
   }
 
