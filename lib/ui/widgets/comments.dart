@@ -73,7 +73,7 @@ class CommentItem extends StatelessWidget {
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
                         comment.userName,
-                        style: TextStyle(fontWeight: FontWeight.w600, fontSize: 17),
+                        style: TextStyle(fontWeight: FontWeight.w600, fontSize: 17, color: Colors.white),
                       ),
                     ),
                   ],
