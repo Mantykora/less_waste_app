@@ -6,8 +6,9 @@ import 'package:less_waste_app/core/models/user_data.dart';
 import 'package:less_waste_app/core/utils/get_text_for_comments.dart';
 import 'package:less_waste_app/core/viewmodels/post_model.dart';
 import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
 
-class PostMain extends StatelessWidget {
+class PostMain extends StatefulWidget {
   final String image;
   final String text;
   final Post post;
@@ -16,6 +17,11 @@ class PostMain extends StatelessWidget {
 
   PostMain({this.image, this.text, this.post, this.user, this.model});
 
+  @override
+  _PostMainState createState() => _PostMainState();
+}
+
+class _PostMainState extends State<PostMain> {
   @override
   Widget build(BuildContext context) {
     return   Column(
@@ -28,10 +34,10 @@ class PostMain extends StatelessWidget {
               children: <Widget>[
                 Padding(
                   padding: const EdgeInsets.only(right: 8.0, bottom: 8.0),
-                  child: Image.asset(image),
+                  child: Image.asset(widget.image),
                 ),
                 Text(
-                  text,
+                  widget.text,
                   //'Żywność',
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
@@ -39,21 +45,24 @@ class PostMain extends StatelessWidget {
             ),
           ),
         ),
-        Text(post.body),
+        Text(widget.post.body),
+        Text(
+            timeFromNow(widget.post.timeStamp)
+                ),
         Padding(
           padding: const EdgeInsets.only(top: 16.0),
           child: InkWell(
             onTap: () {
-              Navigator.pushNamed(context, '/profile', arguments: post.userId);
+              Navigator.pushNamed(context, '/profile', arguments: widget.post.userId);
             },
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 // Text('autor:'),
-                user.profilePhotoUrl != null
+                widget.user.profilePhotoUrl != null
                     ? ClipOval(
                   child: Container(
-                    child: Image.network(user.profilePhotoUrl),
+                    child: Image.network(widget.user.profilePhotoUrl),
                     width: 40,
                     height: 40,
                   ),
@@ -62,7 +71,7 @@ class PostMain extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    user.username,
+                    widget.user.username,
                     style: TextStyle(fontWeight: FontWeight.w600, fontSize: 17),
                   ),
                 ),
@@ -80,14 +89,14 @@ class PostMain extends StatelessWidget {
                   if (Provider.of<List<Like>>(context) != null && Provider.of<List<Like>>(context).isNotEmpty) {
                     String likeId = Provider.of<List<Like>>(context).first.id;
                     print(likeId);
-                    model.deleteLike(likeId, post.id, Provider.of<Post>(context).likesCount);
+                    widget.model.deleteLike(likeId, widget.post.id, Provider.of<Post>(context).likesCount);
                   } else {
-                    model.updateLike(
+                    widget.model.updateLike(
                         Like(
                           userId: Provider.of<User>(context).id,
-                          postId: post.id,
+                          postId: widget.post.id,
                         ),
-                        post.id,
+                        widget.post.id,
                         Provider.of<Post>(context).likesCount);
                   }
                 },
@@ -112,5 +121,21 @@ class PostMain extends StatelessWidget {
       ],
     );
   }
+}
 
+String timeFromNow(int postTime) {
+
+  DateTime postTimeDate = DateTime.fromMillisecondsSinceEpoch(postTime);
+
+  DateTime now = DateTime.now();
+  var difference = now.difference(postTimeDate);
+
+  if (difference < Duration(minutes: 1)) {
+    return "przed chwilą";
+  }
+  else {
+    return "poźniej";
+  }
+
+  //return difference.inSeconds;
 }
