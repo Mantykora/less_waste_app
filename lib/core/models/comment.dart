@@ -5,7 +5,7 @@ class Comment {
   String userId;
   String email;
   String body;
-  String time;
+  int time;
   String profilePhotoUrl;
 
   Comment({

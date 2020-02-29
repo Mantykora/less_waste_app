@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:less_waste_app/core/enums/viewstate.dart';
 import 'package:less_waste_app/core/models/comment.dart';
+import 'package:less_waste_app/core/utils/postTime.dart';
 import 'package:less_waste_app/core/viewmodels/post_model.dart';
 import 'package:less_waste_app/ui/views/base_view.dart';
 
@@ -46,7 +47,11 @@ class CommentItem extends StatelessWidget {
 //            style: TextStyle(fontWeight: FontWeight.bold),
 //          ),
           Text(comment.body, style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500),),
-
+          Padding(
+            padding: const EdgeInsets.only(top: 8.0),
+            child: Text(
+              timeFromNow(comment.time), style: TextStyle(fontSize: 12, color: Colors.white),),
+          ),
           Padding(
             padding: const EdgeInsets.only(top: 8.0),
             child: InkWell(
@@ -68,7 +73,17 @@ class CommentItem extends StatelessWidget {
                         height: 30,
                       ),
                     )
-                        : Container(),
+                        :  ClipOval(
+                      child: Container(
+                        color: Colors.black12,
+                        child: Icon(
+                          Icons.person,
+                          color: Colors.white,
+                        ),
+                        width: 40,
+                        height: 40,
+                      ),
+                    ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
