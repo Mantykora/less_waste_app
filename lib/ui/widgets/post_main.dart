@@ -3,6 +3,7 @@ import 'package:less_waste_app/core/models/like.dart';
 import 'package:less_waste_app/core/models/post.dart';
 import 'package:less_waste_app/core/models/user.dart';
 import 'package:less_waste_app/core/models/user_data.dart';
+import 'package:less_waste_app/core/services/database.dart';
 import 'package:less_waste_app/core/utils/get_text_for_comments.dart';
 import 'package:less_waste_app/core/utils/postTime.dart';
 import 'package:less_waste_app/core/viewmodels/post_model.dart';
@@ -47,6 +48,9 @@ class _PostMainState extends State<PostMain> {
           ),
         ),
         Text(widget.post.body),
+        IconButton(icon: Icon(Icons.delete), onPressed: () {
+          widget.model.deletePost(widget.post);
+        }),
         Padding(
           padding: const EdgeInsets.only(top: 8.0),
           child: Text(

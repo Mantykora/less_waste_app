@@ -1,6 +1,7 @@
 import 'package:less_waste_app/core/enums/viewstate.dart';
 import 'package:less_waste_app/core/models/comment.dart';
 import 'package:less_waste_app/core/models/like.dart';
+import 'package:less_waste_app/core/models/post.dart';
 import 'package:less_waste_app/core/services/database.dart';
 import 'base_model.dart';
 
@@ -28,10 +29,18 @@ class PostModel extends BaseModel {
     await database.updateLikesCountPostById(postId, likesCount);
   }
 
+  Future deletePost(Post post) async {
+    await database.deletePost(post);
+  }
+
   Stream<List<Comment>> getComments(String postId) {
     setState(ViewState.Busy);
     database.getComments(postId);
     setState(ViewState.Idle);
+  }
+
+  Future deleteComment(String postId, Comment comment) async {
+    await database.deleteComment(comment, postId);
   }
 
   Future updateLike(Like like, String postId, int likesCount) async {

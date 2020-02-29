@@ -80,6 +80,11 @@ class DatabaseService {
     });
   }
 
+  Future deletePost(Post post) async {
+    postsCollection.document(post.id)
+        .delete();
+  }
+
   Future updatePostById(String id, int count) async {
     return postsCollection.document(id).updateData({'count': count});
   }
@@ -117,6 +122,12 @@ class DatabaseService {
       'time': comment.time,
       'profilePhotoUrl': comment.profilePhotoUrl
     });
+  }
+
+  Future deleteComment(Comment comment, String postId) async {
+    return await postsCollection.document(postId).collection('comments')
+        .document(comment.id.toString())
+        .delete();
   }
 
   List<Comment> _commentsListFromSnapshot(QuerySnapshot snapshot) {
