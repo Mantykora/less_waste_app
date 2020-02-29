@@ -46,11 +46,13 @@ class _PostMainState extends State<PostMain> {
           ),
         ),
         Text(widget.post.body),
-        Text(
-            timeFromNow(widget.post.timeStamp)
-                ),
         Padding(
-          padding: const EdgeInsets.only(top: 16.0),
+          padding: const EdgeInsets.only(top: 8.0),
+          child: Text(
+              timeFromNow(widget.post.timeStamp), style: TextStyle(fontSize: 12),),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(top: 8.0),
           child: InkWell(
             onTap: () {
               Navigator.pushNamed(context, '/profile', arguments: widget.post.userId);
@@ -67,7 +69,17 @@ class _PostMainState extends State<PostMain> {
                     height: 40,
                   ),
                 )
-                    : Container(),
+                    :  ClipOval(
+                  child: Container(
+                    color: Colors.black12,
+                    child: Icon(
+                      Icons.person,
+                      color: Colors.white,
+                    ),
+                    width: 40,
+                    height: 40,
+                  ),
+                ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
@@ -133,9 +145,12 @@ String timeFromNow(int postTime) {
   if (difference < Duration(minutes: 1)) {
     return "przed chwilą";
   }
-  else {
-    return "poźniej";
-  }
+  else if  (difference < Duration(minutes: 60)){
+    return "${difference.inMinutes} min";
+  } else if (difference < Duration(hours: 24)) {
+    return "${difference.inHours} h";
+  } else return
+    DateFormat("dd MMMM o HH:mm ").format(postTimeDate);
 
   //return difference.inSeconds;
 }
