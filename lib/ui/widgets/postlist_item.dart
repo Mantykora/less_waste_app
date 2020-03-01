@@ -25,12 +25,17 @@ class PostListItem extends StatelessWidget {
     List assets = ['assets/watermelon.png', 'assets/spray.png', 'assets/makeup.png', 'assets/dress.png', 'assets/idea.png'];
 
     final users = Provider.of<List<UserData>>(context);
-    UserData user = users.firstWhere((e) => e.id == post.userId);
+
+    UserData user;
+    if (post != null && post.userId != null) {
+      user = users.firstWhere((e) => e.id == post.userId);
+    }
 
     return MultiProvider(
       providers: [
         StreamProvider<Post>.value(
-          value: DatabaseService().getPostById(post.id),
+          value: post.id != null ? DatabaseService().getPostById(post.id) : null,
+          catchError: (_, err) => Post()
         ),
         StreamProvider<List<Like>>.value(
             value: DatabaseService().getUserLikeForPost(
