@@ -43,14 +43,18 @@ class _PostMainState extends State<PostMain> {
                   //'Żywność',
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
+                Spacer(),
+                IconButton(icon: Icon(Icons.more_horiz), onPressed: () {
+                  _settingModalBottomSheet(context, widget.model, widget.post);
+  },)
               ],
             ),
           ),
         ),
         Text(widget.post.body),
-        IconButton(icon: Icon(Icons.delete), onPressed: () {
-          widget.model.deletePost(widget.post);
-        }),
+//        IconButton(icon: Icon(Icons.delete), onPressed: () {
+//          widget.model.deletePost(widget.post);
+//        }),
         Padding(
           padding: const EdgeInsets.only(top: 8.0),
           child: Text(
@@ -140,3 +144,28 @@ class _PostMainState extends State<PostMain> {
   }
 }
 
+void _settingModalBottomSheet(context, model, post){
+  showModalBottomSheet(
+      context: context,
+      builder: (BuildContext bc){
+        return Container(
+          child: new Wrap(
+            children: <Widget>[
+              new ListTile(
+                  leading: new Icon(Icons.edit),
+                  title: new Text('Edytuj'),
+                  onTap: () => {}
+              ),
+              new ListTile(
+                leading: new Icon(Icons.delete),
+                title: new Text('Usuń'),
+                onTap: () => {
+                model.deletePost(post)
+              },
+              ),
+            ],
+          ),
+        );
+      }
+  );
+}
