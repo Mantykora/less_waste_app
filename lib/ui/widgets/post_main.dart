@@ -17,15 +17,23 @@ class PostMain extends StatefulWidget {
   final UserData user;
   final PostModel model;
 
-  PostMain({this.image, this.text, this.post, this.user, this.model});
+
+  PostMain({this.image, this.text, this.post, this.user, this.model,});
 
   @override
   _PostMainState createState() => _PostMainState();
 }
 
 class _PostMainState extends State<PostMain> {
+
+  bool isThisUserMe = false;
+
+
   @override
   Widget build(BuildContext context) {
+    if (Provider.of<User>(context).id == widget.user.id) {
+      isThisUserMe = true;
+    };
     return   Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -44,9 +52,11 @@ class _PostMainState extends State<PostMain> {
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 Spacer(),
-                IconButton(icon: Icon(Icons.more_horiz), onPressed: () {
+                isThisUserMe
+                ? IconButton(icon: Icon(Icons.more_horiz), onPressed: () {
                   _settingModalBottomSheet(context, widget.model, widget.post);
-  },)
+                  },)
+                    : Container()
               ],
             ),
           ),
