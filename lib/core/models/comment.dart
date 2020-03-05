@@ -1,6 +1,6 @@
 class Comment {
-  int postId;
-  int id;
+  String postId;
+  String id;
   String userName;
   String userId;
   String email;

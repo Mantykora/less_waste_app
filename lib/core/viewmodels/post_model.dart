@@ -40,7 +40,7 @@ class PostModel extends BaseModel {
   }
 
   Future deleteComment(String postId, Comment comment) async {
-    await database.deleteComment(comment, postId);
+    await database.deleteComment(postId: postId, comment: comment);
   }
 
   Future updateLike(Like like, String postId, int likesCount) async {

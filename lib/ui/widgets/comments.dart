@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:less_waste_app/core/enums/viewstate.dart';
 import 'package:less_waste_app/core/models/comment.dart';
+import 'package:less_waste_app/core/models/user.dart';
 import 'package:less_waste_app/core/utils/postTime.dart';
 import 'package:less_waste_app/core/viewmodels/post_model.dart';
 import 'package:less_waste_app/ui/views/base_view.dart';
+import 'package:provider/provider.dart';
+import 'package:provider/provider.dart';
+import 'package:provider/provider.dart';
 
 class Comments extends StatelessWidget {
   final String postId;
@@ -21,7 +25,7 @@ class Comments extends StatelessWidget {
               physics: NeverScrollableScrollPhysics(),
               itemCount: comments != null && comments.isNotEmpty ? comments.length : 0,
               itemBuilder: (context, index) => CommentItem(
-                    comment: comments[index],
+                    comment: comments[index], model: model,
                   )),
     );
   }
@@ -30,11 +34,19 @@ class Comments extends StatelessWidget {
 /// Renders a single comment given a comment model
 class CommentItem extends StatelessWidget {
   final Comment comment;
+  final PostModel model;
 
-  const CommentItem({this.comment});
+  bool isThisUserMe = false;
+
+  CommentItem({this.comment, this.model});
 
   @override
   Widget build(BuildContext context) {
+
+    if (Provider.of<User>(context).id == comment.userId) {
+      isThisUserMe = true;
+    };
+
     return Container(
       padding: EdgeInsets.all(10.0),
       margin: EdgeInsets.symmetric(vertical: 10.0),
@@ -46,7 +58,16 @@ class CommentItem extends StatelessWidget {
 //            comment.name,
 //            style: TextStyle(fontWeight: FontWeight.bold),
 //          ),
-          Text(comment.body, style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500),),
+          Row(
+            children: <Widget>[
+              Text(comment.body, style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500),),
+              isThisUserMe
+                  ? IconButton(icon: Icon(Icons.more_horiz), onPressed: () {
+                _settingModalBottomSheet(context, model, comment, comment.postId);
+              },)
+                  : Container()
+            ],
+          ),
           Padding(
             padding: const EdgeInsets.only(top: 8.0),
             child: Text(
@@ -101,4 +122,30 @@ class CommentItem extends StatelessWidget {
       ),
     );
   }
+}
+
+void _settingModalBottomSheet( context, PostModel model, Comment comment, String postId){
+  showModalBottomSheet(
+      context: context,
+      builder: (BuildContext bc){
+        return Container(
+          child: new Wrap(
+            children: <Widget>[
+              new ListTile(
+                  leading: new Icon(Icons.edit),
+                  title: new Text('Edytuj'),
+                  onTap: () => {}
+              ),
+              new ListTile(
+                leading: new Icon(Icons.delete),
+                title: new Text('Usuń'),
+                onTap: () => {
+                  model.deleteComment(postId, comment)
+                },
+              ),
+            ],
+          ),
+        );
+      }
+  );
 }

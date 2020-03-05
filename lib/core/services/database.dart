@@ -26,13 +26,15 @@ class DatabaseService {
 
   Stream<UserData> getCurrentUserById(String id) {
     return userDataCollection.document(id).snapshots().map((doc) {
-      return UserData(id: doc.documentID, username: doc.data['login'], name: doc.data['name'], lastName: doc.data['lastName'], description: doc.data['description'], profilePhotoUrl: doc.data['profilePhotoUrl']);
+      return UserData(
+          id: doc.documentID, username: doc.data['login'], name: doc.data['name'], lastName: doc.data['lastName'], description: doc.data['description'], profilePhotoUrl: doc.data['profilePhotoUrl']);
     });
   }
 
   List<UserData> _userListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.documents.map((doc) {
-      return UserData(id: doc.documentID, username: doc.data['login'], name: doc.data['name'], lastName: doc.data['lastName'], description: doc.data['description'], profilePhotoUrl: doc.data['profilePhotoUrl']);
+      return UserData(
+          id: doc.documentID, username: doc.data['login'], name: doc.data['name'], lastName: doc.data['lastName'], description: doc.data['description'], profilePhotoUrl: doc.data['profilePhotoUrl']);
     }).toList();
   }
 
@@ -41,24 +43,19 @@ class DatabaseService {
   }
 
   Future updateUserById({String id, String name, String lastName, String description, String profilePhotoUrl}) async {
-
     if (profilePhotoUrl != null) {
       return userDataCollection.document(id).updateData(
-        {  'name': name,
-          'lastName': lastName,
-          'description': description,
-          'profilePhotoUrl': profilePhotoUrl
-        },
+        {'name': name, 'lastName': lastName, 'description': description, 'profilePhotoUrl': profilePhotoUrl},
       );
     } else {
       return userDataCollection.document(id).updateData(
-        {  'name': name,
+        {
+          'name': name,
           'lastName': lastName,
           'description': description,
         },
       );
     }
-
   }
 
   Future updatePost(Post post) async {
@@ -81,8 +78,7 @@ class DatabaseService {
   }
 
   Future deletePost(Post post) async {
-    postsCollection.document(post.id)
-        .delete();
+    postsCollection.document(post.id).delete();
   }
 
   Future updatePostById(String id, int count) async {
@@ -95,44 +91,59 @@ class DatabaseService {
 
   Stream<Post> getPostById(String id) {
     return postsCollection.document(id).snapshots().map((doc) {
-      return Post(id: doc.documentID, userId: doc.data['userId'], body: doc.data['body'], category: doc.data['category'], commentsCount: doc.data['count'], likesCount: doc.data['likesCount'], timeStamp: doc.data['timeStamp']);
+      return Post(
+          id: doc.documentID,
+          userId: doc.data['userId'],
+          body: doc.data['body'],
+          category: doc.data['category'],
+          commentsCount: doc.data['count'],
+          likesCount: doc.data['likesCount'],
+          timeStamp: doc.data['timeStamp']);
     });
   }
 
   List<Post> _postListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.documents.map((doc) {
-      return Post(id: doc.documentID, userId: doc.data['userId'], body: doc.data['body'], category: doc.data['category'], commentsCount: doc.data['count'], likesCount: doc.data['likesCount'], timeStamp: doc.data['timeStamp']);
+      return Post(
+          id: doc.documentID,
+          userId: doc.data['userId'],
+          body: doc.data['body'],
+          category: doc.data['category'],
+          commentsCount: doc.data['count'],
+          likesCount: doc.data['likesCount'],
+          timeStamp: doc.data['timeStamp']);
     }).toList();
   }
 
   Stream<List<Post>> get posts {
-    return postsCollection
-        .orderBy('timeStamp', descending: true)
-        .snapshots()
-        .map(_postListFromSnapshot);
+    return postsCollection.orderBy('timeStamp', descending: true).snapshots().map(_postListFromSnapshot);
   }
 
-  Future updateComment(Comment comment, String postId,) async {
-    return await postsCollection.document(postId).collection('comments')
-        .document()
-        .setData({
-      'body': comment.body,
-      'userName': comment.userName,
-      'userId': comment.userId,
-      'time': comment.time,
-      'profilePhotoUrl': comment.profilePhotoUrl
-    });
+  Future updateComment(
+    Comment comment,
+    String postId,
+  ) async {
+    var docdoc = postsCollection.document(postId).collection('comments').document();
+    var docdocUid = docdoc.documentID;
+
+    return await docdoc
+        .setData({'body': comment.body, 'userName': comment.userName, 'userId': comment.userId, 'time': comment.time, 'profilePhotoUrl': comment.profilePhotoUrl, 'postId': postId, 'id': docdocUid});
   }
 
-  Future deleteComment(Comment comment, String postId) async {
-    return await postsCollection.document(postId).collection('comments')
-        .document(comment.id.toString())
-        .delete();
+  Future deleteComment({Comment comment, String postId}) async {
+    postsCollection.document(postId).collection('comments').document(comment.id.toString()).delete();
   }
 
   List<Comment> _commentsListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.documents.map((doc) {
-      return Comment(body: doc.data['body'], userName: doc.data['userName'], userId: doc.data['userId'], profilePhotoUrl: doc.data['profilePhotoUrl'], time: doc.data['time']);
+      return Comment(
+          body: doc.data['body'],
+          userName: doc.data['userName'],
+          userId: doc.data['userId'],
+          profilePhotoUrl: doc.data['profilePhotoUrl'],
+          time: doc.data['time'],
+          postId: doc.data['postId'],
+          id: doc.data['id']);
     }).toList();
   }
 
@@ -180,13 +191,11 @@ class DatabaseService {
   }
 
   Future deleteImage(String userId) async {
-
     String completePath = "profile/$userId/profilePic";
 
     var deleteTask = FirebaseStorage.instance.ref().child(completePath).delete();
 
     await deleteTask;
     print('image deleted');
-
   }
 }
