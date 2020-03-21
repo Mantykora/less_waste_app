@@ -13,6 +13,8 @@ class AuthService {
 
    FirebaseAuth firebaseAuth = FirebaseAuth.instance;
 
+
+
   //StreamController<User> userController = StreamController<User>();
 
   User _userFromFirebase(FirebaseUser user) {
@@ -20,6 +22,9 @@ class AuthService {
   }
 
   Stream<User> get user {
+     if (firebaseAuth == null ) {
+       return null;
+     }
     return firebaseAuth.onAuthStateChanged.map((FirebaseUser user) => _userFromFirebase(user));
   }
 

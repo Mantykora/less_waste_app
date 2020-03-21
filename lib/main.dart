@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         StreamProvider<User>.value(
-          initialData: User.initial(),
+          //initialData: User.initial(),
           value: locator<AuthService>().user,
         ),
         StreamProvider<List<UserData>>.value(
