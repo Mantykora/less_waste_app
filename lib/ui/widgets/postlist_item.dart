@@ -13,23 +13,31 @@ import 'package:provider/provider.dart';
 class PostListItem extends StatelessWidget {
   final Post post;
   final Function onTap;
-  final List<UserData> users;
+  //final List<UserData> users;
 
   final Function getUserData;
 
-  PostListItem({this.post, this.users, this.getUserData, this.onTap});
+  PostListItem({this.post,
+    //this.users,
+    this.getUserData, this.onTap});
 
   @override
   Widget build(BuildContext context) {
     List<String> categories = ["Żywność", "Środki czystości", "Uroda", "Ubrania", "Inne"];
     List assets = ['assets/watermelon.png', 'assets/spray.png', 'assets/makeup.png', 'assets/dress.png', 'assets/idea.png'];
 
-    final users = Provider.of<List<UserData>>(context);
+    //final users = Provider.of<List<UserData>>(context);
 
     UserData user;
-    if (post != null && post.userId != null) {
-      user = users.firstWhere((e) => e.id == post.userId);
-    }
+//    if (post != null && post.userId != null) {
+//      user = users.firstWhere((e) => e.id == post.userId);
+//    }
+
+    //user = DatabaseService().ge
+
+    //user = DatabaseService().getCurrentUserById(post.id);
+
+
 
     return MultiProvider(
       providers: [
@@ -41,7 +49,10 @@ class PostListItem extends StatelessWidget {
             value: DatabaseService().getUserLikeForPost(
           post.id,
           Provider.of<User>(context).id,
-        ))
+        )),
+        StreamProvider<UserData>.value(value: DatabaseService().getCurrentUserById(post.userId),
+            catchError: (_, err) => null
+        )
       ],
       child: BaseView<PostModel>(
         // onModelReady: (model) { comments =  model.getComments(post.id); },
@@ -58,7 +69,7 @@ class PostListItem extends StatelessWidget {
                       image: assets[post.category],
                       text: categories[post.category],
                       post: post,
-                      user: user,
+                      user: Provider.of<UserData>(context),
                       model: model,
                     ),
                   ),

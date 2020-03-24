@@ -31,7 +31,7 @@ class _PostMainState extends State<PostMain> {
 
   @override
   Widget build(BuildContext context) {
-    if (Provider.of<User>(context).id == widget.user.id) {
+    if (Provider.of<User>(context).id ==  widget.post.userId) {
       isThisUserMe = true;
     };
     return   Column(

@@ -14,7 +14,7 @@ import 'base_view.dart';
 class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final users = Provider.of<List<UserData>>(context);
+    //final users = Provider.of<List<UserData>>(context);
     var posts = Provider.of<List<Post>>(context);
     var username;
     var userId = Provider.of<User>(context).id;
@@ -92,7 +92,10 @@ class HomeView extends StatelessWidget {
                 : Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.max,
-                    children: <Widget>[Expanded(child: getPostsUi(posts, users))],
+                    children: <Widget>[Expanded(child: getPostsUi(posts,
+
+                       // users
+                    ))],
                   )),
       ),
     );
@@ -100,13 +103,13 @@ class HomeView extends StatelessWidget {
 
   Widget getPostsUi(
     List<Post> posts,
-    List<UserData> users,
+    //List<UserData> users,
   ) =>
       ListView.builder(
           itemCount: posts != null && posts.isNotEmpty ? posts.length : 0,
           itemBuilder: (context, index) => PostListItem(
                 post: posts[index],
-                users: users,
+               // users: users,
                 onTap: () {
                   Navigator.pushNamed(context, '/post', arguments: posts[index]);
                 },
