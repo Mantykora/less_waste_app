@@ -7,11 +7,11 @@ import 'package:less_waste_app/core/models/user.dart';
 import 'database.dart';
 
 class AuthService {
-  AuthService({
-    this.firebaseAuth,
-   });
+//  AuthService({
+//    this.firebaseAuth,
+//   });
 
-   FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
 
 
 
