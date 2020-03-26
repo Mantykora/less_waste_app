@@ -24,7 +24,8 @@ class Router {
       case '/wrapper':
         return MaterialPageRoute(builder: (_) => Wrapper());
       case '/create_post':
-        return MaterialPageRoute(builder: (_) => CreatePostView());
+        var post = settings.arguments as Post;
+        return MaterialPageRoute(builder: (_) => CreatePostView(post: post));
       case '/profile':
         return MaterialPageRoute(builder: (_) => ProfileView(settings.arguments));
       case '/about':

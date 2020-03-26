@@ -168,7 +168,9 @@ void _settingModalBottomSheet(context, model, post){
               new ListTile(
                   leading: new Icon(Icons.edit),
                   title: new Text('Edytuj'),
-                  onTap: () => {}
+                  onTap: () => {
+                  Navigator.pushNamed(context, '/create_post', arguments: post)
+                  }
               ),
               new ListTile(
                 leading: new Icon(Icons.delete),

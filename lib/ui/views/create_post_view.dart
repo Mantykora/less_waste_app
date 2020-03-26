@@ -9,12 +9,17 @@ import 'package:provider/provider.dart';
 import 'base_view.dart';
 
 class CreatePostView extends StatelessWidget {
+
+  final Post post;
+
+  CreatePostView({this.post});
+
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
     print(user.id);
 
-    TextEditingController controller = TextEditingController();
+    TextEditingController controller = TextEditingController(text: post != null ? post.body : "");
 
     PostType _postType = PostType.food;
 
