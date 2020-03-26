@@ -80,7 +80,7 @@ class _PostMainState extends State<PostMain> {
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 // Text('autor:'),
-                widget.user.profilePhotoUrl != null
+                widget.user != null && widget.user.profilePhotoUrl != null
                     ? ClipOval(
                   child: Container(
                     child: Image.network(widget.user.profilePhotoUrl),
@@ -102,8 +102,12 @@ class _PostMainState extends State<PostMain> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    widget.user.username,
-                    style: TextStyle(fontWeight: FontWeight.w600, fontSize: 17),
+                    widget.user != null && widget.user.username != null
+                    ? widget.user.username
+                        : "",
+                    style: TextStyle(fontWeight: FontWeight.w600, fontSize: 17)
+
+                    ,
                   ),
                 ),
               ],
