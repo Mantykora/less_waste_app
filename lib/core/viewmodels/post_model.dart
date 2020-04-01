@@ -22,7 +22,7 @@ class PostModel extends BaseModel {
   }
 
   Future updatePostById(String postId, int count) async {
-    await database.updatePostById(postId, count);
+    await database.updatePostById(id: postId, count: count);
   }
 
   Future updatePostLikeById(String postId, int likesCount) async {

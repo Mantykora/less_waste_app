@@ -19,6 +19,12 @@ class CreatePostModel extends BaseModel {
     setState(ViewState.Idle);
   }
 
+  Future updatePostById(Post post, String body) async {
+    setState(ViewState.Busy);
+    await database.updatePostById(
+        id: post.id, count: post.likesCount, body: body);
+  }
+
   PostType onRadioChange(PostType value, PostType second) {
     setState(ViewState.Busy);
 

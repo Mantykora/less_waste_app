@@ -25,7 +25,8 @@ class Comments extends StatelessWidget {
               physics: NeverScrollableScrollPhysics(),
               itemCount: comments != null && comments.isNotEmpty ? comments.length : 0,
               itemBuilder: (context, index) => CommentItem(
-                    comment: comments[index], model: model,
+                    comment: comments[index],
+                    model: model,
                   )),
     );
   }
@@ -42,10 +43,9 @@ class CommentItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     if (Provider.of<User>(context).id == comment.userId) {
       isThisUserMe = true;
-    };
+    }
 
     return Container(
       padding: EdgeInsets.all(10.0),
@@ -59,25 +59,38 @@ class CommentItem extends StatelessWidget {
 //            style: TextStyle(fontWeight: FontWeight.bold),
 //          ),
           Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Text(comment.body, style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500),),
+              Text(
+                comment.body,
+                style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
+              ),
+              Spacer(),
               isThisUserMe
-                  ? IconButton(icon: Icon(Icons.more_horiz), onPressed: () {
-                _settingModalBottomSheet(context, model, comment, comment.postId);
-              },)
+                  ? IconButton(
+                      icon: Icon(
+                        Icons.more_horiz,
+                      ),
+                      onPressed: () {
+                        _settingModalBottomSheet(context, model, comment, comment.postId);
+                      },
+                    )
                   : Container()
             ],
           ),
           Padding(
             padding: const EdgeInsets.only(top: 8.0),
             child: Text(
-              timeFromNow(comment.time), style: TextStyle(fontSize: 12, color: Colors.white),),
+              timeFromNow(comment.time),
+              style: TextStyle(fontSize: 12, color: Colors.white),
+            ),
           ),
           Padding(
             padding: const EdgeInsets.only(top: 8.0),
             child: InkWell(
               onTap: () {
-                Navigator.pushNamed(context, '/profile', arguments: comment.userId);},
+                Navigator.pushNamed(context, '/profile', arguments: comment.userId);
+              },
               child: InkWell(
                 onTap: () {
                   Navigator.pushNamed(context, '/profile', arguments: comment.userId);
@@ -88,23 +101,23 @@ class CommentItem extends StatelessWidget {
                     // Text('autor:'),
                     comment.profilePhotoUrl != null
                         ? ClipOval(
-                      child: Container(
-                        child: Image.network(comment.profilePhotoUrl),
-                        width: 30,
-                        height: 30,
-                      ),
-                    )
-                        :  ClipOval(
-                      child: Container(
-                        color: Colors.black12,
-                        child: Icon(
-                          Icons.person,
-                          color: Colors.white,
-                        ),
-                        width: 40,
-                        height: 40,
-                      ),
-                    ),
+                            child: Container(
+                              child: Image.network(comment.profilePhotoUrl),
+                              width: 30,
+                              height: 30,
+                            ),
+                          )
+                        : ClipOval(
+                            child: Container(
+                              color: Colors.black12,
+                              child: Icon(
+                                Icons.person,
+                                color: Colors.white,
+                              ),
+                              width: 40,
+                              height: 40,
+                            ),
+                          ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
@@ -117,35 +130,27 @@ class CommentItem extends StatelessWidget {
               ),
             ),
           ),
-
         ],
       ),
     );
   }
 }
 
-void _settingModalBottomSheet( context, PostModel model, Comment comment, String postId){
+void _settingModalBottomSheet(context, PostModel model, Comment comment, String postId) {
   showModalBottomSheet(
       context: context,
-      builder: (BuildContext bc){
+      builder: (BuildContext bc) {
         return Container(
           child: new Wrap(
             children: <Widget>[
-              new ListTile(
-                  leading: new Icon(Icons.edit),
-                  title: new Text('Edytuj'),
-                  onTap: () => {}
-              ),
+              new ListTile(leading: new Icon(Icons.edit), title: new Text('Edytuj'), onTap: () => {}),
               new ListTile(
                 leading: new Icon(Icons.delete),
                 title: new Text('Usuń'),
-                onTap: () => {
-                  model.deleteComment(postId, comment)
-                },
+                onTap: () => {model.deleteComment(postId, comment)},
               ),
             ],
           ),
         );
-      }
-  );
+      });
 }

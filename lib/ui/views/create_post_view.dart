@@ -9,7 +9,6 @@ import 'package:provider/provider.dart';
 import 'base_view.dart';
 
 class CreatePostView extends StatelessWidget {
-
   final Post post;
 
   CreatePostView({this.post});
@@ -21,22 +20,27 @@ class CreatePostView extends StatelessWidget {
 
     TextEditingController controller = TextEditingController(text: post != null ? post.body : "");
 
-    PostType _postType = PostType.food;
+    PostType _postType = post == null ? PostType.food : PostType.values[post.category];
+
+    var addPost;
 
     return BaseView<CreatePostModel>(
         //onModelReady: (model) => model.getPosts(),
         builder: (context, model, child) => Scaffold(
               resizeToAvoidBottomInset: false,
 
-              appBar: GradientAppBar(
-                  title: Text('Flutter'),
-                  gradient: LinearGradient(colors: [Colors.blue, Theme.of(context).primaryColor])
-              ),
+              appBar: GradientAppBar(title: Text('Flutter'), gradient: LinearGradient(colors: [Colors.blue, Theme.of(context).primaryColor])),
               floatingActionButton: FloatingActionButton(
                 child: Icon(Icons.check),
                 onPressed: () {
                   if (controller.text.isNotEmpty) {
-                    var addPost = model.addPostToDatabase(Post(userId: user.id, body: controller.text, category: _postType.index, commentsCount: 0, likesCount: 0, timeStamp:  DateTime.now().millisecondsSinceEpoch));
+                    if (post == null) {
+                      addPost = model.addPostToDatabase(
+                          Post(userId: user.id, body: controller.text, category: _postType.index, commentsCount: 0, likesCount: 0, timeStamp: DateTime.now().millisecondsSinceEpoch));
+                    } else {
+                      addPost = model.updatePostById(post, controller.text);
+                    }
+
                     if (addPost != null) {
                       Navigator.of(context).pop();
                     } else {
@@ -54,9 +58,7 @@ class CreatePostView extends StatelessWidget {
                       maxLines: 8,
                       maxLength: 60000,
                       controller: controller,
-                      onChanged: (text) {
-
-                      },
+                      onChanged: (text) {},
                     ),
                   ),
                   Padding(
@@ -77,7 +79,9 @@ class CreatePostView extends StatelessWidget {
                                 padding: const EdgeInsets.only(right: 8.0),
                                 child: Image.asset("assets/watermelon.png"),
                               ),
-                              const Text('Żywność', ),
+                              const Text(
+                                'Żywność',
+                              ),
                             ],
                           ),
                           leading: Radio(

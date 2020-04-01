@@ -81,8 +81,8 @@ class DatabaseService {
     postsCollection.document(post.id).delete();
   }
 
-  Future updatePostById(String id, int count) async {
-    return postsCollection.document(id).updateData({'count': count});
+  Future updatePostById({String id, int count, String body}) async {
+    return postsCollection.document(id).updateData({'count': count, 'body': body});
   }
 
   Future updateLikesCountPostById(String id, int likesCount) async {
