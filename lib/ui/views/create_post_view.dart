@@ -38,7 +38,7 @@ class CreatePostView extends StatelessWidget {
                       addPost = model.addPostToDatabase(
                           Post(userId: user.id, body: controller.text, category: _postType.index, commentsCount: 0, likesCount: 0, timeStamp: DateTime.now().millisecondsSinceEpoch));
                     } else {
-                      addPost = model.updatePostById(post, controller.text);
+                      addPost = model.updatePostById(post, controller.text, _postType.index);
                     }
 
                     if (addPost != null) {
