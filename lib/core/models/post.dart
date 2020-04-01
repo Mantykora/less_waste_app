@@ -6,8 +6,9 @@ class Post {
   int commentsCount;
   int likesCount;
   int timeStamp;
+  bool isEdited;
 
-  Post({this.userId, this.id, this.body, this.category, this.commentsCount, this.likesCount, this.timeStamp});
+  Post({this.userId, this.id, this.body, this.category, this.commentsCount, this.likesCount, this.timeStamp, this.isEdited});
 
   Post.fromJson(Map<String, dynamic> json) {
     userId = json['userId'];
@@ -17,6 +18,7 @@ class Post {
     commentsCount = json['commentsCount'];
     likesCount = json['likesCount'];
     timeStamp = json['timeStamp'];
+    isEdited = json['isEdited'];
   }
 
   Map<String, dynamic> toJson() {
@@ -28,6 +30,7 @@ class Post {
     data['commentsCount'] = this.commentsCount;
     data['likesCount'] = this.likesCount;
     data['timeStamp'] = this.timeStamp;
+    data['isEdited'] = this.isEdited;
     return data;
   }
 }

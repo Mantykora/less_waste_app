@@ -73,7 +73,8 @@ class DatabaseService {
       'category': post.category,
       'count': post.commentsCount,
       'likesCount': post.likesCount,
-      'timeStamp': post.timeStamp
+      'timeStamp': post.timeStamp,
+      'isEdited' : false
     });
   }
 
@@ -82,7 +83,7 @@ class DatabaseService {
   }
 
   Future updatePostById({String id, int count, String body, int category}) async {
-    return postsCollection.document(id).updateData({'count': count, 'body': body, 'category': category});
+    return postsCollection.document(id).updateData({'count': count, 'body': body, 'category': category, 'isEdited': true});
   }
 
   Future updateLikesCountPostById(String id, int likesCount) async {
@@ -98,7 +99,9 @@ class DatabaseService {
           category: doc.data['category'],
           commentsCount: doc.data['count'],
           likesCount: doc.data['likesCount'],
-          timeStamp: doc.data['timeStamp']);
+          timeStamp: doc.data['timeStamp'],
+          isEdited: doc.data['isEdited']
+          );
     });
   }
 
@@ -111,7 +114,9 @@ class DatabaseService {
           category: doc.data['category'],
           commentsCount: doc.data['count'],
           likesCount: doc.data['likesCount'],
-          timeStamp: doc.data['timeStamp']);
+          timeStamp: doc.data['timeStamp'],
+          isEdited: doc.data['isEdited']
+      );
     }).toList();
   }
 

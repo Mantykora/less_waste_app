@@ -67,8 +67,17 @@ class _PostMainState extends State<PostMain> {
 //        }),
         Padding(
           padding: const EdgeInsets.only(top: 8.0),
-          child: Text(
-              timeFromNow(widget.post.timeStamp), style: TextStyle(fontSize: 12),),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text(
+                  timeFromNow(widget.post.timeStamp), style: TextStyle(fontSize: 12),),
+              Text(
+                 widget.post.isEdited != null && widget.post.isEdited
+                 ? 'Edytowany'
+                 : "", style: TextStyle(fontSize: 10),)
+            ],
+          ),
         ),
         Padding(
           padding: const EdgeInsets.only(top: 8.0),
