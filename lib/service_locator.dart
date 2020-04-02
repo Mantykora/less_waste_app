@@ -1,4 +1,5 @@
 import 'package:get_it/get_it.dart';
+import 'package:less_waste_app/core/services/cloud_messaging.dart';
 import 'core/services/auth.dart';
 import 'core/viewmodels/authenticate_model.dart';
 import 'core/viewmodels/comments_model.dart';
@@ -17,4 +18,6 @@ void setupLocator() {
   locator.registerFactory(() => CreatePostModel());
   locator.registerFactory(() => PostModel());
   locator.registerFactory(() => ProfileModel());
+  locator.registerLazySingleton(() => CloudMessagingService());
+
 }

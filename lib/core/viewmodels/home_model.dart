@@ -3,6 +3,7 @@ import 'package:less_waste_app/core/models/post.dart';
 import 'package:less_waste_app/core/models/user.dart';
 import 'package:less_waste_app/core/models/user_data.dart';
 import 'package:less_waste_app/core/services/auth.dart';
+import 'package:less_waste_app/core/services/cloud_messaging.dart';
 import 'package:less_waste_app/core/services/database.dart';
 
 import '../../service_locator.dart';
@@ -15,6 +16,12 @@ class HomeModel extends BaseModel {
   final DatabaseService database = DatabaseService();
 
   Stream<UserData> user;
+
+  final CloudMessagingService _pushNotificationService =
+  locator<CloudMessagingService>();
+  Future handleStartUpLogic() async {
+    await _pushNotificationService.initialise();
+  }
 
   Stream<List<Post>> getPosts() {
     setState(ViewState.Busy);
