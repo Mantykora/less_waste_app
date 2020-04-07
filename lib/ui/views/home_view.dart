@@ -26,7 +26,9 @@ class HomeView extends StatelessWidget {
     return StreamProvider<UserData>.value(
       value: DatabaseService().getCurrentUserById(userId),
       child: BaseView<HomeModel>(
-        onModelReady: (model) {},
+        onModelReady: (model) {
+          model.handleStartUpLogic();
+        },
         builder: (context, model, child) => Scaffold(
             appBar: GradientAppBar(
                 title: Text('Przeglądaj inspiracje'),
