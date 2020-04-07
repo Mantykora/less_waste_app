@@ -15,10 +15,23 @@ class CloudMessagingService {
       },
       onLaunch: (Map<String, dynamic> message) async {
         print("onLaunch: $message");
+        _serialiseAndNavigate(message);
       },
       onResume: (Map<String, dynamic> message) async {
         print("onResume: $message");
+        _serialiseAndNavigate(message);
       },
     );
   }
-}
+
+  void _serialiseAndNavigate(Map<String, dynamic> message) {
+    var notificationData = message['data'];
+    var view = notificationData['view'];
+    if (view != null) {
+      // Navigate to the create post view
+      if (view == 'create_post') {
+      //  _navigationService.navigateTo(CreatePostViewRoute);
+      }
+      // If there's no view it'll just open the app on the first view
+    }
+}}

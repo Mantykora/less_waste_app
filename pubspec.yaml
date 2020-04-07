@@ -36,6 +36,8 @@ dependencies:
   intl: ^0.16.1
   mockito: ^4.1.1
   firebase_messaging: ^6.0.13
+  cloud_functions: ^0.4.2+3
+
 
 
 

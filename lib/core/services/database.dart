@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:less_waste_app/core/models/comment.dart';
 import 'package:less_waste_app/core/models/like.dart';
@@ -204,3 +205,4 @@ class DatabaseService {
     print('image deleted');
   }
 }
+
