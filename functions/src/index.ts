@@ -18,14 +18,23 @@ admin.initializeApp();
 export const createPo = functions.firestore.document('posts/{id}')
       .onCreate((snap) => {
 
-      //const newValue = snap.data();
+      const newValue = snap.data();
+
 
       console.log('Message received');
 
+     console.log(newValue);
+
+     var data = JSON.parse(JSON.stringify(newValue));
+
+
+    var category = data.category.toString();
+    var body = data.body;
+
      const payload = {
                       notification: {
-                        "title": "title",
-                        "body": "Check Choice of the day.",
+                        "title": category,
+                        "body": body,
                       }
                     };
 
