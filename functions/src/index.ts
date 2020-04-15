@@ -24,7 +24,7 @@ export const createPo = functions.firestore.document('posts/{id}')
 
      const payload = {
                       notification: {
-                        "title": "",
+                        "title": "title",
                         "body": "Check Choice of the day.",
                       }
                     };

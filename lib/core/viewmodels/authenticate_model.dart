@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:less_waste_app/core/enums/viewstate.dart';
 import 'package:less_waste_app/core/services/auth.dart';
 
@@ -13,6 +14,9 @@ class AuthenticateModel extends BaseModel {
   final AuthService _authenticationService = locator<AuthService>();
 
   String errorMessage;
+
+  FirebaseMessaging firebaseMessaging =  FirebaseMessaging();
+
 
   void toggleView() {
     setState(ViewState.Busy);
@@ -38,6 +42,10 @@ class AuthenticateModel extends BaseModel {
 
     isResponseSuccessful(response);
 
+    if(isResponseSuccessful(response)) {
+      firebaseMessaging.subscribeToTopic('News');
+    }
+
     setState(ViewState.Idle);
   }
 
@@ -55,6 +63,11 @@ class AuthenticateModel extends BaseModel {
     setState(ViewState.Idle);
 
     isSignInView = isResponseSuccessful(response);
+
+    if(isResponseSuccessful(response)) {
+      firebaseMessaging.subscribeToTopic('News');
+    }
+
     isForgotView = false;
   }
 
