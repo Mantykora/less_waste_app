@@ -2,6 +2,10 @@
 import 'dart:io';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/material.dart';
+import 'package:less_waste_app/core/models/post.dart';
+
+import '../../main.dart';
 
 class CloudMessagingService {
   final FirebaseMessaging _fcm = FirebaseMessaging();
@@ -15,11 +19,15 @@ class CloudMessagingService {
       },
       onLaunch: (Map<String, dynamic> message) async {
         print("onLaunch: $message");
-        _serialiseAndNavigate(message);
+        MyApp.navigatorKey.currentState.pushNamed("/about",);
+       // _serialiseAndNavigate(message);
+
       },
       onResume: (Map<String, dynamic> message) async {
         print("onResume: $message");
-        _serialiseAndNavigate(message);
+        MyApp.navigatorKey.currentState.pushNamed("/about", );
+        //Navigator.of(context).pushNamed(context, '/about');
+       // _serialiseAndNavigate(message);
       },
     );
   }
@@ -29,6 +37,7 @@ class CloudMessagingService {
     var view = notificationData['view'];
     if (view != null) {
       // Navigate to the create post view
+
       if (view == 'create_post') {
       //  _navigationService.navigateTo(CreatePostViewRoute);
       }

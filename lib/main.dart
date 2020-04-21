@@ -15,6 +15,7 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
+  static final navigatorKey = GlobalKey<NavigatorState>();
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -41,6 +42,7 @@ class MyApp extends StatelessWidget {
         home: Wrapper(),
         initialRoute: '/wrapper',
         onGenerateRoute: Router.generateRoute,
+        navigatorKey: navigatorKey,
       ),
     );
   }

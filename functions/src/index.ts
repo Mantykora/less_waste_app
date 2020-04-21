@@ -18,6 +18,8 @@ admin.initializeApp();
 export const createPo = functions.firestore.document('posts/{id}')
       .onCreate((snap) => {
 
+      var categories:string[] = ["Żywność", "Środki czystości", "Uroda", "Ubrania", "Inne"];
+
       const newValue = snap.data();
 
 
@@ -33,8 +35,9 @@ export const createPo = functions.firestore.document('posts/{id}')
 
      const payload = {
                       notification: {
-                        "title": category,
+                        "title": categories[category],
                         "body": body,
+                        "click_action": "FLUTTER_NOTIFICATION_CLICK"
                       }
                     };
 
