@@ -38,9 +38,19 @@ export const createPo = functions.firestore.document('posts/{id}')
                         "title": categories[category],
                         "body": body,
                         "click_action": "FLUTTER_NOTIFICATION_CLICK"
-                      }
+                      },
+                      "data": {
+                         //"data": "datahehe"
+                         "userId": data.userId,
+                          "body": body,
+                         "id": data.id,
+                         "category": category,
+                         "count": data.count.toString(),
+                         "likesCount": data.likesCount.toString(),
+                         "timeStamp": data.timeStamp.toString(),
+                         "isEdited": data.isEdited.toString()
+                       },
                     };
-
       return admin.messaging().sendToTopic("News",payload)
           .then(function(response){
                console.log('Notification sent successfully:',response);
