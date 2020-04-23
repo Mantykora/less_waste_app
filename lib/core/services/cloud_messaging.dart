@@ -19,28 +19,55 @@ class CloudMessagingService {
       },
       onLaunch: (Map<String, dynamic> message) async {
         print("onLaunch: $message");
-        MyApp.navigatorKey.currentState.pushNamed("/about",);
+        await _serialiseAndNavigate(message);
+       // MyApp.navigatorKey.currentState.pushNamed("/about",);
        // _serialiseAndNavigate(message);
 
       },
       onResume: (Map<String, dynamic> message) async {
         print("onResume: $message");
-        MyApp.navigatorKey.currentState.pushNamed("/about", );
+       await _serialiseAndNavigate(message);
+       // MyApp.navigatorKey.currentState.pushNamed("/about", );
         //Navigator.of(context).pushNamed(context, '/about');
        // _serialiseAndNavigate(message);
       },
     );
   }
 
-  void _serialiseAndNavigate(Map<String, dynamic> message) {
-    var notificationData = message['data'];
-    var view = notificationData['view'];
-    if (view != null) {
-      // Navigate to the create post view
+//  'userId': post.userId,
+//  'id': docdocUid,
+//  'body': post.body,
+//  'category': post.category,
+//  'count': post.commentsCount,
+//  'likesCount': post.likesCount,
+//  'timeStamp': post.timeStamp,
+//  'isEdited' : false
 
-      if (view == 'create_post') {
-      //  _navigationService.navigateTo(CreatePostViewRoute);
-      }
-      // If there's no view it'll just open the app on the first view
+  Future  _serialiseAndNavigate(Map<String, dynamic> message) async {
+    var notificationData = message['data'];
+    var id = notificationData['id'];
+    var body = notificationData['body'];
+    var userId = notificationData['userId'];
+    var category = int.parse(notificationData['category']);
+    var commentsCount = int.parse(notificationData['count']);
+    var likesCount = int.parse(notificationData['likesCount']);
+    var timeStamp = int.parse(notificationData['timeStamp']);
+    bool isEdited = notificationData['isEdited'] == "true";
+
+
+    Post post = Post(userId: userId,
+      id: id,
+      body: body,
+      category: category,
+      commentsCount: commentsCount,
+      likesCount: likesCount,
+      timeStamp: timeStamp,
+      isEdited: isEdited
+    );
+    print(userId);
+
+    if (post != null) {
+      MyApp.navigatorKey.currentState.pushNamed("/post", arguments: post);
     }
+
 }}

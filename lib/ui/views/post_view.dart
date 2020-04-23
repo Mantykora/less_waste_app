@@ -67,7 +67,7 @@ class PostView extends StatelessWidget {
                         onPressed: () {
                           if (_commentController.text.trim().isNotEmpty) {
                             var success = model.addCommentToDatabase(Comment(body: _commentController.text, userId: user.id, userName: user.username, profilePhotoUrl: user.profilePhotoUrl, time:  DateTime.now().millisecondsSinceEpoch), post.id,
-                                Provider.of<Post>(context).commentsCount);
+                                Provider.of<Post>(context).commentsCount, post.body, post.category);
                             if (success != null) {
                               _commentController.clear();
                             }
