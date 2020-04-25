@@ -8,12 +8,12 @@ import 'base_model.dart';
 class PostModel extends BaseModel {
   final DatabaseService database = DatabaseService();
 
-  Future addCommentToDatabase(Comment comment, String postId, int postCount, String postBody, int category) async {
+  Future addCommentToDatabase(Comment comment, String postId, int postCount, String postBody, int category, bool isEdited) async {
     setState(ViewState.Busy);
     await database.updateComment(comment, postId).then((onValue) {
       print('comment added to database');
 
-      updatePostById(postId, postCount == null ? 1 : postCount + 1, postBody, category);
+      updatePostById(postId, postCount == null ? 1 : postCount + 1, postBody, category, isEdited);
     }).catchError((onError) {
       print('error adding comment');
       return null;
@@ -21,8 +21,8 @@ class PostModel extends BaseModel {
     setState(ViewState.Idle);
   }
 
-  Future updatePostById(String postId, int count, String postBody, int category) async {
-    await database.updatePostById(id: postId, count: count, body: postBody, category: category);
+  Future updatePostById(String postId, int count, String postBody, int category, bool isEdited) async {
+    await database.updatePostById(id: postId, count: count, body: postBody, category: category, isEdited: isEdited);
   }
 
   Future updatePostLikeById(String postId, int likesCount) async {
