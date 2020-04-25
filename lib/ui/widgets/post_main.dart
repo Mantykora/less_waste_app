@@ -187,7 +187,11 @@ void _settingModalBottomSheet(context, model, post){
                 leading: new Icon(Icons.delete),
                 title: new Text('Usuń'),
                 onTap: () {
-                model.deletePost(post);
+                var delete = model.deletePost(post);
+                if (delete != null) {
+                  Navigator.pushNamed(context, '/home');
+                }
+
               },
               ),
             ],

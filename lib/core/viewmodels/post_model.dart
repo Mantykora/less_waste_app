@@ -30,7 +30,11 @@ class PostModel extends BaseModel {
   }
 
   Future deletePost(Post post) async {
-    await database.deletePost(post);
+    await database.deletePost(post).catchError((onError) {
+      print('error deleting post');
+      return null;
+    });
+
   }
 
   Stream<List<Comment>> getComments(String postId) {
