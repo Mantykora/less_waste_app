@@ -177,15 +177,17 @@ void _settingModalBottomSheet(context, model, post){
               new ListTile(
                   leading: new Icon(Icons.edit),
                   title: new Text('Edytuj'),
-                  onTap: () => {
-                  Navigator.pushNamed(context, '/create_post', arguments: post)
+                  onTap: ()  {
+                  Navigator.pushNamed(context, '/create_post', arguments: post).then((onValue) {
+                    Navigator.pop(context);
+                  });
                   }
               ),
               new ListTile(
                 leading: new Icon(Icons.delete),
                 title: new Text('Usuń'),
-                onTap: () => {
-                model.deletePost(post)
+                onTap: () {
+                model.deletePost(post);
               },
               ),
             ],
