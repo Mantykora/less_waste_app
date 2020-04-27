@@ -7,6 +7,7 @@ import 'package:less_waste_app/ui/views/home_view.dart';
 import 'package:less_waste_app/ui/views/login_view.dart';
 import 'package:less_waste_app/ui/views/post_view.dart';
 import 'package:less_waste_app/ui/views/profile_view.dart';
+import 'package:less_waste_app/ui/views/settings_view.dart';
 import 'package:less_waste_app/ui/views/wrapper.dart';
 
 const String initialRoute = "login";
@@ -30,6 +31,8 @@ class Router {
         return MaterialPageRoute(builder: (_) => ProfileView(settings.arguments));
       case '/about':
         return MaterialPageRoute(builder: (_) => AboutAppView());
+      case '/settings':
+        return MaterialPageRoute(builder: (_) => SettingsView());
       default:
         return MaterialPageRoute(
             builder: (_) => Scaffold(

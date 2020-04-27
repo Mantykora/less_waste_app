@@ -76,6 +76,10 @@ class HomeView extends StatelessWidget {
                   ListTile(
                     leading: Icon(Icons.settings, color: Colors.teal),
                     title: Text('Ustawienia'),
+                    onTap: () async {
+                      Navigator.pop(context);
+                      Navigator.pushNamed(context, '/settings');
+                    },
                   ),
                   ListTile(
                     leading: Icon(Icons.info, color: Colors.teal),
