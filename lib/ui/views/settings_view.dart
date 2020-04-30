@@ -22,14 +22,22 @@ class SettingsView extends StatelessWidget {
           appBar: GradientAppBar(title: Text('Flutter'), gradient: LinearGradient(colors: [Colors.blue, Theme.of(context).primaryColor])),
           body: Column(
             children: <Widget>[
-              Row(
-                children: <Widget>[
-                  Switch(onChanged: (bool value) {
-                    isNotficationOn = value;
-                    model.notificationSettings(isNotficationOn);
-                  }, value: isNotficationOn,),
-                  Text('Powiadomienia w aplikacji')
-                ],
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Row(
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.only(right: 8.0),
+                      child: Image.asset( 'assets/music.png',),
+                    ),
+                    Text('Powiadomienia w aplikacji', style: TextStyle(fontSize: 15),),
+                    Spacer(),
+                    Switch(onChanged: (bool value) {
+                      isNotficationOn = value;
+                      model.notificationSettings(isNotficationOn);
+                    }, value: isNotficationOn,),
+                  ],
+                ),
               )
             ],
           ),
