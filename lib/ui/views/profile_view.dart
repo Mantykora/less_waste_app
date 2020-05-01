@@ -44,6 +44,7 @@ class ProfileView extends StatelessWidget {
     bool isProfilePicFromServer = true;
 
     //TODO 2 show loading indication, alert/sth after updating profile
+    //TODO delete icon if doesn't have a pic dhoul disappear
     return BaseView<ProfileModel>(
         builder: (context, model, child) => Scaffold(
                 body: CustomScrollView(slivers: <Widget>[
@@ -81,10 +82,8 @@ class ProfileView extends StatelessWidget {
                                   onTap: isThisUserMe
                                       ? () async {
                                           imageSource = await _choosePhoto(context);
-                                          //TODO if imageSource != null
                                           if (imageSource != null) {
                                             File file = await ImagePicker.pickImage(source: imageSource);
-                                            //TODO only square cropp
                                             await ImageCropper.cropImage(
                                                 sourcePath: file.path,
                                                 cropStyle: CropStyle.circle,
@@ -110,8 +109,6 @@ class ProfileView extends StatelessWidget {
                                         }
                                       : null,
                                   child:
-                                      //TODO remove photo
-                                      //no photo is shown
                                       user.profilePhotoUrl == null && choosenPhoto == null
                                           ? Container(
                                               color: Colors.black38,
@@ -148,7 +145,10 @@ class ProfileView extends StatelessWidget {
                               ),
                               isThisUserMe
                               //hide delete if user is not me
-                                  ? Positioned(
+                              ? user.profilePhotoUrl == null && choosenPhoto == null
+                              //if there is no photo - don't show delete icon
+                              ?  Container()
+                              : Positioned(
                                       right: 75.0,
                                       // alignment: Alignment.center,
                                       child: InkWell(
