@@ -143,11 +143,13 @@ void _settingModalBottomSheet(context, PostModel model, Comment comment, String 
         return Container(
           child: new Wrap(
             children: <Widget>[
-              new ListTile(leading: new Icon(Icons.edit), title: new Text('Edytuj'), onTap: () => {}),
+//              new ListTile(leading: new Icon(Icons.edit), title: new Text('Edytuj'), onTap: () => {
+//
+//              }),
               new ListTile(
                 leading: new Icon(Icons.delete),
                 title: new Text('Usuń'),
-                onTap: () => {model.deleteComment(postId, comment)},
+                onTap: () {model.deleteComment(postId, comment);},
               ),
             ],
           ),
