@@ -108,68 +108,67 @@ class ProfileView extends StatelessWidget {
                                           }
                                         }
                                       : null,
-                                  child:
-                                      user.profilePhotoUrl == null && choosenPhoto == null
+                                  child: user.profilePhotoUrl == null && choosenPhoto == null
+                                      ? Container(
+                                          color: Colors.black38,
+                                          width: 150,
+                                          height: 150,
+                                          child: Icon(
+                                            isThisUserMe ? Icons.add_a_photo : Icons.person,
+                                            color: Colors.white,
+                                            size: 45,
+                                          ),
+                                        )
+                                      //photo from the server
+                                      : isProfilePicFromServer
                                           ? Container(
-                                              color: Colors.black38,
-                                              width: 150,
                                               height: 150,
-                                              child: Icon(
-                                                isThisUserMe ? Icons.add_a_photo : Icons.person,
-                                                color: Colors.white,
-                                                size: 45,
-                                              ),
-                                            )
-                                          //photo from the server
-                                          : isProfilePicFromServer
-                                              ? Container(
-                                                  height: 150,
-                                                  width: 150,
-                                                  child: Image.network(
-                                                    user.profilePhotoUrl,
-                                                    width: 150,
-                                                    height: 150,
-                                                    fit: BoxFit.fill,
-                                                  ))
-                                              //photo chosen from the gallery/camera
-                                              : Container(
-                                                  height: 150,
-                                                  width: 150,
-                                                  child: Image.file(
-                                                    choosenPhoto,
-                                                    width: 150,
-                                                    height: 150,
-                                                    fit: BoxFit.fill,
-                                                  )),
+                                              width: 150,
+                                              child: Image.network(
+                                                user.profilePhotoUrl,
+                                                width: 150,
+                                                height: 150,
+                                                fit: BoxFit.fill,
+                                              ))
+                                          //photo chosen from the gallery/camera
+                                          : Container(
+                                              height: 150,
+                                              width: 150,
+                                              child: Image.file(
+                                                choosenPhoto,
+                                                width: 150,
+                                                height: 150,
+                                                fit: BoxFit.fill,
+                                              )),
                                 )),
                               ),
                               isThisUserMe
-                              //hide delete if user is not me
-                              ? user.profilePhotoUrl == null && choosenPhoto == null
-                              //if there is no photo - don't show delete icon
-                              ?  Container()
-                              : Positioned(
-                                      right: 75.0,
-                                      // alignment: Alignment.center,
-                                      child: InkWell(
-                                        onTap: () {
-                                          model.deleteImage(userId: user.id);
-                                        },
-                                        child: ClipOval(
-                                          child: Container(
-                                              color: Colors.white,
-                                              child: Padding(
-                                                padding: const EdgeInsets.all(4.0),
-                                                child: Icon(
-                                                  Icons.delete,
-                                                  color: Colors.blue,
+                                  //hide delete if user is not me
+                                  ? user.profilePhotoUrl == null && choosenPhoto == null
+                                      //if there is no photo - don't show delete icon
+                                      ? Container()
+                                      : Positioned(
+                                          right: 75.0,
+                                          // alignment: Alignment.center,
+                                          child: InkWell(
+                                            onTap: () {
+                                              model.deleteImage(userId: user.id);
+                                            },
+                                            child: ClipOval(
+                                              child: Container(
+                                                  color: Colors.white,
+                                                  child: Padding(
+                                                    padding: const EdgeInsets.all(4.0),
+                                                    child: Icon(
+                                                      Icons.delete,
+                                                      color: Colors.blue,
 
-                                                //  Theme.of(context).accentColor,
-                                                ),
-                                              )),
-                                        ),
-                                      ),
-                                    )
+                                                      //  Theme.of(context).accentColor,
+                                                    ),
+                                                  )),
+                                            ),
+                                          ),
+                                        )
                                   : Container()
                             ],
                           )),
@@ -184,29 +183,36 @@ class ProfileView extends StatelessWidget {
                   ProfileTextField(lastNameController, "nazwisko", false, isThisUserMe),
                   ProfileTextField(aboutMeController, "o mnie", true, isThisUserMe),
                   isThisUserMe
-                      ? Padding(
-                          padding: const EdgeInsets.only(top: 54.0, right: 24.0, left: 24.0),
-                          child: RaisedButton(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: new BorderRadius.circular(18.0),
-                              ),
-                              color: Colors.blue,
-
-                              //Theme.of(context).accentColor,
-                              child: Text(
-                                "Zapisz",
-                                style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700),
-                              ),
-                              onPressed: () {
-                                //upload profile photo, update user data
-
-                                if (choosenPhoto != null) {
-                                  model.uploadImage(image: choosenPhoto, userId: user.id, name: nameController.text, lastName: lastNameController.text, description: aboutMeController.text);
-                                } else {
-                                  model.updateUserById(userId: user.id, name: nameController.text, lastName: lastNameController.text, description: aboutMeController.text);
-                                }
-                              }),
-                        )
+                      ? model.state == ViewState.Busy
+                          ? Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Padding(
+                                  padding: const EdgeInsets.all(50.0),
+                                  child: CircularProgressIndicator(),
+                                ),
+                              ],
+                            )
+                          : Padding(
+                              padding: const EdgeInsets.only(top: 54.0, right: 24.0, left: 24.0),
+                              child: RaisedButton(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: new BorderRadius.circular(18.0),
+                                  ),
+                                  color: Colors.blue,
+                                  child: Text(
+                                    "Zapisz",
+                                    style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700),
+                                  ),
+                                  onPressed: () {
+                                    //upload profile photo, update user data
+                                    if (choosenPhoto != null) {
+                                      model.uploadImage(image: choosenPhoto, userId: user.id, name: nameController.text, lastName: lastNameController.text, description: aboutMeController.text);
+                                    } else {
+                                      model.updateUserById(userId: user.id, name: nameController.text, lastName: lastNameController.text, description: aboutMeController.text);
+                                    }
+                                  }),
+                            )
                       : Container()
                 ]),
               )
@@ -219,9 +225,7 @@ Future<ImageSource> _choosePhoto(BuildContext context) async {
       context: context,
       builder: (BuildContext context) {
         return SimpleDialog(
-          shape:  RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(20.0))
-          ),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20.0))),
           title: const Text('Dodaj zdjęcie'),
           children: <Widget>[
             SimpleDialogOption(
